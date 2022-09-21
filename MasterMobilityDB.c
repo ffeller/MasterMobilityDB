@@ -9,8 +9,8 @@ PG_FUNCTION_INFO_V1(MoTypeCreate);
 Datum
 MoTypeCreate(PG_FUNCTION_ARGS)
 {
-int32 moTypeId = PG_GETARG_INT32(0);
-text* description = PG_GETARG_TEXT_PP(1);
+    int32 moTypeId = PG_GETARG_INT32(0);
+    text* description = PG_GETARG_TEXT_PP(1);
 
-PG_RETURN_INT32(arg1 + arg2);
+    
 }
