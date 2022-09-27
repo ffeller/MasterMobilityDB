@@ -1,3 +1,3 @@
 CREATE OR REPLACE FUNCTION
-addme(int,int) RETURNS int AS 'MODULE_PATHNAME','addme'
+MoTypeCreate(int,int) RETURNS int AS 'MODULE_PATHNAME','MoTypeCreate'
 LANGUAGE C STRICT;
