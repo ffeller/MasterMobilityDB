@@ -3,42 +3,53 @@
 #include "fmgr.h"
 #include "executor/spi.h"
 
+#define ERR_MMDB_001 "Failure when preparing %s on table %s"
+#define ERR_MMDB_002 "Failure when executing %s on table %s"
+#define ERR_MMDB_003 "%s on table %s affected no rows"
+ 
 PG_MODULE_MAGIC;
+
+PG_FUNCTION_INFO_V1(fteste);
+
+Datum 
+fteste(PG_FUNCTION_ARGS)
+{
+    elog(INFO, "passo 0"); 
+    PG_RETURN_INT32(1);
+}
 
 PG_FUNCTION_INFO_V1(MoTypeCreate);
 
-Datum
+Datum 
 MoTypeCreate(PG_FUNCTION_ARGS)
 {
-    text * description = PG_GETARG_TEXT_PP(1);
-    Oid types[] = {TEXTOID};
+    Oid types[] = {VARCHAROID};
     SPIPlanPtr stmt;
     Datum values[1];
     bool isnull;
     int new_mo_type_id, ret, proc;
     char * op = "insert";
     char * table = "master.mo_type";
-    char * msg;
 
     char * sql = 
         "insert into master.mo_type(mo_type_id, description) \
-        values(nextval(seq_mo_type), ?) \
+        values(nextval('master.seq_mo_type'), $1) \
         returning mo_type_id";
 
+    elog(INFO, "passo 0");
+    
     SPI_connect();
 
     stmt = SPI_prepare(sql, 1, types);
     if (!stmt) {
-        sprintf(msg, "Failure when preparing %s on table %s", op, table);
-        elog(ERROR, msg);
+        elog(ERROR, ERR_MMDB_001, op, table);
     }
 
-    values[0] = description;
+    values[0] = PG_GETARG_DATUM(0);
 
     ret = SPI_execp(stmt, values, " ", 1);
     if (ret < 0) {
-        sprintf(msg, "Failure when executing %s on table %s", op, table);
-        elog(ERROR, msg);
+        elog(ERROR, ERR_MMDB_002, op, table);
     }
     proc = SPI_processed;
 
@@ -48,8 +59,7 @@ MoTypeCreate(PG_FUNCTION_ARGS)
                                     1,
                                     &isnull));
     } else {
-        sprintf(msg, "%s on table %s affected no rows", op, table);
-        elog(ERROR, msg);
+        elog(ERROR, ERR_MMDB_003, op, table);
         new_mo_type_id = 0;
     }
 
