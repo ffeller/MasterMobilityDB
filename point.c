@@ -7,10 +7,10 @@
 
 PG_MODULE_MAGIC;
 
-PG_FUNCTION_INFO_V1(moving_object_create);
+PG_FUNCTION_INFO_V1(point_create);
 
 Datum 
-moving_object_create(PG_FUNCTION_ARGS)
+point_create(PG_FUNCTION_ARGS)
 {
     Oid types[] = {INT4OID,INT4OID};
     SPIPlanPtr stmt; 
@@ -58,10 +58,10 @@ moving_object_create(PG_FUNCTION_ARGS)
     PG_RETURN_INT32(new_mo_id);
 }
 
-PG_FUNCTION_INFO_V1(moving_object_update);
+PG_FUNCTION_INFO_V1(point_update);
 
 Datum 
-moving_object_update(PG_FUNCTION_ARGS)
+point_update(PG_FUNCTION_ARGS)
 {
     Oid types[] = {INT4OID,INT4OID,INT4OID};
     SPIPlanPtr stmt;
@@ -99,10 +99,10 @@ moving_object_update(PG_FUNCTION_ARGS)
     PG_RETURN_INT32(proc);
 }
 
-PG_FUNCTION_INFO_V1(moving_object_delete);
+PG_FUNCTION_INFO_V1(point_delete);
 
 Datum 
-moving_object_delete(PG_FUNCTION_ARGS)
+point_delete(PG_FUNCTION_ARGS)
 {
     Oid types[] = {INT4OID};
     SPIPlanPtr stmt;
