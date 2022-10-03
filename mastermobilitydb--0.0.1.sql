@@ -1,11 +1,11 @@
 CREATE OR REPLACE FUNCTION
-MoTypeCreate(varchar) RETURNS int AS 'MODULE_PATHNAME','MoTypeCreate'
+mo_type_create(varchar) RETURNS int AS '$libdir/mo_type.so','mo_type_create'
 LANGUAGE C STRICT;
 
 CREATE OR REPLACE FUNCTION
-MoTypeUpdate(int, varchar) RETURNS int AS 'MODULE_PATHNAME','MoTypeUpdate'
+mo_type_update(int, varchar) RETURNS int AS '$libdir/mo_type.so','mo_type_update'
 LANGUAGE C STRICT;
 
 CREATE OR REPLACE FUNCTION
-MoTypeDelete(int) RETURNS int AS 'MODULE_PATHNAME','MoTypeDelete'
+mo_type_delete(int) RETURNS int AS '$libdir/mo_type.so','mo_type_delete'
 LANGUAGE C STRICT;

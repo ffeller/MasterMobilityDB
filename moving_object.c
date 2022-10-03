@@ -7,23 +7,24 @@
 
 PG_MODULE_MAGIC;
 
-PG_FUNCTION_INFO_V1(MoTypeCreate);
+PG_FUNCTION_INFO_V1(moving_object_create);
 
 Datum 
-MoTypeCreate(PG_FUNCTION_ARGS)
+moving_object_create(PG_FUNCTION_ARGS)
 {
-    Oid types[] = {VARCHAROID};
-    SPIPlanPtr stmt;
-    Datum values[1];
+    Oid types[] = {VARCHAROID, INT4OID};
+    SPIPlanPtr stmt; 
+    Datum values[2];
     bool isnull;
-    int new_mo_type_id, ret, proc;
+    int new_mo_id, ret, proc;
+    
     char * op = "insert";
-    char * table = "master.mo_type";
+    char * table = "master.moving_object";
 
     char * sql = 
-        "insert into master.mo_type(mo_type_id, description) \
-        values(nextval('master.seq_mo_type'), $1) \
-        returning mo_type_id";
+        "insert into master.moving_object(mo_id, description, mo_type_id) \
+        values(nextval('master.seq_moving_object'), $1, $2) \
+        returning mo_id";
 
     SPI_connect();
 
@@ -33,6 +34,7 @@ MoTypeCreate(PG_FUNCTION_ARGS)
     }
 
     values[0] = PG_GETARG_DATUM(0);
+    values[1] = PG_GETARG_DATUM(1);
 
     ret = SPI_execp(stmt, values, " ", 1);
     if (ret < 0) {
@@ -41,47 +43,49 @@ MoTypeCreate(PG_FUNCTION_ARGS)
     proc = SPI_processed;
 
     if (proc > 0) {
-        new_mo_type_id = DatumGetInt32(SPI_getbinval(SPI_tuptable->vals[0],
+        new_mo_id = DatumGetInt32(SPI_getbinval(SPI_tuptable->vals[0],
                                     SPI_tuptable->tupdesc,
                                     1,
                                     &isnull));
     } else {
         elog(ERROR, ERR_MMDB_003, op, table);
-        new_mo_type_id = 0;
+        new_mo_id = 0;
     }
 
     SPI_freeplan(stmt);
     SPI_finish();
 
-    PG_RETURN_INT32(new_mo_type_id);
+    PG_RETURN_INT32(new_mo_id);
 }
 
-PG_FUNCTION_INFO_V1(MoTypeUpdate);
+PG_FUNCTION_INFO_V1(moving_object_update);
 
 Datum 
-MoTypeUpdate(PG_FUNCTION_ARGS)
+moving_object_update(PG_FUNCTION_ARGS)
 {
-    Oid types[] = {INT4OID,VARCHAROID};
+    Oid types[] = {INT4OID,VARCHAROID,INT4OID};
     SPIPlanPtr stmt;
-    Datum values[2];
+    Datum values[3];
     int ret, proc;
     char * op = "update";
-    char * table = "master.mo_type";
+    char * table = "master.moving_object";
 
     char * sql = 
-        "update master.mo_type \
-        set description = $1 \
-        where mo_type_id = $2";
+        "update master.moving_object \
+        set description = $2, \
+            mo_type_id = $3 \
+        where mo_id = $1";
 
     SPI_connect();
 
-    stmt = SPI_prepare(sql, 2, types);
+    stmt = SPI_prepare(sql, 3, types);
     if (!stmt) {
         elog(ERROR, ERR_MMDB_001, op, table);
     }
 
-    values[0] = PG_GETARG_DATUM(1);
-    values[1] = PG_GETARG_DATUM(0);
+    values[0] = PG_GETARG_DATUM(0);
+    values[1] = PG_GETARG_DATUM(1);
+    values[2] = PG_GETARG_DATUM(2);
 
     ret = SPI_execp(stmt, values, " ", 0);
     if (ret < 0) {
@@ -95,21 +99,21 @@ MoTypeUpdate(PG_FUNCTION_ARGS)
     PG_RETURN_INT32(proc);
 }
 
-PG_FUNCTION_INFO_V1(MoTypeDelete);
+PG_FUNCTION_INFO_V1(moving_object_delete);
 
 Datum 
-MoTypeDelete(PG_FUNCTION_ARGS)
+moving_object_delete(PG_FUNCTION_ARGS)
 {
     Oid types[] = {INT4OID};
     SPIPlanPtr stmt;
     Datum values[1];
     int ret, proc;
     char * op = "delete";
-    char * table = "master.mo_type";
+    char * table = "master.moving_object";
 
     char * sql = 
-        "delete from master.mo_type \
-        where mo_type_id = $1";
+        "delete from master.moving_object \
+        where mo_id = $1";
 
     SPI_connect();
 
