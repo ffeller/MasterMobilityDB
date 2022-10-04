@@ -28,7 +28,7 @@ point_create(PG_FUNCTION_ARGS)
 
     SPI_connect();
 
-    stmt = SPI_prepare(sql, 1, types);
+    stmt = SPI_prepare(sql, 2, types);
     if (!stmt) {
         elog(ERROR, ERR_MMDB_001, op, table);
     }
@@ -117,7 +117,7 @@ point_delete(PG_FUNCTION_ARGS)
 
     SPI_connect();
 
-    stmt = SPI_prepare(sql, 2, types);
+    stmt = SPI_prepare(sql, 1, types);
     if (!stmt) {
         elog(ERROR, ERR_MMDB_001, op, table);
     }
