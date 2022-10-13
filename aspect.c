@@ -7,25 +7,25 @@
 
 PG_MODULE_MAGIC;
 
-PG_FUNCTION_INFO_V1(mo_type_create);
- 
+PG_FUNCTION_INFO_V1(aspect_create);
+
 Datum 
-mo_type_create(PG_FUNCTION_ARGS)
+aspect_create(PG_FUNCTION_ARGS)
 {
-    Oid types[] = {VARCHAROID};
+    Oid types[] = {VARCHAROID,INT4OID,INT4OID,TIMESTAMPOID,INT4OID,INT4OID};
     int argcount = sizeof(types)/sizeof(types[0]);
     SPIPlanPtr stmt; 
     Datum * values = malloc(sizeof(Datum) * argcount);
     bool isnull;
-    int new_mo_type_id, ret, proc;
+    int new_aspect_id, ret, proc;
     
     char * op = "insert";
-    char * table = "master.mo_type";
+    char * table = "master.aspect";
 
     char * sql = 
-        "insert into master.mo_type(mo_type_id, description) \
-        values(nextval('master.seq_mo_type'), $1) \
-        returning mo_type_id";
+        "insert into master.aspect(aspect_id, description, x, y, t, \
+            space_time, aspect_type_id) \
+        values(nextval('master.seq_aspect'), $1, $2, $3, $4, $5, $6)";
 
     SPI_connect();
 
@@ -45,39 +45,42 @@ mo_type_create(PG_FUNCTION_ARGS)
     proc = SPI_processed;
 
     if (proc > 0) {
-        new_mo_type_id = DatumGetInt32(SPI_getbinval(SPI_tuptable->vals[0],
+        new_aspect_id = DatumGetInt32(SPI_getbinval(SPI_tuptable->vals[0],
                                     SPI_tuptable->tupdesc,
                                     1,
                                     &isnull));
     } else {
         elog(ERROR, ERR_MMDB_003, op, table);
-        new_mo_type_id = 0;
+        new_aspect_id = 0;
     }
 
     SPI_freeplan(stmt);
     SPI_finish();
     free(values);
 
-    PG_RETURN_INT32(new_mo_type_id);
+    PG_RETURN_INT32(new_aspect_id);
 }
 
-PG_FUNCTION_INFO_V1(mo_type_create_many);
- 
+PG_FUNCTION_INFO_V1(aspect_create_many);
+
 Datum 
-mo_type_create_many(PG_FUNCTION_ARGS)
+aspect_create_many(PG_FUNCTION_ARGS)
 {
-    Oid types[] = {VARCHARARRAYOID};
+    Oid types[] = {VARCHARARRAYOID,INT4ARRAYOID,INT4ARRAYOID,
+        TIMESTAMPARRAYOID,INT4ARRAYOID,INT4ARRAYOID};
     int argcount = sizeof(types)/sizeof(types[0]);
     SPIPlanPtr stmt; 
     Datum * values = malloc(sizeof(Datum) * argcount);
     int ret, proc;
     
     char * op = "insert";
-    char * table = "master.mo_type";
+    char * table = "master.aspect";
 
     char * sql = 
-        "insert into master.mo_type(mo_type_id, description) \
-        values(nextval('master.seq_mo_type'), unnest($1))";
+        "insert into master.aspect(aspect_id, description, x, y, t, \
+            space_time, aspect_type_id) \
+        values(nextval('master.seq_aspect'), unnest($1), unnest($2), \
+            unnest($3), unnest($4), unnest($5), unnest($6))";
 
     SPI_connect();
 
@@ -90,7 +93,7 @@ mo_type_create_many(PG_FUNCTION_ARGS)
         values[i] = PG_GETARG_DATUM(i);
     }
 
-    ret = SPI_execp(stmt, values, " ", 0);
+    ret = SPI_execp(stmt, values, " ", 1);
     if (ret < 0) {
         elog(ERROR, ERR_MMDB_002, op, table);
     }
@@ -107,23 +110,24 @@ mo_type_create_many(PG_FUNCTION_ARGS)
     PG_RETURN_INT32(proc);
 }
 
-PG_FUNCTION_INFO_V1(mo_type_update);
+PG_FUNCTION_INFO_V1(aspect_update);
 
 Datum 
-mo_type_update(PG_FUNCTION_ARGS)
+aspect_update(PG_FUNCTION_ARGS)
 {
-    Oid types[] = {INT4OID,VARCHAROID};
+    Oid types[] = {INT4OID,VARCHAROID,INT4OID,INT4OID,TIMESTAMPOID,INT4OID,INT4OID};
     int argcount = sizeof(types)/sizeof(types[0]);
     SPIPlanPtr stmt;
     Datum * values = malloc(sizeof(Datum) * argcount);
     int ret, proc;
     char * op = "update";
-    char * table = "master.mo_type";
+    char * table = "master.aspect";
 
     char * sql = 
-        "update master.mo_type \
-        set description = $2 \
-        where mo_type_id = $1";
+        "update master.aspect \
+        set description = $2, x = $3, y = $4, t = $5, space_time = $6, \
+            aspect_type_id = $7 \
+        where aspect_id = $1";
 
     SPI_connect();
 
@@ -149,10 +153,10 @@ mo_type_update(PG_FUNCTION_ARGS)
     PG_RETURN_INT32(proc);
 }
 
-PG_FUNCTION_INFO_V1(mo_type_delete);
+PG_FUNCTION_INFO_V1(aspect_delete);
 
 Datum 
-mo_type_delete(PG_FUNCTION_ARGS)
+aspect_delete(PG_FUNCTION_ARGS)
 {
     Oid types[] = {INT4OID};
     int argcount = sizeof(types)/sizeof(types[0]);
@@ -160,11 +164,11 @@ mo_type_delete(PG_FUNCTION_ARGS)
     Datum * values = malloc(sizeof(Datum) * argcount);
     int ret, proc;
     char * op = "delete";
-    char * table = "master.mo_type";
+    char * table = "master.aspect";
 
     char * sql = 
-        "delete from master.mo_type \
-        where mo_type_id = $1";
+        "delete from master.aspect \
+        where aspect_id = $1";
 
     SPI_connect();
 

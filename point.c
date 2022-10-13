@@ -13,8 +13,9 @@ Datum
 point_create(PG_FUNCTION_ARGS)
 {
     Oid types[] = {INT4OID,INT4OID};
+    int argcount = sizeof(types)/sizeof(types[0]);
     SPIPlanPtr stmt; 
-    Datum values[2];
+    Datum * values = malloc(sizeof(Datum) * argcount);
     bool isnull;
     int new_mo_id, ret, proc;
     
@@ -28,13 +29,14 @@ point_create(PG_FUNCTION_ARGS)
 
     SPI_connect();
 
-    stmt = SPI_prepare(sql, 2, types);
+    stmt = SPI_prepare(sql, argcount, types);
     if (!stmt) {
         elog(ERROR, ERR_MMDB_001, op, table);
     }
 
-    values[0] = PG_GETARG_DATUM(0);
-    values[1] = PG_GETARG_DATUM(1);
+    for (int i = 0; i < argcount; i++) {
+        values[i] = PG_GETARG_DATUM(i);
+    }
 
     ret = SPI_execp(stmt, values, " ", 1);
     if (ret < 0) {
@@ -54,8 +56,55 @@ point_create(PG_FUNCTION_ARGS)
 
     SPI_freeplan(stmt);
     SPI_finish();
+    free(values);
 
     PG_RETURN_INT32(new_mo_id);
+}
+
+PG_FUNCTION_INFO_V1(point_create_many);
+
+Datum 
+point_create_many(PG_FUNCTION_ARGS)
+{
+    Oid types[] = {INT4ARRAYOID,INT4ARRAYOID};
+    int argcount = sizeof(types)/sizeof(types[0]);
+    SPIPlanPtr stmt; 
+    Datum * values = malloc(sizeof(Datum) * argcount);
+    int ret, proc;
+    
+    char * op = "insert";
+    char * table = "master.point";
+
+    char * sql = 
+        "insert into master.point(point_id, p_order, mat_id) \
+        values(nextval('master.seq_point'), unnest($1), unnest($2))";
+
+    SPI_connect();
+
+    stmt = SPI_prepare(sql, argcount, types);
+    if (!stmt) {
+        elog(ERROR, ERR_MMDB_001, op, table);
+    }
+
+    for (int i = 0; i < argcount; i++) {
+        values[i] = PG_GETARG_DATUM(i);
+    }
+
+    ret = SPI_execp(stmt, values, " ", 0);
+    if (ret < 0) {
+        elog(ERROR, ERR_MMDB_002, op, table);
+    }
+    proc = SPI_processed;
+
+    if (proc == 0) {
+        elog(ERROR, ERR_MMDB_003, op, table);
+    }
+
+    SPI_freeplan(stmt);
+    SPI_finish();
+    free(values);
+
+    PG_RETURN_INT32(proc);
 }
 
 PG_FUNCTION_INFO_V1(point_update);
@@ -64,28 +113,29 @@ Datum
 point_update(PG_FUNCTION_ARGS)
 {
     Oid types[] = {INT4OID,INT4OID,INT4OID};
+    int argcount = sizeof(types)/sizeof(types[0]);
     SPIPlanPtr stmt;
-    Datum values[3];
+    Datum * values = malloc(sizeof(Datum) * argcount);
     int ret, proc;
     char * op = "update";
     char * table = "master.point";
 
     char * sql = 
         "update master.point \
-        set description = $2, \
-            mo_type_id = $3 \
+        set p_order = $2, \
+            mat_id = $3 \
         where point_id = $1";
 
     SPI_connect();
 
-    stmt = SPI_prepare(sql, 3, types);
+    stmt = SPI_prepare(sql, argcount, types);
     if (!stmt) {
         elog(ERROR, ERR_MMDB_001, op, table);
     }
 
-    values[0] = PG_GETARG_DATUM(0);
-    values[1] = PG_GETARG_DATUM(1);
-    values[2] = PG_GETARG_DATUM(2);
+    for (int i = 0; i < argcount; i++) {
+        values[i] = PG_GETARG_DATUM(i);
+    }
 
     ret = SPI_execp(stmt, values, " ", 0);
     if (ret < 0) {
@@ -95,6 +145,7 @@ point_update(PG_FUNCTION_ARGS)
 
     SPI_freeplan(stmt);
     SPI_finish();
+    free(values);
 
     PG_RETURN_INT32(proc);
 }
@@ -105,8 +156,9 @@ Datum
 point_delete(PG_FUNCTION_ARGS)
 {
     Oid types[] = {INT4OID};
+    int argcount = sizeof(types)/sizeof(types[0]);
     SPIPlanPtr stmt;
-    Datum values[1];
+    Datum * values = malloc(sizeof(Datum) * argcount);
     int ret, proc;
     char * op = "delete";
     char * table = "master.point";
@@ -117,12 +169,14 @@ point_delete(PG_FUNCTION_ARGS)
 
     SPI_connect();
 
-    stmt = SPI_prepare(sql, 1, types);
+    stmt = SPI_prepare(sql, argcount, types);
     if (!stmt) {
         elog(ERROR, ERR_MMDB_001, op, table);
     }
 
-    values[0] = PG_GETARG_DATUM(0);
+    for (int i = 0; i < argcount; i++) {
+        values[i] = PG_GETARG_DATUM(i);
+    }
 
     ret = SPI_execp(stmt, values, " ", 0);
     if (ret < 0) {
@@ -132,6 +186,7 @@ point_delete(PG_FUNCTION_ARGS)
 
     SPI_freeplan(stmt);
     SPI_finish();
+    free(values);
 
     PG_RETURN_INT32(proc);
 }

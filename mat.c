@@ -7,25 +7,25 @@
 
 PG_MODULE_MAGIC;
 
-PG_FUNCTION_INFO_V1(mo_type_create);
+PG_FUNCTION_INFO_V1(mat_create);
  
 Datum 
-mo_type_create(PG_FUNCTION_ARGS)
+mat_create(PG_FUNCTION_ARGS)
 {
     Oid types[] = {VARCHAROID};
     int argcount = sizeof(types)/sizeof(types[0]);
     SPIPlanPtr stmt; 
     Datum * values = malloc(sizeof(Datum) * argcount);
     bool isnull;
-    int new_mo_type_id, ret, proc;
+    int new_mat_id, ret, proc;
     
     char * op = "insert";
-    char * table = "master.mo_type";
+    char * table = "master.mat";
 
     char * sql = 
-        "insert into master.mo_type(mo_type_id, description) \
-        values(nextval('master.seq_mo_type'), $1) \
-        returning mo_type_id";
+        "insert into master.mat(mat_id, description) \
+        values(nextval('master.seq_mat'), $1) \
+        returning mat_id";
 
     SPI_connect();
 
@@ -45,26 +45,26 @@ mo_type_create(PG_FUNCTION_ARGS)
     proc = SPI_processed;
 
     if (proc > 0) {
-        new_mo_type_id = DatumGetInt32(SPI_getbinval(SPI_tuptable->vals[0],
+        new_mat_id = DatumGetInt32(SPI_getbinval(SPI_tuptable->vals[0],
                                     SPI_tuptable->tupdesc,
                                     1,
                                     &isnull));
     } else {
         elog(ERROR, ERR_MMDB_003, op, table);
-        new_mo_type_id = 0;
+        new_mat_id = 0;
     }
 
     SPI_freeplan(stmt);
     SPI_finish();
     free(values);
 
-    PG_RETURN_INT32(new_mo_type_id);
+    PG_RETURN_INT32(new_mat_id);
 }
 
-PG_FUNCTION_INFO_V1(mo_type_create_many);
+PG_FUNCTION_INFO_V1(mat_create_many);
  
 Datum 
-mo_type_create_many(PG_FUNCTION_ARGS)
+mat_create_many(PG_FUNCTION_ARGS)
 {
     Oid types[] = {VARCHARARRAYOID};
     int argcount = sizeof(types)/sizeof(types[0]);
@@ -73,11 +73,11 @@ mo_type_create_many(PG_FUNCTION_ARGS)
     int ret, proc;
     
     char * op = "insert";
-    char * table = "master.mo_type";
+    char * table = "master.mat";
 
     char * sql = 
-        "insert into master.mo_type(mo_type_id, description) \
-        values(nextval('master.seq_mo_type'), unnest($1))";
+        "insert into master.mat(mat_id, description) \
+        values(nextval('master.seq_mat'), unnest($1))";
 
     SPI_connect();
 
@@ -107,10 +107,10 @@ mo_type_create_many(PG_FUNCTION_ARGS)
     PG_RETURN_INT32(proc);
 }
 
-PG_FUNCTION_INFO_V1(mo_type_update);
+PG_FUNCTION_INFO_V1(mat_update);
 
 Datum 
-mo_type_update(PG_FUNCTION_ARGS)
+mat_update(PG_FUNCTION_ARGS)
 {
     Oid types[] = {INT4OID,VARCHAROID};
     int argcount = sizeof(types)/sizeof(types[0]);
@@ -118,12 +118,12 @@ mo_type_update(PG_FUNCTION_ARGS)
     Datum * values = malloc(sizeof(Datum) * argcount);
     int ret, proc;
     char * op = "update";
-    char * table = "master.mo_type";
+    char * table = "master.mat";
 
     char * sql = 
-        "update master.mo_type \
+        "update master.mat \
         set description = $2 \
-        where mo_type_id = $1";
+        where mat_id = $1";
 
     SPI_connect();
 
@@ -149,10 +149,10 @@ mo_type_update(PG_FUNCTION_ARGS)
     PG_RETURN_INT32(proc);
 }
 
-PG_FUNCTION_INFO_V1(mo_type_delete);
+PG_FUNCTION_INFO_V1(mat_delete);
 
 Datum 
-mo_type_delete(PG_FUNCTION_ARGS)
+mat_delete(PG_FUNCTION_ARGS)
 {
     Oid types[] = {INT4OID};
     int argcount = sizeof(types)/sizeof(types[0]);
@@ -160,11 +160,11 @@ mo_type_delete(PG_FUNCTION_ARGS)
     Datum * values = malloc(sizeof(Datum) * argcount);
     int ret, proc;
     char * op = "delete";
-    char * table = "master.mo_type";
+    char * table = "master.mat";
 
     char * sql = 
-        "delete from master.mo_type \
-        where mo_type_id = $1";
+        "delete from master.mat \
+        where mat_id = $1";
 
     SPI_connect();
 

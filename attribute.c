@@ -7,25 +7,24 @@
 
 PG_MODULE_MAGIC;
 
-PG_FUNCTION_INFO_V1(mo_type_create);
- 
+PG_FUNCTION_INFO_V1(attribute_create);
+
 Datum 
-mo_type_create(PG_FUNCTION_ARGS)
+attribute_create(PG_FUNCTION_ARGS)
 {
-    Oid types[] = {VARCHAROID};
+    Oid types[] = {VARCHAROID,INT4OID,INT4OID};
     int argcount = sizeof(types)/sizeof(types[0]);
     SPIPlanPtr stmt; 
     Datum * values = malloc(sizeof(Datum) * argcount);
     bool isnull;
-    int new_mo_type_id, ret, proc;
+    int new_attribute_id, ret, proc;
     
     char * op = "insert";
-    char * table = "master.mo_type";
+    char * table = "master.attribute";
 
     char * sql = 
-        "insert into master.mo_type(mo_type_id, description) \
-        values(nextval('master.seq_mo_type'), $1) \
-        returning mo_type_id";
+        "insert into master.attribute(attribute_id, name, aspect_type_id, data_type_id) \
+        values(nextval('seq_attribute'), $1, $2, $3)";
 
     SPI_connect();
 
@@ -38,46 +37,46 @@ mo_type_create(PG_FUNCTION_ARGS)
         values[i] = PG_GETARG_DATUM(i);
     }
 
-    ret = SPI_execp(stmt, values, " ", 1);
+    ret = SPI_execp(stmt, values, " ", 0);
     if (ret < 0) {
         elog(ERROR, ERR_MMDB_002, op, table);
     }
     proc = SPI_processed;
 
     if (proc > 0) {
-        new_mo_type_id = DatumGetInt32(SPI_getbinval(SPI_tuptable->vals[0],
+        new_attribute_id = DatumGetInt32(SPI_getbinval(SPI_tuptable->vals[0],
                                     SPI_tuptable->tupdesc,
                                     1,
                                     &isnull));
     } else {
         elog(ERROR, ERR_MMDB_003, op, table);
-        new_mo_type_id = 0;
+        new_attribute_id = 0;
     }
 
     SPI_freeplan(stmt);
     SPI_finish();
     free(values);
 
-    PG_RETURN_INT32(new_mo_type_id);
+    PG_RETURN_INT32(new_attribute_id);
 }
 
-PG_FUNCTION_INFO_V1(mo_type_create_many);
- 
+PG_FUNCTION_INFO_V1(attribute_create_many);
+
 Datum 
-mo_type_create_many(PG_FUNCTION_ARGS)
+attribute_create_many(PG_FUNCTION_ARGS)
 {
-    Oid types[] = {VARCHARARRAYOID};
+    Oid types[] = {VARCHARARRAYOID,INT4ARRAYOID,INT4ARRAYOID};
     int argcount = sizeof(types)/sizeof(types[0]);
     SPIPlanPtr stmt; 
     Datum * values = malloc(sizeof(Datum) * argcount);
     int ret, proc;
     
     char * op = "insert";
-    char * table = "master.mo_type";
+    char * table = "master.attribute";
 
     char * sql = 
-        "insert into master.mo_type(mo_type_id, description) \
-        values(nextval('master.seq_mo_type'), unnest($1))";
+        "insert into master.attribute(attribute_id, value, data_type) \
+        values(nextval('seq_attribute'), unnest($1), unnest($2), unnest($3))";
 
     SPI_connect();
 
@@ -107,23 +106,23 @@ mo_type_create_many(PG_FUNCTION_ARGS)
     PG_RETURN_INT32(proc);
 }
 
-PG_FUNCTION_INFO_V1(mo_type_update);
+PG_FUNCTION_INFO_V1(attribute_update);
 
 Datum 
-mo_type_update(PG_FUNCTION_ARGS)
+attribute_update(PG_FUNCTION_ARGS)
 {
-    Oid types[] = {INT4OID,VARCHAROID};
+    Oid types[] = {INT4OID,VARCHAROID,INT4OID,INT4OID};
     int argcount = sizeof(types)/sizeof(types[0]);
     SPIPlanPtr stmt;
     Datum * values = malloc(sizeof(Datum) * argcount);
     int ret, proc;
     char * op = "update";
-    char * table = "master.mo_type";
+    char * table = "master.attribute";
 
     char * sql = 
-        "update master.mo_type \
-        set description = $2 \
-        where mo_type_id = $1";
+        "update master.attribute \
+        set name = $2, aspect_type_id = $3, data_type_id = $4 \
+        where attribute_id = $1";
 
     SPI_connect();
 
@@ -149,10 +148,10 @@ mo_type_update(PG_FUNCTION_ARGS)
     PG_RETURN_INT32(proc);
 }
 
-PG_FUNCTION_INFO_V1(mo_type_delete);
+PG_FUNCTION_INFO_V1(attribute_delete);
 
 Datum 
-mo_type_delete(PG_FUNCTION_ARGS)
+attribute_delete(PG_FUNCTION_ARGS)
 {
     Oid types[] = {INT4OID};
     int argcount = sizeof(types)/sizeof(types[0]);
@@ -160,11 +159,11 @@ mo_type_delete(PG_FUNCTION_ARGS)
     Datum * values = malloc(sizeof(Datum) * argcount);
     int ret, proc;
     char * op = "delete";
-    char * table = "master.mo_type";
+    char * table = "master.attribute";
 
     char * sql = 
-        "delete from master.mo_type \
-        where mo_type_id = $1";
+        "delete from master.attribute \
+        where attribute_id = $1";
 
     SPI_connect();
 
