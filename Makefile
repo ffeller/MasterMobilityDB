@@ -1,4 +1,5 @@
-MODULES = aspect_attribute aspect_type aspect attribute mat_aspect mat mo_aspect mo_relationship mo_type mor_aspect moving_object point point_aspect
+MODULE_big = mastermobilitydb
+OBJS = mastermobilitydb.o aspect_attribute.o aspect_type.o aspect.o attribute.o mat_aspect.o mat.o mo_aspect.o mo_relationship.o mo_type.o mor_aspect.o moving_object.o point.o point_aspect.o
 EXTENSION = mastermobilitydb
 DATA = mastermobilitydb--0.0.1.sql
 PG_CONFIG = pg_config

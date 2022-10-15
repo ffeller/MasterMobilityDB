@@ -5,8 +5,6 @@
 
 #include "mastermobilitydb.h"
 
-PG_MODULE_MAGIC;
-
 PG_FUNCTION_INFO_V1(aspect_create);
 
 Datum 
@@ -25,7 +23,8 @@ aspect_create(PG_FUNCTION_ARGS)
     char * sql = 
         "insert into master.aspect(aspect_id, description, x, y, t, \
             space_time, aspect_type_id) \
-        values(nextval('master.seq_aspect'), $1, $2, $3, $4, $5, $6)";
+        values(nextval('master.seq_aspect'), $1, $2, $3, $4, $5, $6) \
+        returning aspect_id";
 
     SPI_connect();
 
@@ -193,3 +192,4 @@ aspect_delete(PG_FUNCTION_ARGS)
 
     PG_RETURN_INT32(proc);
 }
+
