@@ -1,5 +1,6 @@
 {
   "files.associations": {
-    "mastermobilitydb.h": "c"
+    "mastermobilitydb.h": "c",
+    "typeinfo": "c"
   }
 }
