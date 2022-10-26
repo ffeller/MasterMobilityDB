@@ -44,7 +44,7 @@ int run_sql_cmd(
   int ret, proc;
   char *op = operation(sql);
 
-  SPI_connect_ext(SPI_OPT_NONATOMIC);
+  SPI_connect();
 
   stmt = SPI_prepare(sql, argcount, types);
   if (!stmt) {
@@ -74,7 +74,6 @@ int run_sql_cmd(
       ret = proc;
   }
 
-  SPI_commit();
   SPI_freeplan(stmt);
   SPI_finish();
 
