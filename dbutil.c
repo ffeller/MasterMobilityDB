@@ -51,6 +51,8 @@ int run_sql_cmd(
       elog(ERROR, ERR_MMDB_001, op, SCHEMA_NAME, table);
   }
 
+  SPI_keepplan(stmt);
+
   ret = SPI_execp(stmt, values, " ", (retid)?1:0);
   if (ret < 0) {
       elog(ERROR, ERR_MMDB_002, op, SCHEMA_NAME, table);
@@ -74,7 +76,6 @@ int run_sql_cmd(
       ret = proc;
   }
 
-  SPI_freeplan(stmt);
   SPI_finish();
 
   return ret;

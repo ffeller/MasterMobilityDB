@@ -3,6 +3,15 @@
 #include "fmgr.h"
 #include "executor/spi.h"
 
-#include "mastermobilitydb.h"
-
 PG_MODULE_MAGIC;
+
+void _PG_init(void);
+void _PG_fini(void);
+
+void _PG_init(void)
+{
+}
+
+void _PG_fini(void)
+{
+}

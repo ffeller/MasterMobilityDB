@@ -6,7 +6,7 @@
 #include "dbutil.h"
 
 #define TABLE_NAME "aspect_attribute"
-
+ 
 PG_FUNCTION_INFO_V1(aspect_attribute_create);
 
 Datum 
