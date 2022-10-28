@@ -80,4 +80,3 @@ int run_sql_cmd(
 
   return ret;
 }
-

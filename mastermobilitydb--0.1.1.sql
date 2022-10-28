@@ -225,6 +225,12 @@ mo_type_delete(integer)
 RETURNS integer 
 AS 'MODULE_PATHNAME','mo_type_delete'
 LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+mo_type_find_by_id(in integer, out integer, out text) 
+RETURNS setof record 
+AS 'MODULE_PATHNAME','mo_type_find_by_id'
+LANGUAGE C STRICT;
 -------------------------------------------------------------------------------
 
 --mor_aspect
