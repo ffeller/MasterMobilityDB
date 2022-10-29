@@ -1,6 +1,7 @@
 {
   "files.associations": {
     "mastermobilitydb.h": "c",
-    "typeinfo": "c"
+    "typeinfo": "c",
+    "tuple": "c"
   }
 }
