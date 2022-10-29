@@ -227,8 +227,8 @@ AS 'MODULE_PATHNAME','mo_type_delete'
 LANGUAGE C STRICT;
 
 CREATE OR REPLACE FUNCTION
-mo_type_find_by_id(in integer, out integer, out text) 
-RETURNS setof record 
+mo_type_find_by_id(in integer, out integer, out varchar(50)) 
+RETURNS record 
 AS 'MODULE_PATHNAME','mo_type_find_by_id'
 LANGUAGE C STRICT;
 -------------------------------------------------------------------------------
