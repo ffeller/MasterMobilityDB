@@ -111,10 +111,13 @@ Datum
 mo_type_find_by_id(PG_FUNCTION_ARGS) {
     Oid types[] = {INT4OID};
     int argcount = sizeof(types)/sizeof(types[0]);
-    Datum * values = palloc(sizeof(Datum) * argcount);
-    int proc;
-    SPITupleTable *tuptable;
-    HeapTuple tuple;
+    Datum * srcvalues = palloc(sizeof(Datum) * argcount);
+    Datum * values;
+    TupleDesc tupdesc, srctupdesc;
+    bool isnull;
+    int colcount;
+    SPITupleTable *srctuptable;
+    HeapTuple tuple, srctuple;
     char sql[200];
     SPIPlanPtr stmt; 
     Datum ret;
@@ -123,6 +126,14 @@ mo_type_find_by_id(PG_FUNCTION_ARGS) {
     char *table = TABLE_NAME;
     char curname[20];
     
+    if (get_call_result_type(fcinfo, NULL, &tupdesc) != TYPEFUNC_COMPOSITE)
+        ereport(ERROR,
+                (errcode(ERRCODE_FEATURE_NOT_SUPPORTED),
+                    errmsg("function returning record called in context "
+                        "that cannot accept type record")));
+
+    tupdesc = BlessTupleDesc(tupdesc);
+
     strcpy(curname, "c_");
     strcat(curname, table);
 
@@ -141,19 +152,37 @@ mo_type_find_by_id(PG_FUNCTION_ARGS) {
 
     SPI_keepplan(stmt);
 
-    curs = SPI_cursor_open(curname, stmt, values, " ", true);
+    for (int i = 0; i < argcount; i++) {
+        srcvalues[i] = PG_GETARG_DATUM(i);
+    }
+
+    curs = SPI_cursor_open(curname, stmt, srcvalues, " ", true);
     SPI_cursor_fetch(curs, true, 1);
-    
-    proc = SPI_processed;
+    pfree(srcvalues);
 
     if (SPI_tuptable != NULL) {
-        tuptable = SPI_tuptable;
-        tuple = tuptable->vals[0];
+        srctuptable = SPI_tuptable;
+        srctupdesc = srctuptable->tupdesc;
+        srctuple = srctuptable->vals[0];
+        colcount = srctupdesc->natts;
+
+        values = (Datum *) palloc(sizeof(Datum) * colcount);
+        for (int i = 1; i <= colcount; i++) {
+            char *str = SPI_getvalue(srctuple, srctupdesc, i);
+            elog(INFO, "value %d %s", i, str);
+            values[i-1] = SPI_getbinval(srctuple, srctupdesc, i, &isnull);
+        }
+
+        tuple = heap_form_tuple(tupdesc, values, &isnull);
+        
         ret = HeapTupleGetDatum(tuple);
+        SPI_cursor_close(curs);
         SPI_finish();
+        pfree(values);
         PG_RETURN_DATUM(ret);
     } else {
         elog(WARNING, ERR_MMDB_003, op, SCHEMA_NAME, table);
+        SPI_cursor_close(curs);
         SPI_finish();
         PG_RETURN_NULL();
     }
