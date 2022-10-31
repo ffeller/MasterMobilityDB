@@ -1,5 +1,18 @@
 MODULE_big = mastermobilitydb
-OBJS = dbutil.o mastermobilitydb.o aspect_attribute.o aspect_type.o aspect.o attribute.o mat_aspect.o mat.o mo_aspect.o mo_relationship.o mo_type.o mor_aspect.o moving_object.o point.o point_aspect.o
+OBJS = dbutil.o mastermobilitydb.o \
+	core/aspect_attribute.o \
+	core/aspect_type.o \
+	core/aspect.o \
+	core/attribute.o \
+	core/mat_aspect.o \
+	core/mat.o \
+	core/mo_aspect.o \
+	core/mo_relationship.o \
+	core/mo_type.o \
+	core/mor_aspect.o \
+	core/moving_object.o \
+	core/point.o \
+	core/point_aspect.o
 EXTENSION = mastermobilitydb
 DATA = mastermobilitydb--0.1.1.sql
 PG_CONFIG = pg_config

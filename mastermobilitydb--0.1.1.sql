@@ -231,6 +231,18 @@ mo_type_find_by_id(in integer, out integer, out varchar)
 RETURNS record 
 AS 'MODULE_PATHNAME','mo_type_find_by_id'
 LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+mo_type_find_all(out integer, out varchar) 
+RETURNS setof record 
+AS 'MODULE_PATHNAME','mo_type_find_all'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+mo_type_count() 
+RETURNS integer 
+AS 'MODULE_PATHNAME','mo_type_count'
+LANGUAGE C STRICT;
 -------------------------------------------------------------------------------
 
 --mor_aspect

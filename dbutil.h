@@ -9,6 +9,8 @@
 char *str_lower(char *);
 char *operation(char *);
 
-Portal open_cursor(char *, char *, int, Oid *, Datum *);
+Portal open_cursor(char *, char *, Oid *, int, Datum *);
 int run_sql_cmd(char *, char *, Oid *, int, Datum *, bool);
-HeapTuple run_sql_query(char *, char *, Oid *, int, Datum *, TupleDesc);
+HeapTuple run_sql_query_tuple(char *, char *, Oid *, int , Datum *, TupleDesc);
+Datum run_sql_query_single(char *, char *, Oid *, int, Datum *);
+HeapTuple ret_tuple(SPITupleTable *, TupleDesc);

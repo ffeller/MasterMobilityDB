@@ -34,8 +34,8 @@ char *operation(char *sql) {
 Portal open_cursor(
     char *table,
     char *sql, 
-    int argcount, 
     Oid *types,
+    int argcount, 
     Datum *values)
 {
     SPIPlanPtr stmt;
@@ -108,68 +108,102 @@ int run_sql_cmd(
   return ret;
 }
 
-HeapTuple run_sql_query(
+HeapTuple ret_tuple(
+    SPITupleTable *srctuptable,
+    TupleDesc tupdesc
+) {
+    Datum *values;
+    TupleDesc auxtupdesc, srctupdesc;
+    HeapTuple tuple, srctuple;
+    int colcount;
+    bool isnull, *nulls;
+
+    srctupdesc = srctuptable->tupdesc;
+    srctuple = srctuptable->vals[0];
+    colcount = srctupdesc->natts;
+
+    values = (Datum *) palloc(sizeof(Datum) * colcount);
+    nulls = (bool *) palloc(sizeof(bool) * colcount);
+    for (int i = 1; i <= colcount; i++) {
+        // elog(INFO, "%s=%s", SPI_fname(srctupdesc, i), SPI_getvalue(srctuple, srctupdesc, i));
+        values[i-1] = SPI_getbinval(srctuple, srctupdesc, i, &isnull);
+        nulls[i-1] = isnull;
+    }
+
+    auxtupdesc = BlessTupleDesc(tupdesc);
+    tuple = heap_form_tuple(auxtupdesc, values, nulls);
+    
+    pfree(values);
+    pfree(nulls);
+
+    return tuple;
+}
+
+HeapTuple run_sql_query_tuple(
     char *table,
     char *sql,
     Oid *types,
     int argcount,
-    Datum *srcvalues,
+    Datum *values,
     TupleDesc tupdesc
 ) {
-    Datum *values;
-    bool *nulls, isnull;
-    TupleDesc srctupdesc, auxtupdesc;
-    int colcount;
-    SPITupleTable *srctuptable;
-    HeapTuple tuple, srctuple;
-    SPIPlanPtr stmt; 
-    char op[10], curname[20]; 
+    int proc;
+    char op[10]; 
     Portal curs;
-
-    strcpy(curname, "c_");
-    strcat(curname, table);
-
-    strcpy(op, operation(sql));
+    HeapTuple tuple;
 
     SPI_connect();
-
-    stmt = SPI_prepare(sql, argcount, types);
-    if (!stmt) {
-        elog(ERROR, ERR_MMDB_001, op, SCHEMA_NAME, table);
-    }
-
-    SPI_keepplan(stmt);
-
-    curs = SPI_cursor_open(curname, stmt, srcvalues, " ", true);
+    curs = open_cursor(table, sql, types, argcount, values);
     SPI_cursor_fetch(curs, true, 1);
-
-    if (SPI_tuptable != NULL) {
-        srctuptable = SPI_tuptable;
-        srctupdesc = srctuptable->tupdesc;
-        srctuple = srctuptable->vals[0];
-        colcount = srctupdesc->natts;
-
-        values = (Datum *) palloc(sizeof(Datum) * colcount);
-        nulls = (bool *) palloc(sizeof(bool) * colcount);
-        for (int i = 1; i <= colcount; i++) {
-            values[i-1] = SPI_getbinval(srctuple, srctupdesc, i, &isnull);
-            nulls[i-1] = isnull;
-        }
-
-        auxtupdesc = BlessTupleDesc(tupdesc);
-        tuple = heap_form_tuple(auxtupdesc, values, nulls);
-        
-        pfree(values);
-        pfree(nulls);
+    proc = SPI_processed;
+    if (proc > 0) {
+        tuple = ret_tuple(SPI_tuptable, tupdesc);
         SPI_cursor_close(curs);
         SPI_finish();
-        
+
         return tuple;
     } else {
+        strcpy(op, operation(sql));
         elog(WARNING, ERR_MMDB_003, op, SCHEMA_NAME, table);
         SPI_cursor_close(curs);
         SPI_finish();
+
         return NULL;
     }
 }
 
+Datum run_sql_query_single(
+    char *table,
+    char *sql,
+    Oid *types,
+    int argcount,
+    Datum *values
+) {
+    int proc;
+    char op[10]; 
+    Portal curs;
+    bool isnull;
+    Datum ret;
+
+    SPI_connect();
+    curs = open_cursor(table, sql, types, argcount, values);
+    SPI_cursor_fetch(curs, true, 1);
+    proc = SPI_processed;
+    if (proc > 0) {
+        ret = SPI_getbinval(SPI_tuptable->vals[0],
+                                  SPI_tuptable->tupdesc,
+                                  1,
+                                  &isnull);
+        SPI_cursor_close(curs);
+        SPI_finish();
+
+        return ret;
+    } else {
+        strcpy(op, operation(sql));
+        elog(WARNING, ERR_MMDB_003, op, SCHEMA_NAME, table);
+        SPI_cursor_close(curs);
+        SPI_finish();
+
+        return (Datum) NULL;
+    }
+}
