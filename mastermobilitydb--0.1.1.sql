@@ -22,6 +22,24 @@ aspect_attribute_delete(integer, integer)
 RETURNS integer 
 AS 'MODULE_PATHNAME','aspect_attribute_delete'
 LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+aspect_attribute_find_by_id(in integer, out integer, out varchar) 
+RETURNS record 
+AS 'MODULE_PATHNAME','aspect_attribute_find_by_id'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+aspect_attribute_find_all(out integer, out varchar) 
+RETURNS setof record 
+AS 'MODULE_PATHNAME','aspect_attribute_find_all'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+aspect_attribute_count() 
+RETURNS integer 
+AS 'MODULE_PATHNAME','aspect_attribute_count'
+LANGUAGE C STRICT;
 -------------------------------------------------------------------------------
 
 --aspect_type
@@ -47,6 +65,24 @@ CREATE OR REPLACE FUNCTION
 aspect_type_delete(integer) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','aspect_type_delete'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+aspect_type_find_by_id(in integer, out integer, out varchar) 
+RETURNS record 
+AS 'MODULE_PATHNAME','aspect_type_find_by_id'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+aspect_type_find_all(out integer, out varchar) 
+RETURNS setof record 
+AS 'MODULE_PATHNAME','aspect_type_find_all'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+aspect_type_count() 
+RETURNS integer 
+AS 'MODULE_PATHNAME','aspect_type_count'
 LANGUAGE C STRICT;
 -------------------------------------------------------------------------------
 
@@ -74,6 +110,24 @@ aspect_delete(integer)
 RETURNS integer 
 AS 'MODULE_PATHNAME','aspect_delete'
 LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+aspect_find_by_id(in integer, out integer, out varchar) 
+RETURNS record 
+AS 'MODULE_PATHNAME','aspect_find_by_id'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+aspect_find_all(out integer, out varchar) 
+RETURNS setof record 
+AS 'MODULE_PATHNAME','aspect_find_all'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+aspect_count() 
+RETURNS integer 
+AS 'MODULE_PATHNAME','aspect_count'
+LANGUAGE C STRICT;
 -------------------------------------------------------------------------------
 
 --attribute
@@ -100,6 +154,24 @@ attribute_delete(integer)
 RETURNS integer 
 AS 'MODULE_PATHNAME','attribute_delete'
 LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+attribute_find_by_id(in integer, out integer, out varchar) 
+RETURNS record 
+AS 'MODULE_PATHNAME','attribute_find_by_id'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+attribute_find_all(out integer, out varchar) 
+RETURNS setof record 
+AS 'MODULE_PATHNAME','attribute_find_all'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+attribute_count() 
+RETURNS integer 
+AS 'MODULE_PATHNAME','attribute_count'
+LANGUAGE C STRICT;
 -------------------------------------------------------------------------------
 
 --mat_aspect
@@ -119,6 +191,24 @@ CREATE OR REPLACE FUNCTION
 mat_aspect_delete(integer, integer) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','mat_aspect_delete'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+mat_aspect_find_by_id(in integer, out integer, out varchar) 
+RETURNS record 
+AS 'MODULE_PATHNAME','mat_aspect_find_by_id'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+mat_aspect_find_all(out integer, out varchar) 
+RETURNS setof record 
+AS 'MODULE_PATHNAME','mat_aspect_find_all'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+mat_aspect_count() 
+RETURNS integer 
+AS 'MODULE_PATHNAME','mat_aspect_count'
 LANGUAGE C STRICT;
 -------------------------------------------------------------------------------
 
@@ -146,6 +236,24 @@ mat_delete(integer)
 RETURNS integer 
 AS 'MODULE_PATHNAME','mat_delete'
 LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+mat_find_by_id(in integer, out integer, out varchar) 
+RETURNS record 
+AS 'MODULE_PATHNAME','mat_find_by_id'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+mat_find_all(out integer, out varchar) 
+RETURNS setof record 
+AS 'MODULE_PATHNAME','mat_find_all'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+mat_count() 
+RETURNS integer 
+AS 'MODULE_PATHNAME','mat_count'
+LANGUAGE C STRICT;
 -------------------------------------------------------------------------------
 
 --mo_aspect
@@ -171,6 +279,24 @@ CREATE OR REPLACE FUNCTION
 mo_aspect_delete(integer, integer) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','mo_aspect_delete'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+mo_aspect_find_by_id(in integer, out integer, out varchar) 
+RETURNS record 
+AS 'MODULE_PATHNAME','mo_aspect_find_by_id'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+mo_aspect_find_all(out integer, out varchar) 
+RETURNS setof record 
+AS 'MODULE_PATHNAME','mo_aspect_find_all'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+mo_aspect_count() 
+RETURNS integer 
+AS 'MODULE_PATHNAME','mo_aspect_count'
 LANGUAGE C STRICT;
 -------------------------------------------------------------------------------
 
@@ -198,6 +324,24 @@ CREATE OR REPLACE FUNCTION
 mo_relationship_delete(integer) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','mo_relationship_delete'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+mo_relationship_find_by_id(in integer, out integer, out varchar) 
+RETURNS record 
+AS 'MODULE_PATHNAME','mo_relationship_find_by_id'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+mo_relationship_find_all(out integer, out varchar) 
+RETURNS setof record 
+AS 'MODULE_PATHNAME','mo_relationship_find_all'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+mo_relationship_count() 
+RETURNS integer 
+AS 'MODULE_PATHNAME','mo_relationship_count'
 LANGUAGE C STRICT;
 -------------------------------------------------------------------------------
 
@@ -263,6 +407,24 @@ mor_aspect_delete(integer, integer)
 RETURNS integer 
 AS 'MODULE_PATHNAME','mor_aspect_delete'
 LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+mor_aspect_find_by_id(in integer, out integer, out varchar) 
+RETURNS record 
+AS 'MODULE_PATHNAME','mor_aspect_find_by_id'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+mor_aspect_find_all(out integer, out varchar) 
+RETURNS setof record 
+AS 'MODULE_PATHNAME','mor_aspect_find_all'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+mor_aspect_count() 
+RETURNS integer 
+AS 'MODULE_PATHNAME','mor_aspect_count'
+LANGUAGE C STRICT;
 -------------------------------------------------------------------------------
 
 --moving_object
@@ -288,6 +450,24 @@ CREATE OR REPLACE FUNCTION
 moving_object_delete(integer) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','moving_object_delete'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+moving_object_find_by_id(in integer, out integer, out varchar) 
+RETURNS record 
+AS 'MODULE_PATHNAME','moving_object_find_by_id'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+moving_object_find_all(out integer, out varchar) 
+RETURNS setof record 
+AS 'MODULE_PATHNAME','moving_object_find_all'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+moving_object_count() 
+RETURNS integer 
+AS 'MODULE_PATHNAME','moving_object_count'
 LANGUAGE C STRICT;
 -------------------------------------------------------------------------------
 
@@ -315,6 +495,24 @@ point_delete(integer)
 RETURNS integer 
 AS 'MODULE_PATHNAME','point_delete'
 LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+point_find_by_id(in integer, out integer, out varchar) 
+RETURNS record 
+AS 'MODULE_PATHNAME','point_find_by_id'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+point_find_all(out integer, out varchar) 
+RETURNS setof record 
+AS 'MODULE_PATHNAME','point_find_all'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+point_count() 
+RETURNS integer 
+AS 'MODULE_PATHNAME','point_count'
+LANGUAGE C STRICT;
 -------------------------------------------------------------------------------
 
 --point_aspect
@@ -334,5 +532,23 @@ CREATE OR REPLACE FUNCTION
 point_aspect_delete(integer, integer) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','point_aspect_delete'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+point_aspect_find_by_id(in integer, out integer, out varchar) 
+RETURNS record 
+AS 'MODULE_PATHNAME','point_aspect_find_by_id'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+point_aspect_find_all(out integer, out varchar) 
+RETURNS setof record 
+AS 'MODULE_PATHNAME','point_aspect_find_all'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+point_aspect_count() 
+RETURNS integer 
+AS 'MODULE_PATHNAME','point_aspect_count'
 LANGUAGE C STRICT;
 -------------------------------------------------------------------------------

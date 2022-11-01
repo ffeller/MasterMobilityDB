@@ -3,5 +3,9 @@
     "mastermobilitydb.h": "c",
     "typeinfo": "c",
     "tuple": "c"
+  },
+  "files.exclude": {
+    "**/*.bc": true,
+    "**/*.o": true
   }
 }
