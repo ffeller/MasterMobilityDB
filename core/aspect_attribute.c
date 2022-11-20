@@ -15,6 +15,7 @@ aspect_attribute_create(PG_FUNCTION_ARGS)
     Oid types[] = {INT4OID,INT4OID,VARCHAROID,INT4OID};
     int argcount = sizeof(types)/sizeof(types[0]);
     Datum *values = palloc(sizeof(Datum) * argcount);
+    char *nulls = palloc(sizeof(char) * argcount);
     int proc;
     
     char sql[200];
@@ -22,11 +23,18 @@ aspect_attribute_create(PG_FUNCTION_ARGS)
         values($1, $2, $3, $4)", SCHEMA_NAME);
 
     for (int i = 0; i < argcount; i++) {
-        values[i] = PG_GETARG_DATUM(i);
+        if (PG_ARGISNULL(i)) {
+            values[i] =  (Datum) NULL;
+            nulls[i] = 'n';
+        } else {
+            values[i] = PG_GETARG_DATUM(i);
+            nulls[i] = ' ';
+        }
     }
 
-    proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, false);
+    proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, false);
     pfree(values);
+    pfree(nulls);
     PG_RETURN_INT32(proc);
 }
 
@@ -38,6 +46,7 @@ aspect_attribute_create_many(PG_FUNCTION_ARGS)
     Oid types[] = {INT4ARRAYOID,INT4ARRAYOID,VARCHARARRAYOID,INT4ARRAYOID};
     int argcount = sizeof(types)/sizeof(types[0]);
     Datum *values = palloc(sizeof(Datum) * argcount);
+    char *nulls = palloc(sizeof(char) * argcount);
     int proc;
     
     char sql[200];
@@ -45,12 +54,18 @@ aspect_attribute_create_many(PG_FUNCTION_ARGS)
         values(unnest($1), unnest($2), unnest($3), unnest($4))", SCHEMA_NAME);
 
     for (int i = 0; i < argcount; i++) {
-        values[i] = PG_GETARG_DATUM(i);
+        if (PG_ARGISNULL(i)) {
+            values[i] =  (Datum) NULL;
+            nulls[i] = 'n';
+        } else {
+            values[i] = PG_GETARG_DATUM(i);
+            nulls[i] = ' ';
+        }
     }
 
-    proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, false);
+    proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, false);
     pfree(values);
-
+    pfree(nulls);
     PG_RETURN_INT32(proc);
 }
 
@@ -62,17 +77,29 @@ aspect_attribute_update(PG_FUNCTION_ARGS)
     Oid types[] = {INT4OID,INT4OID,VARCHAROID,INT4OID};
     int argcount = sizeof(types)/sizeof(types[0]);
     Datum *values = palloc(sizeof(Datum) * argcount);
+    char *nulls = palloc(sizeof(char) * argcount);
     int proc;
 
     char sql[200];
     sprintf(sql, "update %s.aspect_attribute \
-        set value = $2, \
+        set value = $3, \
             data_type_id = $4 \
         where aspect_id = $1 and \
             attribute_id = $2", SCHEMA_NAME);
 
-    proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, false);
+    for (int i = 0; i < argcount; i++) {
+        if (PG_ARGISNULL(i)) {
+            values[i] =  (Datum) NULL;
+            nulls[i] = 'n';
+        } else {
+            values[i] = PG_GETARG_DATUM(i);
+            nulls[i] = ' ';
+        }
+    }
+
+    proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, false);
     pfree(values);
+    pfree(nulls);
     PG_RETURN_INT32(proc);
 }
 
@@ -84,6 +111,7 @@ aspect_attribute_delete(PG_FUNCTION_ARGS)
     Oid types[] = {INT4OID,INT4OID};
     int argcount = sizeof(types)/sizeof(types[0]);
     Datum *values = palloc(sizeof(Datum) * argcount);
+    char *nulls = palloc(sizeof(char) * argcount);
     int proc;
 
     char sql[200]; 
@@ -92,11 +120,18 @@ aspect_attribute_delete(PG_FUNCTION_ARGS)
             attribute_id = $2", SCHEMA_NAME);
 
     for (int i = 0; i < argcount; i++) {
-        values[i] = PG_GETARG_DATUM(i);
+        if (PG_ARGISNULL(i)) {
+            values[i] =  (Datum) NULL;
+            nulls[i] = 'n';
+        } else {
+            values[i] = PG_GETARG_DATUM(i);
+            nulls[i] = ' ';
+        }
     }
 
-    proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, false);
+    proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, false);
     pfree(values);
+    pfree(nulls);
     PG_RETURN_INT32(proc);
 }
 
@@ -107,6 +142,7 @@ aspect_attribute_find_by_id(PG_FUNCTION_ARGS) {
     Oid types[] = {INT4OID,INT4OID};
     int argcount = sizeof(types)/sizeof(types[0]);
     Datum *values = palloc(sizeof(Datum) * argcount);
+    char *nulls = palloc(sizeof(char) * argcount);
     HeapTuple tuple;
     TupleDesc tupdesc;
 
@@ -118,7 +154,13 @@ aspect_attribute_find_by_id(PG_FUNCTION_ARGS) {
         SCHEMA_NAME);
 
     for (int i = 0; i < argcount; i++) {
-        values[i] = PG_GETARG_DATUM(i);
+        if (PG_ARGISNULL(i)) {
+            values[i] =  (Datum) NULL;
+            nulls[i] = 'n';
+        } else {
+            values[i] = PG_GETARG_DATUM(i);
+            nulls[i] = ' ';
+        }
     }
 
     if (get_call_result_type(fcinfo, NULL, &tupdesc) != TYPEFUNC_COMPOSITE) {
@@ -128,8 +170,9 @@ aspect_attribute_find_by_id(PG_FUNCTION_ARGS) {
                         "that cannot accept type record")));
     }
 
-    tuple = run_sql_query_tuple(TABLE_NAME, sql, types, argcount, values, tupdesc);
+    tuple = run_sql_query_tuple(TABLE_NAME, sql, types, argcount, values, nulls, tupdesc);
     pfree(values);
+    pfree(nulls);
 
     if (tuple != NULL) {
         PG_RETURN_DATUM(HeapTupleGetDatum(tuple));
@@ -147,7 +190,7 @@ aspect_attribute_count(PG_FUNCTION_ARGS) {
     sprintf(sql, 
         "select count(*) as cnt from %s.aspect_attribute", SCHEMA_NAME);
 
-    ret = run_sql_query_single(TABLE_NAME, sql, NULL, 0, NULL);
+    ret = run_sql_query_single(TABLE_NAME, sql, NULL, 0, NULL, NULL);
 
     PG_RETURN_INT32(DatumGetInt32(ret));
 }
@@ -185,7 +228,7 @@ aspect_attribute_find_all(PG_FUNCTION_ARGS)
         funcctx->tuple_desc = tupdesc;
 
         SPI_connect();
-        auxcurs = open_cursor(TABLE_NAME, sql, NULL, 0, NULL);
+        auxcurs = open_cursor(TABLE_NAME, sql, NULL, 0, NULL, NULL);
         funcctx->user_fctx = auxcurs;
 
         MemoryContextSwitchTo(oldcontext);

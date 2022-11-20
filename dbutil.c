@@ -36,7 +36,8 @@ Portal open_cursor(
     char *sql, 
     Oid *types,
     int argcount, 
-    Datum *values)
+    Datum *values,
+    char *nulls)
 {
     SPIPlanPtr stmt;
     char op[10], curname[20]; 
@@ -52,7 +53,7 @@ Portal open_cursor(
         elog(ERROR, ERR_MMDB_001, op, SCHEMA_NAME, table);
     }
     SPI_keepplan(stmt);
-    curs = SPI_cursor_open(curname, stmt, values, " ", true);
+    curs = SPI_cursor_open(curname, stmt, values, nulls, true);
 
     return(curs);
 }
@@ -63,6 +64,7 @@ int run_sql_cmd(
   Oid *types,
   int argcount,
   Datum *values,
+  char *nulls,
   bool retid
 ) {
   SPIPlanPtr stmt; 
@@ -80,7 +82,7 @@ int run_sql_cmd(
 
   SPI_keepplan(stmt);
 
-  ret = SPI_execp(stmt, values, " ", (retid)?1:0);
+  ret = SPI_execp(stmt, values, nulls, (retid)?1:0);
   if (ret < 0) {
       elog(ERROR, ERR_MMDB_002, op, SCHEMA_NAME, table);
   }
@@ -145,6 +147,7 @@ HeapTuple run_sql_query_tuple(
     Oid *types,
     int argcount,
     Datum *values,
+    char *nulls,
     TupleDesc tupdesc
 ) {
     int proc;
@@ -153,7 +156,7 @@ HeapTuple run_sql_query_tuple(
     HeapTuple tuple;
 
     SPI_connect();
-    curs = open_cursor(table, sql, types, argcount, values);
+    curs = open_cursor(table, sql, types, argcount, values, nulls);
     SPI_cursor_fetch(curs, true, 1);
     proc = SPI_processed;
     if (proc > 0) {
@@ -171,13 +174,14 @@ HeapTuple run_sql_query_tuple(
         return NULL;
     }
 }
-
+ 
 Datum run_sql_query_single(
     char *table,
     char *sql,
     Oid *types,
     int argcount,
-    Datum *values
+    Datum *values,
+    char *nulls
 ) {
     int proc;
     char op[10]; 
@@ -186,7 +190,7 @@ Datum run_sql_query_single(
     Datum ret;
 
     SPI_connect();
-    curs = open_cursor(table, sql, types, argcount, values);
+    curs = open_cursor(table, sql, types, argcount, values, nulls);
     SPI_cursor_fetch(curs, true, 1);
     proc = SPI_processed;
     if (proc > 0) {
