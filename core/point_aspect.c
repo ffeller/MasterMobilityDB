@@ -12,8 +12,8 @@ PG_FUNCTION_INFO_V1(point_aspect_create);
 Datum 
 point_aspect_create(PG_FUNCTION_ARGS)
 {
-    Oid types[] = {INT4OID,INT4OID};
-    int argcount = sizeof(types)/sizeof(types[0]);
+    int argcount = PG_NARGS();
+    Oid *types = palloc(sizeof(Oid) * argcount);
     Datum * values = palloc(sizeof(Datum) * argcount);
     char *nulls = palloc(sizeof(char) * argcount);
     int proc;
@@ -23,6 +23,7 @@ point_aspect_create(PG_FUNCTION_ARGS)
         values($1, $2)", SCHEMA_NAME);
 
     for (int i = 0; i < argcount; i++) {
+        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
         if (PG_ARGISNULL(i)) {
             values[i] =  (Datum) NULL;
             nulls[i] = 'n';
@@ -35,6 +36,7 @@ point_aspect_create(PG_FUNCTION_ARGS)
     proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, false);
     pfree(values);
     pfree(nulls);
+    pfree(types);
     PG_RETURN_INT32(proc);
 }
 
@@ -43,8 +45,8 @@ PG_FUNCTION_INFO_V1(point_aspect_create_many);
 Datum 
 point_aspect_create_many(PG_FUNCTION_ARGS)
 {
-    Oid types[] = {INT4ARRAYOID,INT4ARRAYOID};
-    int argcount = sizeof(types)/sizeof(types[0]);
+    int argcount = PG_NARGS();
+    Oid *types = palloc(sizeof(Oid) * argcount);
     Datum * values = palloc(sizeof(Datum) * argcount);
     char *nulls = palloc(sizeof(char) * argcount);
     int proc;
@@ -54,6 +56,7 @@ point_aspect_create_many(PG_FUNCTION_ARGS)
         values(unnest($1), unnest($2))", SCHEMA_NAME);
 
     for (int i = 0; i < argcount; i++) {
+        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
         if (PG_ARGISNULL(i)) {
             values[i] =  (Datum) NULL;
             nulls[i] = 'n';
@@ -66,6 +69,7 @@ point_aspect_create_many(PG_FUNCTION_ARGS)
     proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, false);
     pfree(values);
     pfree(nulls);
+    pfree(types);
     PG_RETURN_INT32(proc);
 }
 
@@ -74,8 +78,8 @@ PG_FUNCTION_INFO_V1(point_aspect_delete);
 Datum 
 point_aspect_delete(PG_FUNCTION_ARGS)
 {
-    Oid types[] = {INT4OID,INT4OID};
-    int argcount = sizeof(types)/sizeof(types[0]);
+    int argcount = PG_NARGS();
+    Oid *types = palloc(sizeof(Oid) * argcount);
     Datum * values = palloc(sizeof(Datum) * argcount);
     char *nulls = palloc(sizeof(char) * argcount);
     int proc;
@@ -85,6 +89,7 @@ point_aspect_delete(PG_FUNCTION_ARGS)
         where point_id = $1 and aspect_id = $2", SCHEMA_NAME);
 
     for (int i = 0; i < argcount; i++) {
+        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
         if (PG_ARGISNULL(i)) {
             values[i] =  (Datum) NULL;
             nulls[i] = 'n';
@@ -97,6 +102,7 @@ point_aspect_delete(PG_FUNCTION_ARGS)
     proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, false);
     pfree(values);
     pfree(nulls);
+    pfree(types);
     PG_RETURN_INT32(proc);
 }
 
@@ -104,8 +110,8 @@ PG_FUNCTION_INFO_V1(point_aspect_find_by_id);
 
 Datum
 point_aspect_find_by_id(PG_FUNCTION_ARGS) {
-    Oid types[] = {INT4OID,INT4OID};
-    int argcount = sizeof(types)/sizeof(types[0]);
+    int argcount = PG_NARGS();
+    Oid *types = palloc(sizeof(Oid) * argcount);
     Datum *values = palloc(sizeof(Datum) * argcount);
     char *nulls = palloc(sizeof(char) * argcount);
     HeapTuple tuple;
@@ -119,6 +125,7 @@ point_aspect_find_by_id(PG_FUNCTION_ARGS) {
         SCHEMA_NAME);
 
     for (int i = 0; i < argcount; i++) {
+        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
         if (PG_ARGISNULL(i)) {
             values[i] =  (Datum) NULL;
             nulls[i] = 'n';
@@ -138,6 +145,7 @@ point_aspect_find_by_id(PG_FUNCTION_ARGS) {
     tuple = run_sql_query_tuple(TABLE_NAME, sql, types, argcount, values, nulls, tupdesc);
     pfree(values);
     pfree(nulls);
+    pfree(types);
 
     if (tuple != NULL) {
         PG_RETURN_DATUM(HeapTupleGetDatum(tuple));

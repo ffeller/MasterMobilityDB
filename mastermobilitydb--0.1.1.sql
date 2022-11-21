@@ -7,7 +7,7 @@ aspect_attribute_create(
   in data_type integer) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','aspect_attribute_create'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 aspect_attribute_create_many(
@@ -17,7 +17,7 @@ aspect_attribute_create_many(
   in data_type_array integer[]) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','aspect_attribute_create_many'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 aspect_attribute_update(
@@ -97,7 +97,7 @@ aspect_type_delete(
   in key_id_1 integer) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','aspect_type_delete'
-LANGUAGE C;
+LANGUAGE C STRICT;
 
 CREATE OR REPLACE FUNCTION
 aspect_type_find_by_id(
@@ -107,7 +107,7 @@ aspect_type_find_by_id(
   out super_type_id integer) 
 RETURNS record 
 AS 'MODULE_PATHNAME','aspect_type_find_by_id'
-LANGUAGE C;
+LANGUAGE C STRICT;
 
 CREATE OR REPLACE FUNCTION
 aspect_type_find_all(
@@ -116,13 +116,13 @@ aspect_type_find_all(
   out super_type_id integer) 
 RETURNS setof record 
 AS 'MODULE_PATHNAME','aspect_type_find_all'
-LANGUAGE C;
+LANGUAGE C STRICT;
 
 CREATE OR REPLACE FUNCTION
 aspect_type_count() 
 RETURNS integer 
 AS 'MODULE_PATHNAME','aspect_type_count'
-LANGUAGE C;
+LANGUAGE C STRICT;
 -------------------------------------------------------------------------------
 
 --aspect
@@ -136,7 +136,7 @@ aspect_create(
   in aspect_type_id integer) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','aspect_create'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 aspect_create_many(
@@ -148,7 +148,7 @@ aspect_create_many(
   in aspect_type_id_array integer[]) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','aspect_create_many'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 aspect_update(
@@ -212,7 +212,7 @@ attribute_create(
   in aspect_type_id integer) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','attribute_create'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 attribute_create_many(
@@ -221,7 +221,7 @@ attribute_create_many(
   in aspect_type_id_array integer[]) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','attribute_create_many'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 attribute_update(
@@ -275,7 +275,7 @@ mat_aspect_create(
   in aspect_id integer) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','mat_aspect_create'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 mat_aspect_create_many(
@@ -283,7 +283,7 @@ mat_aspect_create_many(
   in aspect_id_array integer[]) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','mat_aspect_create_many'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 mat_aspect_delete(
@@ -322,14 +322,14 @@ mat_create(
   in description varchar) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','mat_create'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 mat_create_many(
   in description_array varchar[]) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','mat_create_many'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 mat_update(
@@ -379,7 +379,7 @@ mo_aspect_create(
   in end_time timestamp) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','mo_aspect_create'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 mo_aspect_create_many(
@@ -389,7 +389,7 @@ mo_aspect_create_many(
   in end_time_array timestamp[]) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','mo_aspect_create_many'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 mo_aspect_update(
@@ -448,7 +448,7 @@ mo_relationship_create(
   in mo_source integer) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','mo_relationship_create'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 mo_relationship_create_many(
@@ -459,7 +459,7 @@ mo_relationship_create_many(
   in mo_source_array integer[]) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','mo_relationship_create_many'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 mo_relationship_update(
@@ -518,14 +518,14 @@ mo_type_create(
   in description varchar) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','mo_type_create'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 mo_type_create_many(
   in description_array varchar[]) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','mo_type_create_many'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 mo_type_update(
@@ -573,7 +573,7 @@ mor_aspect_create(
   in aspect_id integer) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','mor_aspect_create'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 mor_aspect_create_many(
@@ -581,7 +581,7 @@ mor_aspect_create_many(
   in aspect_id_array integer[]) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','mor_aspect_create_many'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 mor_aspect_delete(
@@ -623,7 +623,7 @@ moving_object_create(
   in mo_type_id integer) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','moving_object_create'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 moving_object_create_many(
@@ -631,7 +631,7 @@ moving_object_create_many(
   in mo_type_id_array integer[]) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','moving_object_create_many'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 moving_object_update(
@@ -682,7 +682,7 @@ point_create(
   in mat_id integer) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','point_create'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 point_create_many(
@@ -690,7 +690,7 @@ point_create_many(
   in mat_id_array integer[]) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','point_create_many'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 point_update(
@@ -741,7 +741,7 @@ point_aspect_create(
   in aspect_id integer) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','point_aspect_create'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 point_aspect_create_many(
@@ -749,7 +749,7 @@ point_aspect_create_many(
   in aspect_id_array integer[]) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','point_aspect_create_many'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 point_aspect_delete(

@@ -12,8 +12,8 @@ PG_FUNCTION_INFO_V1(moving_object_create);
 Datum 
 moving_object_create(PG_FUNCTION_ARGS)
 {
-    Oid types[] = {VARCHAROID, INT4OID};
-    int argcount = sizeof(types)/sizeof(types[0]);
+    int argcount = PG_NARGS();
+    Oid *types = palloc(sizeof(Oid) * argcount);
     Datum * values = palloc(sizeof(Datum) * argcount);
     char *nulls = palloc(sizeof(char) * argcount);
     
@@ -25,6 +25,7 @@ moving_object_create(PG_FUNCTION_ARGS)
         returning mo_id", SCHEMA_NAME, SCHEMA_NAME);
 
     for (int i = 0; i < argcount; i++) {
+        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
         if (PG_ARGISNULL(i)) {
             values[i] =  (Datum) NULL;
             nulls[i] = 'n';
@@ -37,6 +38,7 @@ moving_object_create(PG_FUNCTION_ARGS)
     new_mo_id = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, true);
     pfree(values);
     pfree(nulls);
+    pfree(types);
     PG_RETURN_INT32(new_mo_id);
 }
 
@@ -45,8 +47,8 @@ PG_FUNCTION_INFO_V1(moving_object_create_many);
 Datum 
 moving_object_create_many(PG_FUNCTION_ARGS)
 {
-    Oid types[] = {VARCHARARRAYOID, INT4ARRAYOID};
-    int argcount = sizeof(types)/sizeof(types[0]);
+    int argcount = PG_NARGS();
+    Oid *types = palloc(sizeof(Oid) * argcount);
     Datum * values = palloc(sizeof(Datum) * argcount);
     char *nulls = palloc(sizeof(char) * argcount);
     int proc;
@@ -57,6 +59,7 @@ moving_object_create_many(PG_FUNCTION_ARGS)
         SCHEMA_NAME, SCHEMA_NAME);
 
     for (int i = 0; i < argcount; i++) {
+        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
         if (PG_ARGISNULL(i)) {
             values[i] =  (Datum) NULL;
             nulls[i] = 'n';
@@ -69,6 +72,7 @@ moving_object_create_many(PG_FUNCTION_ARGS)
     proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, false);
     pfree(values);
     pfree(nulls);
+    pfree(types);
     PG_RETURN_INT32(proc);
 }
 
@@ -77,8 +81,8 @@ PG_FUNCTION_INFO_V1(moving_object_update);
 Datum 
 moving_object_update(PG_FUNCTION_ARGS)
 {
-    Oid types[] = {INT4OID,VARCHAROID,INT4OID};
-    int argcount = sizeof(types)/sizeof(types[0]);
+    int argcount = PG_NARGS();
+    Oid *types = palloc(sizeof(Oid) * argcount);
     Datum * values = palloc(sizeof(Datum) * argcount);
     char *nulls = palloc(sizeof(char) * argcount);
     int proc;
@@ -90,6 +94,7 @@ moving_object_update(PG_FUNCTION_ARGS)
         where mo_id = $1", SCHEMA_NAME);
 
     for (int i = 0; i < argcount; i++) {
+        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
         values[i] = PG_GETARG_DATUM(i);
         nulls[i] = PG_ARGISNULL(i) ? 'n' : ' ';
     }
@@ -97,6 +102,7 @@ moving_object_update(PG_FUNCTION_ARGS)
     proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, false);
     pfree(values);
     pfree(nulls);
+    pfree(types);
     PG_RETURN_INT32(proc);
 }
 
@@ -105,8 +111,8 @@ PG_FUNCTION_INFO_V1(moving_object_delete);
 Datum 
 moving_object_delete(PG_FUNCTION_ARGS)
 {
-    Oid types[] = {INT4OID};
-    int argcount = sizeof(types)/sizeof(types[0]);
+    int argcount = PG_NARGS();
+    Oid *types = palloc(sizeof(Oid) * argcount);
     Datum * values = palloc(sizeof(Datum) * argcount);
     char *nulls = palloc(sizeof(char) * argcount);
     int proc;
@@ -116,6 +122,7 @@ moving_object_delete(PG_FUNCTION_ARGS)
         where mo_id = $1", SCHEMA_NAME);
 
     for (int i = 0; i < argcount; i++) {
+        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
         if (PG_ARGISNULL(i)) {
             values[i] =  (Datum) NULL;
             nulls[i] = 'n';
@@ -128,6 +135,7 @@ moving_object_delete(PG_FUNCTION_ARGS)
     proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, false);
     pfree(values);
     pfree(nulls);
+    pfree(types);
     PG_RETURN_INT32(proc);
 }
 
@@ -135,8 +143,8 @@ PG_FUNCTION_INFO_V1(moving_object_find_by_id);
 
 Datum
 moving_object_find_by_id(PG_FUNCTION_ARGS) {
-    Oid types[] = {INT4OID,VARCHAROID,INT4OID};
-    int argcount = sizeof(types)/sizeof(types[0]);
+    int argcount = PG_NARGS();
+    Oid *types = palloc(sizeof(Oid) * argcount);
     Datum *values = palloc(sizeof(Datum) * argcount);
     char *nulls = palloc(sizeof(char) * argcount);
     HeapTuple tuple;
@@ -150,6 +158,7 @@ moving_object_find_by_id(PG_FUNCTION_ARGS) {
         SCHEMA_NAME);
 
     for (int i = 0; i < argcount; i++) {
+        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
         if (PG_ARGISNULL(i)) {
             values[i] =  (Datum) NULL;
             nulls[i] = 'n';
@@ -169,6 +178,7 @@ moving_object_find_by_id(PG_FUNCTION_ARGS) {
     tuple = run_sql_query_tuple(TABLE_NAME, sql, types, argcount, values, nulls, tupdesc);
     pfree(values);
     pfree(nulls);
+    pfree(types);
 
     if (tuple != NULL) {
         PG_RETURN_DATUM(HeapTupleGetDatum(tuple));

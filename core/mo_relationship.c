@@ -12,8 +12,8 @@ PG_FUNCTION_INFO_V1(mo_relationship_create);
 Datum 
 mo_relationship_create(PG_FUNCTION_ARGS)
 {
-    Oid types[] = {VARCHAROID,TIMESTAMPOID,TIMESTAMPOID,INT4OID,INT4OID};
-    int argcount = sizeof(types)/sizeof(types[0]);
+    int argcount = PG_NARGS();
+    Oid *types = palloc(sizeof(Oid) * argcount);
     Datum * values = palloc(sizeof(Datum) * argcount);
     char *nulls = palloc(sizeof(char) * argcount);
     
@@ -27,6 +27,7 @@ mo_relationship_create(PG_FUNCTION_ARGS)
         returning mo_id", SCHEMA_NAME, SCHEMA_NAME);
 
     for (int i = 0; i < argcount; i++) {
+        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
         if (PG_ARGISNULL(i)) {
             values[i] =  (Datum) NULL;
             nulls[i] = 'n';
@@ -39,6 +40,7 @@ mo_relationship_create(PG_FUNCTION_ARGS)
     new_mor_id = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, true);
     pfree(values);
     pfree(nulls);
+    pfree(types);
     PG_RETURN_INT32(new_mor_id);
 }
 
@@ -47,8 +49,8 @@ PG_FUNCTION_INFO_V1(mo_relationship_create_many);
 Datum 
 mo_relationship_create_many(PG_FUNCTION_ARGS)
 {
-    Oid types[] = {VARCHARARRAYOID,TIMESTAMPARRAYOID,TIMESTAMPARRAYOID,INT4ARRAYOID,INT4ARRAYOID};
-    int argcount = sizeof(types)/sizeof(types[0]);
+    int argcount = PG_NARGS();
+    Oid *types = palloc(sizeof(Oid) * argcount);
     Datum * values = palloc(sizeof(Datum) * argcount);
     char *nulls = palloc(sizeof(char) * argcount);
     int proc;
@@ -61,6 +63,7 @@ mo_relationship_create_many(PG_FUNCTION_ARGS)
             unnest($3), unnest($4), unnest($5))", SCHEMA_NAME, SCHEMA_NAME);
 
     for (int i = 0; i < argcount; i++) {
+        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
         if (PG_ARGISNULL(i)) {
             values[i] =  (Datum) NULL;
             nulls[i] = 'n';
@@ -73,6 +76,7 @@ mo_relationship_create_many(PG_FUNCTION_ARGS)
     proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, false);
     pfree(values);
     pfree(nulls);
+    pfree(types);
     PG_RETURN_INT32(proc);
 }
 
@@ -81,8 +85,8 @@ PG_FUNCTION_INFO_V1(mo_relationship_update);
 Datum 
 mo_relationship_update(PG_FUNCTION_ARGS)
 {
-    Oid types[] = {INT4OID,VARCHAROID,TIMESTAMPOID,TIMESTAMPOID,INT4OID,INT4OID};
-    int argcount = sizeof(types)/sizeof(types[0]);
+    int argcount = PG_NARGS();
+    Oid *types = palloc(sizeof(Oid) * argcount);
     Datum * values = palloc(sizeof(Datum) * argcount);
     char *nulls = palloc(sizeof(char) * argcount);
     int proc;
@@ -95,6 +99,7 @@ mo_relationship_update(PG_FUNCTION_ARGS)
         where mor_id = $1", SCHEMA_NAME);
 
     for (int i = 0; i < argcount; i++) {
+        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
         if (PG_ARGISNULL(i)) {
             values[i] =  (Datum) NULL;
             nulls[i] = 'n';
@@ -107,6 +112,7 @@ mo_relationship_update(PG_FUNCTION_ARGS)
     proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, false);
     pfree(values);
     pfree(nulls);
+    pfree(types);
     PG_RETURN_INT32(proc);
 }
 
@@ -115,8 +121,8 @@ PG_FUNCTION_INFO_V1(mo_relationship_delete);
 Datum 
 mo_relationship_delete(PG_FUNCTION_ARGS)
 {
-    Oid types[] = {INT4OID};
-    int argcount = sizeof(types)/sizeof(types[0]);
+    int argcount = PG_NARGS();
+    Oid *types = palloc(sizeof(Oid) * argcount);
     Datum * values = palloc(sizeof(Datum) * argcount);
     char *nulls = palloc(sizeof(char) * argcount);
     int proc;
@@ -126,6 +132,7 @@ mo_relationship_delete(PG_FUNCTION_ARGS)
         where mor_id = $1", SCHEMA_NAME);
 
     for (int i = 0; i < argcount; i++) {
+        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
         if (PG_ARGISNULL(i)) {
             values[i] =  (Datum) NULL;
             nulls[i] = 'n';
@@ -138,6 +145,7 @@ mo_relationship_delete(PG_FUNCTION_ARGS)
     proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, false);
     pfree(values);
     pfree(nulls);
+    pfree(types);
     PG_RETURN_INT32(proc);
 }
 
@@ -145,8 +153,8 @@ PG_FUNCTION_INFO_V1(mo_relationship_find_by_id);
 
 Datum
 mo_relationship_find_by_id(PG_FUNCTION_ARGS) {
-    Oid types[] = {INT4OID,VARCHAROID,TIMESTAMPOID,TIMESTAMPOID,INT4OID,INT4OID};
-    int argcount = sizeof(types)/sizeof(types[0]);
+    int argcount = PG_NARGS();
+    Oid *types = palloc(sizeof(Oid) * argcount);
     Datum *values = palloc(sizeof(Datum) * argcount);
     char *nulls = palloc(sizeof(char) * argcount);
     HeapTuple tuple;
@@ -161,6 +169,7 @@ mo_relationship_find_by_id(PG_FUNCTION_ARGS) {
         SCHEMA_NAME);
 
     for (int i = 0; i < argcount; i++) {
+        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
         if (PG_ARGISNULL(i)) {
             values[i] =  (Datum) NULL;
             nulls[i] = 'n';
@@ -180,6 +189,7 @@ mo_relationship_find_by_id(PG_FUNCTION_ARGS) {
     tuple = run_sql_query_tuple(TABLE_NAME, sql, types, argcount, values, nulls, tupdesc);
     pfree(values);
     pfree(nulls);
+    pfree(types);
 
     if (tuple != NULL) {
         PG_RETURN_DATUM(HeapTupleGetDatum(tuple));
