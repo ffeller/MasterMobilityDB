@@ -3,12 +3,13 @@
 #include "fmgr.h"
 #include "executor/spi.h"
 #include "funcapi.h"
+#include "utils/lsyscache.h"
 
 #include "dbutil.h"
 
 char *str_lower(char *str){
   int i = 0;
-  static char ret[200];
+  static char ret[SQL_LENGTH];
   
   while (str[i]) {
     ret[i] = tolower(str[i]);
@@ -20,13 +21,25 @@ char *str_lower(char *str){
 }
 
 char *operation(char *sql) {
-  char tokens[200];
+  char tokens[SQL_LENGTH];
   char *token; 
   char *op;
 
   strcpy(tokens, sql);
   token = strtok(tokens, " ");
-  op = str_lower(token);
+  while (strcasecmp(token,"select") 
+    && strcasecmp(token,"insert")
+    && strcasecmp(token,"update") 
+    && strcasecmp(token,"delete")
+    && token != NULL) {
+    token = strtok(NULL, " ");
+  }
+
+  if (token == NULL) {
+    strcpy(op, "unknown operation");
+  } else {
+    op = str_lower(token);
+  }
 
   return op;
 }
@@ -89,7 +102,7 @@ int run_sql_cmd(
   proc = SPI_processed;
 
   if (proc == 0) {
-      elog(ERROR, ERR_MMDB_003, op, SCHEMA_NAME, table);
+      elog(WARNING, ERR_MMDB_003, op, SCHEMA_NAME, table);
   } else {
     if (retid) {
       newid = DatumGetInt32(SPI_getbinval(SPI_tuptable->vals[0],
@@ -108,6 +121,66 @@ int run_sql_cmd(
   SPI_finish();
 
   return ret;
+}
+
+Datum * run_sql_cmd_new(
+  char *table,
+  char *sql,
+  Oid *types,
+  int argcount, 
+  Datum *values,
+  char *nulls,
+  uint64 *n
+) {
+  Datum *elems;
+  SPIPlanPtr stmt; 
+  bool isnull;
+  Datum newid;
+  int ret; 
+  uint64 proc;
+  SPITupleTable *tuptable;
+  char *op = operation(sql);
+
+  if (SPI_connect() != SPI_OK_CONNECT) {
+    elog(ERROR, ERR_MMDB_004, op, SCHEMA_NAME, table);
+  }
+
+  stmt = SPI_prepare(sql, argcount, types);
+  if (!stmt) {
+    elog(ERROR, ERR_MMDB_001, op, SCHEMA_NAME, table);
+  }
+
+  if (SPI_keepplan(stmt) != 0) {
+    elog(ERROR, ERR_MMDB_005, op, SCHEMA_NAME, table);
+  }
+
+  ret = SPI_execp(stmt, values, nulls, 0);
+  if (ret < 0) {
+    elog(ERROR, ERR_MMDB_002, op, SCHEMA_NAME, table);
+  }
+  proc = SPI_processed;
+
+  if (proc == 0) {
+    elog(WARNING, ERR_MMDB_003, op, SCHEMA_NAME, table);
+  }
+
+  tuptable = SPI_tuptable;
+  *n = tuptable->numvals;
+  elems = (Datum *) palloc(*n * sizeof(Datum));
+
+  for (int i = 0; i < *n; i++) {
+    newid = SPI_getbinval(tuptable->vals[i],
+                                tuptable->tupdesc,
+                                1,
+                                &isnull);
+    elems[i] = newid;
+  }
+
+  if (SPI_finish() != SPI_OK_FINISH) {
+    elog(ERROR, ERR_MMDB_006, op, SCHEMA_NAME, table);
+  }
+
+  return elems;
 }
 
 HeapTuple ret_tuple(
@@ -231,16 +304,38 @@ void prepare_arrays(
     }
 }
 
+Datum * run_sql_cmd_args_new(
+    PG_FUNCTION_ARGS, 
+    char *table_name, 
+    char *sql,
+    uint64 *n
+) {
+    Datum *newids;
+    int argcount = PG_NARGS();
+    Oid *types = (Oid *) palloc(sizeof(Oid) * argcount);
+    Datum *values = (Datum *) palloc(sizeof(Datum) * argcount);
+    char *nulls = (char *) palloc(sizeof(char) * argcount);
+
+    prepare_arrays(fcinfo, argcount, types, values, nulls);
+    
+    newids = run_sql_cmd_new(table_name, sql, types, argcount, values, nulls, n);
+    pfree(values);
+    pfree(nulls);
+    pfree(types);
+
+    return newids;
+}
+
 int run_sql_cmd_args(
     PG_FUNCTION_ARGS, 
-    char * table_name, 
-    char * sql, 
+    char *table_name, 
+    char *sql, 
     bool retid
 ) {
     int argcount = PG_NARGS();
-    Oid * types = palloc(sizeof(Oid) * argcount);
-    Datum * values = palloc(sizeof(Datum) * argcount);
-    char * nulls = palloc(sizeof(char) * argcount);
+    Oid * types = (Oid *) palloc(sizeof(Oid) * argcount);
+    Datum * values = (Datum *) palloc(sizeof(Datum) * argcount);
+    char * nulls = (char *) palloc(sizeof(char) * argcount);
     int new_id;
 
     prepare_arrays(fcinfo, argcount, types, values, nulls);
@@ -258,9 +353,9 @@ HeapTuple run_sql_query_tuple_args(
     char * sql
 ) {
     int argcount = PG_NARGS();
-    Oid * types = palloc(sizeof(Oid) * argcount);
-    Datum * values = palloc(sizeof(Datum) * argcount);
-    char * nulls = palloc(sizeof(char) * argcount);
+    Oid * types = (Oid *) palloc(sizeof(Oid) * argcount);
+    Datum * values = (Datum *) palloc(sizeof(Datum) * argcount);
+    char * nulls = (char *) palloc(sizeof(char) * argcount);
     HeapTuple tuple;
     TupleDesc tupdesc;
 
@@ -281,3 +376,62 @@ HeapTuple run_sql_query_tuple_args(
     return tuple;
 }
 
+ArrayType * make_pg_array(
+    Datum *carray, 
+    uint64 nelems
+) {
+    ArrayType *result;
+    Oid       elemtype = INT4OID;
+    int16     typlen;
+    bool      typbyval;
+    char      typalign;
+
+    get_typlenbyvalalign(elemtype, &typlen, &typbyval, &typalign);    
+    result = construct_array(carray, nelems, INT4OID, typlen, typbyval, typalign);
+
+    return result;
+}
+
+char * temp_table (char *schema_name, char *table_name) {
+  char sql[SQL_LENGTH];
+  char tmpname[50];
+  
+  strcpy(tmpname, "tmp_");
+  strcat(tmpname, table_name);
+
+  sprintf(sql,
+      "create temp table %s as \
+          select description, x, y, t, space_time, aspect_type_id \
+          from %s.%s limit 0", tmpname, schema_name, table_name);
+
+run_sql_cmd(table_name, sql, types, argcount, values, nulls, retid);
+
+}
+
+char * get_table_non_pk_columns(char *table_name, int *attr_qty) {
+    char sql[SQL_LENGTH];
+    
+    sprintf(sql, 
+      "select column_name from pg_arr where table_name = '%s' and column_name not in (select column_name from information_schema.key_column_usage where table_name = '%s');", table_name, table_name);
+    SPI_connect();
+    int result = SPI_exec(query, 0);
+    
+    if (result < 0) {
+        elog(ERROR, "Query failed: %s", SPI_result_code_string(result));
+        SPI_finish();
+        PG_RETURN_NULL();
+    }
+    
+    int num_rows = SPI_processed;
+    
+    for (int i = 0; i < num_rows; i++) {
+        char *column_name = SPI_getvalue(result, i, 1);
+        char *data_type = SPI_getvalue(result, i, 2);
+        char *is_nullable = SPI_getvalue(result, i, 3);
+        
+        printf("%s\t%s\t%s\n", column_name, data_type, is_nullable);
+    }
+    
+    SPI_finish();
+    PG_RETURN_NULL();
+}

@@ -3,7 +3,7 @@ CREATE OR REPLACE FUNCTION
 aspect_attribute_create(
   in aspect_id integer, 
   in attribute_id integer, 
-  in data_value varchar, 
+  in data_value text, 
   in data_type integer) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','aspect_attribute_create'
@@ -13,7 +13,7 @@ CREATE OR REPLACE FUNCTION
 aspect_attribute_create_many(
   in aspect_id_array integer[], 
   in attribute_id_array integer[], 
-  in data_value_array varchar[], 
+  in data_value_array text[], 
   in data_type_array integer[]) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','aspect_attribute_create_many'
@@ -23,7 +23,7 @@ CREATE OR REPLACE FUNCTION
 aspect_attribute_update(
   in key_id_1 integer, 
   in key_id_2 integer, 
-  in data_valye varchar, 
+  in data_value text, 
   in data_type integer) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','aspect_attribute_update'
@@ -146,8 +146,15 @@ aspect_create_many(
   in t_array timestamp[], 
   in space_time_array integer[], 
   in aspect_type_id_array integer[]) 
-RETURNS integer 
+RETURNS integer[] 
 AS 'MODULE_PATHNAME','aspect_create_many'
+LANGUAGE C;
+
+CREATE OR REPLACE FUNCTION
+fteste(
+  in rows row_type[]) 
+RETURNS integer[] 
+AS 'MODULE_PATHNAME','fteste'
 LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
@@ -265,6 +272,60 @@ CREATE OR REPLACE FUNCTION
 attribute_count() 
 RETURNS integer 
 AS 'MODULE_PATHNAME','attribute_count'
+LANGUAGE C STRICT;
+-------------------------------------------------------------------------------
+
+--data_type
+CREATE OR REPLACE FUNCTION
+data_type_create(
+  in data_type_name varchar)
+RETURNS integer 
+AS 'MODULE_PATHNAME','data_type_create'
+LANGUAGE C;
+
+CREATE OR REPLACE FUNCTION
+data_type_create_many(
+  in data_type_name_array varchar[])
+RETURNS integer 
+AS 'MODULE_PATHNAME','data_type_create_many'
+LANGUAGE C;
+
+CREATE OR REPLACE FUNCTION
+data_type_update(
+  in id_key_1 integer, 
+  in data_type_name varchar)
+RETURNS integer 
+AS 'MODULE_PATHNAME','data_type_update'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+data_type_delete(
+  in id_key_1 integer)
+RETURNS integer 
+AS 'MODULE_PATHNAME','data_type_delete'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+data_type_find_by_id(
+  in id_key_1 integer,
+  out data_type_id integer, 
+  out data_type_name varchar) 
+RETURNS record 
+AS 'MODULE_PATHNAME','data_type_find_by_id'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+data_type_find_all(
+  out data_type_id integer, 
+  out data_type_name varchar) 
+RETURNS setof record 
+AS 'MODULE_PATHNAME','data_type_find_all'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+data_type_count() 
+RETURNS integer 
+AS 'MODULE_PATHNAME','data_type_count'
 LANGUAGE C STRICT;
 -------------------------------------------------------------------------------
 

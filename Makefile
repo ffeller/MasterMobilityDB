@@ -3,6 +3,7 @@ OBJS = dbutil.o mastermobilitydb.o \
 	core/aspect_attribute.o \
 	core/aspect_type.o \
 	core/aspect.o \
+	core/data_type.o \
 	core/attribute.o \
 	core/mat_aspect.o \
 	core/mat.o \
@@ -14,7 +15,7 @@ OBJS = dbutil.o mastermobilitydb.o \
 	core/point.o \
 	core/point_aspect.o
 EXTENSION = mastermobilitydb
-DATA = mastermobilitydb--0.2.1.sql
+DATA = mastermobilitydb--0.2.3.sql
 PG_CONFIG = pg_config
 PGXS := $(shell $(PG_CONFIG) --pgxs)
 include $(PGXS)

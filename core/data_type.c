@@ -5,78 +5,80 @@
 
 #include "dbutil.h"
 
-#define TABLE_NAME "aspect_attribute"
- 
-PG_FUNCTION_INFO_V1(aspect_attribute_create);
+#define TABLE_NAME "data_type"
+
+PG_FUNCTION_INFO_V1(data_type_create);
 
 Datum 
-aspect_attribute_create(PG_FUNCTION_ARGS)
+data_type_create(PG_FUNCTION_ARGS)
 {
-    int proc;
-    char sql[200];
-    sprintf(sql, "insert into %s.aspect_attribute(aspect_id, attribute_id, value, data_type_id) \
-        values($1, $2, $3, $4)", SCHEMA_NAME);
+    int new_data_type_id;
+    char sql[200]; 
+    sprintf(sql, "insert into %s.data_type( \
+        data_type_id, data_type_name) \
+        values(nextval('%s.seq_data_type'), $1) \
+        returning data_type_id",
+        SCHEMA_NAME, SCHEMA_NAME);
 
-    proc = run_sql_cmd_args(fcinfo, TABLE_NAME, sql, false);
-    PG_RETURN_INT32(proc);
+    new_data_type_id = run_sql_cmd_args(fcinfo, TABLE_NAME, sql, true);
+    PG_RETURN_INT32(new_data_type_id);
 }
 
-PG_FUNCTION_INFO_V1(aspect_attribute_create_many);
+PG_FUNCTION_INFO_V1(data_type_create_many);
 
 Datum 
-aspect_attribute_create_many(PG_FUNCTION_ARGS)
-{
-    int proc;
-    char sql[200];
-    sprintf(sql, "insert into %s.aspect_attribute(aspect_id, attribute_id, value, data_type_id) \
-        values(unnest($1), unnest($2), unnest($3), unnest($4))", SCHEMA_NAME);
-
-    proc = run_sql_cmd_args(fcinfo, TABLE_NAME, sql, false);
-    PG_RETURN_INT32(proc);
-}
-
-PG_FUNCTION_INFO_V1(aspect_attribute_update);
-
-Datum 
-aspect_attribute_update(PG_FUNCTION_ARGS)
-{
-    int proc;
-    char sql[200];
-    sprintf(sql, "update %s.aspect_attribute \
-        set value = $3, \
-            data_type_id = $4 \
-        where aspect_id = $1 and \
-            attribute_id = $2", SCHEMA_NAME);
-
-    proc = run_sql_cmd_args(fcinfo, TABLE_NAME, sql, false);
-    PG_RETURN_INT32(proc);
-}
-
-PG_FUNCTION_INFO_V1(aspect_attribute_delete);
-
-Datum 
-aspect_attribute_delete(PG_FUNCTION_ARGS)
+data_type_create_many(PG_FUNCTION_ARGS)
 {
     int proc;
     char sql[200]; 
-    sprintf(sql, "delete from %s.aspect_attribute \
-        where aspect_id = $1 and \
-            attribute_id = $2", SCHEMA_NAME);
+    sprintf(sql, 
+        "insert into %s.data_type(data_type_id, data_type_name) \
+        values(nextval('%s.seq_data_type'), unnest($1))",
+        SCHEMA_NAME,SCHEMA_NAME);
 
     proc = run_sql_cmd_args(fcinfo, TABLE_NAME, sql, false);
     PG_RETURN_INT32(proc);
 }
 
-PG_FUNCTION_INFO_V1(aspect_attribute_find_by_id);
+PG_FUNCTION_INFO_V1(data_type_update);
+
+Datum 
+data_type_update(PG_FUNCTION_ARGS)
+{
+    int proc;
+    char sql[200]; 
+    sprintf(sql, "update %s.data_type \
+        set data_type_name = $2 \
+        where data_type_id = $1", SCHEMA_NAME);
+
+    proc = run_sql_cmd_args(fcinfo, TABLE_NAME, sql, false);
+    PG_RETURN_INT32(proc);
+}
+
+PG_FUNCTION_INFO_V1(data_type_delete);
+
+Datum 
+data_type_delete(PG_FUNCTION_ARGS)
+{
+    int proc;
+    char sql[200]; 
+    sprintf(sql, "delete from %s.data_type \
+        where data_type_id = $1", SCHEMA_NAME);
+
+    proc = run_sql_cmd_args(fcinfo, TABLE_NAME, sql, false);
+    PG_RETURN_INT32(proc);
+}
+
+PG_FUNCTION_INFO_V1(data_type_find_by_id);
 
 Datum
-aspect_attribute_find_by_id(PG_FUNCTION_ARGS) {
+data_type_find_by_id(PG_FUNCTION_ARGS) {
     HeapTuple tuple;
     char sql[200];
     sprintf(sql, 
-        "select aspect_id, attribute_id, value, data_type \
-        from %s.aspect_attribute \
-        where aspect_id = $1 and attribute_id = $2", 
+        "select data_type_id, data_type_name \
+        from %s.data_type \
+        where data_type_id = $1", 
         SCHEMA_NAME);
 
     tuple = run_sql_query_tuple_args(fcinfo, TABLE_NAME, sql); 
@@ -88,24 +90,24 @@ aspect_attribute_find_by_id(PG_FUNCTION_ARGS) {
     }
 }
 
-PG_FUNCTION_INFO_V1(aspect_attribute_count);
+PG_FUNCTION_INFO_V1(data_type_count);
 
 Datum
-aspect_attribute_count(PG_FUNCTION_ARGS) {
+data_type_count(PG_FUNCTION_ARGS) {
     Datum ret;
     char sql[200];
     sprintf(sql, 
-        "select count(*) as cnt from %s.aspect_attribute", SCHEMA_NAME);
+        "select count(*) as cnt from %s.data_type", SCHEMA_NAME);
 
     ret = run_sql_query_single(TABLE_NAME, sql, NULL, 0, NULL, NULL);
 
     PG_RETURN_INT32(DatumGetInt32(ret));
 }
 
-PG_FUNCTION_INFO_V1(aspect_attribute_find_all);
+PG_FUNCTION_INFO_V1(data_type_find_all);
 
 Datum
-aspect_attribute_find_all(PG_FUNCTION_ARGS)
+data_type_find_all(PG_FUNCTION_ARGS)
 {
     FuncCallContext     *funcctx;
     TupleDesc            tupdesc;
@@ -119,8 +121,8 @@ aspect_attribute_find_all(PG_FUNCTION_ARGS)
 
         char sql[200];
         sprintf(sql, 
-        "select aspect_id, attribute_id, value, data_type \
-        from %s.aspect_attribute",
+        "select data_type_id, data_type_name \
+        from %s.data_type",
         SCHEMA_NAME);
         
         funcctx = SRF_FIRSTCALL_INIT();

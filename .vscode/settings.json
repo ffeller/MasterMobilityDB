@@ -2,7 +2,10 @@
   "files.associations": {
     "mastermobilitydb.h": "c",
     "typeinfo": "c",
-    "tuple": "c"
+    "tuple": "c",
+    "memory": "c",
+    "fmgrprotos.h": "c",
+    "syscache.h": "c"
   },
   "files.exclude": {
     "**/*.bc": true,

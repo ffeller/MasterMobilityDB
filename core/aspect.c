@@ -2,6 +2,7 @@
 #include "pg_config.h"
 #include "fmgr.h"
 #include "executor/spi.h"
+#include "utils/array.h"
 
 #include "dbutil.h"
 
@@ -28,15 +29,24 @@ PG_FUNCTION_INFO_V1(aspect_create_many);
 Datum 
 aspect_create_many(PG_FUNCTION_ARGS)
 {
-    int proc;
-    char sql[200]; 
-    sprintf(sql, "insert into %s.aspect(aspect_id, description, x, y, t, \
-            space_time, aspect_type_id) \
-        values(nextval('%s.seq_aspect'), unnest($1), unnest($2), \
-            unnest($3), unnest($4), unnest($5), unnest($6))", SCHEMA_NAME, SCHEMA_NAME);
+    Datum     *newids;
+    ArrayType *result;
+    char      sql[SQL_LENGTH]; 
+    uint64    n;
 
-    proc = run_sql_cmd_args(fcinfo, TABLE_NAME, sql, false);
-    PG_RETURN_INT32(proc);
+    sprintf(sql, 
+        "with inserted as ( \
+            insert into %s.aspect(aspect_id, description, x, y, t, \
+                space_time, aspect_type_id) \
+            values(nextval('%s.seq_aspect'), unnest($1), unnest($2), \
+                unnest($3), unnest($4), unnest($5), unnest($6)) \
+            returning aspect_id) \
+        select aspect_id from inserted", SCHEMA_NAME, SCHEMA_NAME);
+
+    newids = run_sql_cmd_args_new(fcinfo, TABLE_NAME, sql, &n);
+
+    result = make_pg_array(newids, n);
+    PG_RETURN_ARRAYTYPE_P(result);
 }
 
 PG_FUNCTION_INFO_V1(aspect_update);
@@ -77,7 +87,7 @@ aspect_find_by_id(PG_FUNCTION_ARGS) {
     char sql[200];
     sprintf(sql, 
         "select aspect_id, description, x, y, t, \
-            space_time, aspect_id \
+            space_time, aspect_type_id \
         from %s.aspect \
         where aspect_id = $1", 
         SCHEMA_NAME);
@@ -123,7 +133,7 @@ aspect_find_all(PG_FUNCTION_ARGS)
         char sql[200];
         sprintf(sql, 
         "select aspect_id, description, x, y, t, \
-            space_time, aspect_id \
+            space_time, aspect_type_id \
         from %s.aspect",
         SCHEMA_NAME);
         
@@ -170,3 +180,26 @@ aspect_find_all(PG_FUNCTION_ARGS)
     }
 }
 
+PG_FUNCTION_INFO_V1(fteste);
+
+Datum 
+fteste(PG_FUNCTION_ARGS)
+{
+    Datum     *newids;
+    ArrayType *result;
+    char      sql[SQL_LENGTH]; 
+    uint64    n;
+
+    strcpy(sql, 
+        "with inserted as ( \
+            INSERT INTO temp_table (id, column1, column2, column3) \
+            SELECT nextval('master.seq_mo_type'),  (row_data).column1, (row_data).column2, (row_data).column3 \
+            FROM UNNEST($1) AS row_data \
+            returning id) \
+            select id from inserted");
+
+    newids = run_sql_cmd_args_new(fcinfo, TABLE_NAME, sql, &n);
+
+    result = make_pg_array(newids, n);
+    PG_RETURN_ARRAYTYPE_P(result);
+}
