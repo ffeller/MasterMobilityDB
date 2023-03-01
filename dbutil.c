@@ -211,3 +211,73 @@ Datum run_sql_query_single(
         return (Datum) NULL;
     }
 }
+
+void prepare_arrays(
+    PG_FUNCTION_ARGS, 
+    int argcount, 
+    Oid * types, 
+    Datum * values, 
+    char * nulls
+) {
+    for (int i = 0; i < argcount; i++) {
+        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
+        if (PG_ARGISNULL(i)) {
+            values[i] =  (Datum) 0;
+            nulls[i] = 'n';
+        } else {
+            values[i] = PG_GETARG_DATUM(i);
+            nulls[i] = ' ';
+        }
+    }
+}
+
+int run_sql_cmd_args(
+    PG_FUNCTION_ARGS, 
+    char * table_name, 
+    char * sql, 
+    bool retid
+) {
+    int argcount = PG_NARGS();
+    Oid * types = palloc(sizeof(Oid) * argcount);
+    Datum * values = palloc(sizeof(Datum) * argcount);
+    char * nulls = palloc(sizeof(char) * argcount);
+    int new_id;
+
+    prepare_arrays(fcinfo, argcount, types, values, nulls);
+    
+    new_id = run_sql_cmd(table_name, sql, types, argcount, values, nulls, retid);
+    pfree(values);
+    pfree(nulls);
+    pfree(types);
+    return new_id;
+}
+
+HeapTuple run_sql_query_tuple_args(
+    PG_FUNCTION_ARGS, 
+    char * table_name, 
+    char * sql
+) {
+    int argcount = PG_NARGS();
+    Oid * types = palloc(sizeof(Oid) * argcount);
+    Datum * values = palloc(sizeof(Datum) * argcount);
+    char * nulls = palloc(sizeof(char) * argcount);
+    HeapTuple tuple;
+    TupleDesc tupdesc;
+
+    prepare_arrays(fcinfo, argcount, types, values, nulls);
+    
+    if (get_call_result_type(fcinfo, NULL, &tupdesc) != TYPEFUNC_COMPOSITE) {
+        ereport(ERROR,
+                (errcode(ERRCODE_FEATURE_NOT_SUPPORTED),
+                    errmsg("function returning record called in context "
+                        "that cannot accept type record")));
+    }
+
+    tuple = run_sql_query_tuple(table_name, sql, types, argcount, values, nulls, tupdesc);
+    pfree(values);
+    pfree(nulls);
+    pfree(types);
+
+    return tuple;
+}
+

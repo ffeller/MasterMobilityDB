@@ -12,33 +12,13 @@ PG_FUNCTION_INFO_V1(point_create);
 Datum 
 point_create(PG_FUNCTION_ARGS)
 {
-    int argcount = PG_NARGS();
-    Oid *types = palloc(sizeof(Oid) * argcount);
-    Datum * values = palloc(sizeof(Datum) * argcount);
-    char *nulls = palloc(sizeof(char) * argcount);
-    
-    char sql[200];
     int new_point_id;
-
+    char sql[200];
     sprintf(sql, "insert into %s.point(point_id, p_order, mat_id) \
         values(nextval('%s.seq_point'), $1, $2) \
         returning point_id", SCHEMA_NAME, SCHEMA_NAME);
 
-    for (int i = 0; i < argcount; i++) {
-        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
-        if (PG_ARGISNULL(i)) {
-            values[i] =  (Datum) NULL;
-            nulls[i] = 'n';
-        } else {
-            values[i] = PG_GETARG_DATUM(i);
-            nulls[i] = ' ';
-        }
-    }
-
-    new_point_id = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, true);
-    pfree(values);
-    pfree(nulls);
-    pfree(types);
+    new_point_id = run_sql_cmd_args(fcinfo, TABLE_NAME, sql, true);
     PG_RETURN_INT32(new_point_id);
 }
 
@@ -47,32 +27,13 @@ PG_FUNCTION_INFO_V1(point_create_many);
 Datum 
 point_create_many(PG_FUNCTION_ARGS)
 {
-    int argcount = PG_NARGS();
-    Oid *types = palloc(sizeof(Oid) * argcount);
-    Datum * values = palloc(sizeof(Datum) * argcount);
-    char *nulls = palloc(sizeof(char) * argcount);
     int proc;
-    
     char sql[200];
     sprintf(sql, "insert into %s.point(point_id, p_order, mat_id) \
         values(nextval('%s.seq_point'), unnest($1), unnest($2))",
         SCHEMA_NAME, SCHEMA_NAME);
 
-    for (int i = 0; i < argcount; i++) {
-        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
-        if (PG_ARGISNULL(i)) {
-            values[i] =  (Datum) NULL;
-            nulls[i] = 'n';
-        } else {
-            values[i] = PG_GETARG_DATUM(i);
-            nulls[i] = ' ';
-        }
-    }
-
-    proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, false);
-    pfree(values);
-    pfree(nulls);
-    pfree(types);
+    proc = run_sql_cmd_args(fcinfo, TABLE_NAME, sql, false);
     PG_RETURN_INT32(proc);
 }
 
@@ -81,12 +42,7 @@ PG_FUNCTION_INFO_V1(point_update);
 Datum 
 point_update(PG_FUNCTION_ARGS)
 {
-    int argcount = PG_NARGS();
-    Oid *types = palloc(sizeof(Oid) * argcount);
-    Datum * values = palloc(sizeof(Datum) * argcount);
-    char *nulls = palloc(sizeof(char) * argcount);
     int proc;
-    
     char sql[200];
     sprintf(sql, "update %s.point \
         set p_order = $2, \
@@ -94,21 +50,7 @@ point_update(PG_FUNCTION_ARGS)
         where point_id = $1",
         SCHEMA_NAME);
 
-    for (int i = 0; i < argcount; i++) {
-        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
-        if (PG_ARGISNULL(i)) {
-            values[i] =  (Datum) NULL;
-            nulls[i] = 'n';
-        } else {
-            values[i] = PG_GETARG_DATUM(i);
-            nulls[i] = ' ';
-        }
-    }
-
-    proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, false);
-    pfree(values);
-    pfree(nulls);
-    pfree(types);
+    proc = run_sql_cmd_args(fcinfo, TABLE_NAME, sql, false);
     PG_RETURN_INT32(proc);
 }
 
@@ -117,31 +59,12 @@ PG_FUNCTION_INFO_V1(point_delete);
 Datum 
 point_delete(PG_FUNCTION_ARGS)
 {
-    int argcount = PG_NARGS();
-    Oid *types = palloc(sizeof(Oid) * argcount);
-    Datum * values = palloc(sizeof(Datum) * argcount);
-    char *nulls = palloc(sizeof(char) * argcount);
     int proc;
-    
     char sql[200];
     sprintf(sql, "delete from %s.point \
         where point_id = $1", SCHEMA_NAME);
 
-    for (int i = 0; i < argcount; i++) {
-        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
-        if (PG_ARGISNULL(i)) {
-            values[i] =  (Datum) NULL;
-            nulls[i] = 'n';
-        } else {
-            values[i] = PG_GETARG_DATUM(i);
-            nulls[i] = ' ';
-        }
-    }
-
-    proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, false);
-    pfree(values);
-    pfree(nulls);
-    pfree(types);
+    proc = run_sql_cmd_args(fcinfo, TABLE_NAME, sql, false);
     PG_RETURN_INT32(proc);
 }
 
@@ -149,13 +72,7 @@ PG_FUNCTION_INFO_V1(point_find_by_id);
 
 Datum
 point_find_by_id(PG_FUNCTION_ARGS) {
-    int argcount = PG_NARGS();
-    Oid *types = palloc(sizeof(Oid) * argcount);
-    Datum *values = palloc(sizeof(Datum) * argcount);
-    char *nulls = palloc(sizeof(char) * argcount);
     HeapTuple tuple;
-    TupleDesc tupdesc;
-
     char sql[200];
     sprintf(sql, 
         "select point_id, p_order, mat_id \
@@ -163,28 +80,7 @@ point_find_by_id(PG_FUNCTION_ARGS) {
         where point_id = $1", 
         SCHEMA_NAME);
 
-    for (int i = 0; i < argcount; i++) {
-        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
-        if (PG_ARGISNULL(i)) {
-            values[i] =  (Datum) NULL;
-            nulls[i] = 'n';
-        } else {
-            values[i] = PG_GETARG_DATUM(i);
-            nulls[i] = ' ';
-        }
-    }
-
-    if (get_call_result_type(fcinfo, NULL, &tupdesc) != TYPEFUNC_COMPOSITE) {
-        ereport(ERROR,
-                (errcode(ERRCODE_FEATURE_NOT_SUPPORTED),
-                    errmsg("function returning record called in context "
-                        "that cannot accept type record")));
-    }
-
-    tuple = run_sql_query_tuple(TABLE_NAME, sql, types, argcount, values, nulls, tupdesc);
-    pfree(values);
-    pfree(nulls);
-    pfree(types);
+    tuple = run_sql_query_tuple_args(fcinfo, TABLE_NAME, sql); 
 
     if (tuple != NULL) {
         PG_RETURN_DATUM(HeapTupleGetDatum(tuple));

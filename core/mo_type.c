@@ -15,33 +15,14 @@ PG_FUNCTION_INFO_V1(mo_type_create);
 Datum 
 mo_type_create(PG_FUNCTION_ARGS)
 {
-    int argcount = PG_NARGS();
-    Oid *types = palloc(sizeof(Oid) * argcount);
-    Datum * values = palloc(sizeof(Datum) * argcount);
-    char *nulls = palloc(sizeof(char) * argcount);
-    
-    char sql[200];
     int new_mo_type_id;
+    char sql[200];
     
     sprintf(sql, "insert into %s.mo_type(mo_type_id, description) \
         values(nextval('%s.seq_mo_type'), $1) \
         returning mo_type_id", SCHEMA_NAME, SCHEMA_NAME);
 
-    for (int i = 0; i < argcount; i++) {
-        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
-        if (PG_ARGISNULL(i)) {
-            values[i] =  (Datum) NULL;
-            nulls[i] = 'n';
-        } else {
-            values[i] = PG_GETARG_DATUM(i);
-            nulls[i] = ' ';
-        }
-    }
-
-    new_mo_type_id = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, true);
-    pfree(values);
-    pfree(nulls);
-    pfree(types);
+    new_mo_type_id = run_sql_cmd_args(fcinfo, TABLE_NAME, sql, true);
     PG_RETURN_INT32(new_mo_type_id);
 }
 
@@ -50,31 +31,12 @@ PG_FUNCTION_INFO_V1(mo_type_create_many);
 Datum 
 mo_type_create_many(PG_FUNCTION_ARGS)
 {
-    int argcount = PG_NARGS();
-    Oid *types = palloc(sizeof(Oid) * argcount);
-    Datum * values = palloc(sizeof(Datum) * argcount);
-    char *nulls = palloc(sizeof(char) * argcount);
     int proc;
-    
     char sql[200];
     sprintf(sql, "insert into %s.mo_type(mo_type_id, description) \
         values(nextval('%s.seq_mo_type'), unnest($1))", SCHEMA_NAME, SCHEMA_NAME);
 
-    for (int i = 0; i < argcount; i++) {
-        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
-        if (PG_ARGISNULL(i)) {
-            values[i] =  (Datum) NULL;
-            nulls[i] = 'n';
-        } else {
-            values[i] = PG_GETARG_DATUM(i);
-            nulls[i] = ' ';
-        }
-    }
-
-    proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, false);
-    pfree(values);
-    pfree(nulls);
-    pfree(types);
+    proc = run_sql_cmd_args(fcinfo, TABLE_NAME, sql, false);
     PG_RETURN_INT32(proc);
 }
 
@@ -83,32 +45,13 @@ PG_FUNCTION_INFO_V1(mo_type_update);
 Datum 
 mo_type_update(PG_FUNCTION_ARGS)
 {
-    int argcount = PG_NARGS();
-    Oid *types = palloc(sizeof(Oid) * argcount);
-    Datum * values = palloc(sizeof(Datum) * argcount);
-    char *nulls = palloc(sizeof(char) * argcount);
     int proc;
-
     char sql[200];
     sprintf(sql, "update %s.mo_type \
         set description = $2 \
         where mo_type_id = $1", SCHEMA_NAME);
 
-    for (int i = 0; i < argcount; i++) {
-        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
-        if (PG_ARGISNULL(i)) {
-            values[i] =  (Datum) NULL;
-            nulls[i] = 'n';
-        } else {
-            values[i] = PG_GETARG_DATUM(i);
-            nulls[i] = ' ';
-        }
-    }
-
-    proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, false);
-    pfree(values);
-    pfree(nulls);
-    pfree(types);
+    proc = run_sql_cmd_args(fcinfo, TABLE_NAME, sql, false);
     PG_RETURN_INT32(proc);
 }
 
@@ -117,31 +60,12 @@ PG_FUNCTION_INFO_V1(mo_type_delete);
 Datum 
 mo_type_delete(PG_FUNCTION_ARGS)
 {
-    int argcount = PG_NARGS();
-    Oid *types = palloc(sizeof(Oid) * argcount);
-    Datum * values = palloc(sizeof(Datum) * argcount);
-    char *nulls = palloc(sizeof(char) * argcount);
     int proc;
-
     char sql[200];
     sprintf(sql, "delete from %s.mo_type \
         where mo_type_id = $1", SCHEMA_NAME);
 
-    for (int i = 0; i < argcount; i++) {
-        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
-        if (PG_ARGISNULL(i)) {
-            values[i] =  (Datum) NULL;
-            nulls[i] = 'n';
-        } else {
-            values[i] = PG_GETARG_DATUM(i);
-            nulls[i] = ' ';
-        }
-    }
-
-    proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, false);
-    pfree(values);
-    pfree(nulls);
-    pfree(types);
+    proc = run_sql_cmd_args(fcinfo, TABLE_NAME, sql, false);
     PG_RETURN_INT32(proc);
 }
 
@@ -149,40 +73,13 @@ PG_FUNCTION_INFO_V1(mo_type_find_by_id);
 
 Datum
 mo_type_find_by_id(PG_FUNCTION_ARGS) {
-    int argcount = PG_NARGS();
-    Oid *types = palloc(sizeof(Oid) * argcount);
-    Datum *values = palloc(sizeof(Datum) * argcount);
-    char *nulls = palloc(sizeof(char) * argcount);
     HeapTuple tuple;
-    TupleDesc tupdesc;
-
     char sql[200];
     sprintf(sql, 
         "select mo_type_id, description from %s.mo_type \
         where mo_type_id = $1", SCHEMA_NAME);
 
-    for (int i = 0; i < argcount; i++) {
-        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
-        if (PG_ARGISNULL(i)) {
-            values[i] =  (Datum) NULL;
-            nulls[i] = 'n';
-        } else {
-            values[i] = PG_GETARG_DATUM(i);
-            nulls[i] = ' ';
-        }
-    }
-
-    if (get_call_result_type(fcinfo, NULL, &tupdesc) != TYPEFUNC_COMPOSITE) {
-        ereport(ERROR,
-                (errcode(ERRCODE_FEATURE_NOT_SUPPORTED),
-                    errmsg("function returning record called in context "
-                        "that cannot accept type record")));
-    }
-
-    tuple = run_sql_query_tuple(TABLE_NAME, sql, types, argcount, values, nulls, tupdesc);
-    pfree(values);
-    pfree(nulls);
-    pfree(types);
+    tuple = run_sql_query_tuple_args(fcinfo, TABLE_NAME, sql); 
 
     if (tuple != NULL) {
         PG_RETURN_DATUM(HeapTupleGetDatum(tuple));

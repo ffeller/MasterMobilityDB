@@ -14,4 +14,6 @@ int run_sql_cmd(char *, char *, Oid *, int, Datum *, char *, bool);
 HeapTuple run_sql_query_tuple(char *, char *, Oid *, int , Datum *, char *, TupleDesc);
 Datum run_sql_query_single(char *, char *, Oid *, int, Datum *, char *);
 HeapTuple ret_tuple(SPITupleTable *, TupleDesc);
- 
+int run_sql_cmd_args(PG_FUNCTION_ARGS, char *, char *, bool);
+void prepare_arrays(PG_FUNCTION_ARGS, int, Oid *, Datum *, char *);
+HeapTuple run_sql_query_tuple_args(PG_FUNCTION_ARGS, char *, char *);

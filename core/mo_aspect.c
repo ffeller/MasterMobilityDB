@@ -12,31 +12,12 @@ PG_FUNCTION_INFO_V1(mo_aspect_create);
 Datum 
 mo_aspect_create(PG_FUNCTION_ARGS)
 {
-    int argcount = PG_NARGS();
-    Oid *types = palloc(sizeof(Oid) * argcount);
-    Datum *values = palloc(sizeof(Datum) * argcount);
-    char *nulls = palloc(sizeof(char) * argcount);
     int proc;
-    
     char sql[200];
     sprintf(sql, "insert into %s.mo_aspect(mo_id, aspect_id, start_time, end_time) \
         values($1, $2, $3, $4)", SCHEMA_NAME);
 
-    for (int i = 0; i < argcount; i++) {
-        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
-        if (PG_ARGISNULL(i)) {
-            values[i] =  (Datum) NULL;
-            nulls[i] = 'n';
-        } else {
-            values[i] = PG_GETARG_DATUM(i);
-            nulls[i] = ' ';
-        }
-    }
-
-    proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, false);
-    pfree(values);
-    pfree(nulls);
-    pfree(types);
+    proc = run_sql_cmd_args(fcinfo, TABLE_NAME, sql, false);
     PG_RETURN_INT32(proc);
 }
 
@@ -45,31 +26,12 @@ PG_FUNCTION_INFO_V1(mo_aspect_create_many);
 Datum 
 mo_aspect_create_many(PG_FUNCTION_ARGS)
 {
-    int argcount = PG_NARGS();
-    Oid *types = palloc(sizeof(Oid) * argcount);
-    Datum *values = palloc(sizeof(Datum) * argcount);
-    char *nulls = palloc(sizeof(char) * argcount);
     int proc;
-    
     char sql[200];
     sprintf(sql, "insert into %s.mo_aspect(mo_id, aspect_id, start_time, end_time) \
         values(unnest($1), unnest($2), unnest($3), unnest($4))", SCHEMA_NAME);
 
-    for (int i = 0; i < argcount; i++) {
-        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
-        if (PG_ARGISNULL(i)) {
-            values[i] =  (Datum) NULL;
-            nulls[i] = 'n';
-        } else {
-            values[i] = PG_GETARG_DATUM(i);
-            nulls[i] = ' ';
-        }
-    }
-
-    proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, false);
-    pfree(values);
-    pfree(nulls);
-    pfree(types);
+    proc = run_sql_cmd_args(fcinfo, TABLE_NAME, sql, false);
     PG_RETURN_INT32(proc);
 }
 
@@ -78,32 +40,13 @@ PG_FUNCTION_INFO_V1(mo_aspect_update);
 Datum 
 mo_aspect_update(PG_FUNCTION_ARGS)
 {
-    int argcount = PG_NARGS();
-    Oid *types = palloc(sizeof(Oid) * argcount);
-    Datum *values = palloc(sizeof(Datum) * argcount);
-    char *nulls = palloc(sizeof(char) * argcount);
     int proc;
-    
     char sql[200];
     sprintf(sql, "update %s.mo_aspect \
         set start_time = $3, end_time = $4 \
         where mo_id = $1 and aspect_id = $2", SCHEMA_NAME);
 
-    for (int i = 0; i < argcount; i++) {
-        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
-        if (PG_ARGISNULL(i)) {
-            values[i] =  (Datum) NULL;
-            nulls[i] = 'n';
-        } else {
-            values[i] = PG_GETARG_DATUM(i);
-            nulls[i] = ' ';
-        }
-    }
-
-    proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, false);
-    pfree(values);
-    pfree(nulls);
-    pfree(types);
+    proc = run_sql_cmd_args(fcinfo, TABLE_NAME, sql, false);
     PG_RETURN_INT32(proc);
 }
 
@@ -112,33 +55,12 @@ PG_FUNCTION_INFO_V1(mo_aspect_delete);
 Datum 
 mo_aspect_delete(PG_FUNCTION_ARGS)
 {
-    int argcount = PG_NARGS();
-    Oid *types = palloc(sizeof(Oid) * argcount);
-    Datum *values = palloc(sizeof(Datum) * argcount);
-    char *nulls = palloc(sizeof(char) * argcount);
     int proc;
-    
     char sql[200];
     sprintf(sql, "delete from %s.mo_aspect \
         where mo_id = $1 and aspect_id = $2", SCHEMA_NAME);
 
-    SPI_connect();
-
-    for (int i = 0; i < argcount; i++) {
-        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
-        if (PG_ARGISNULL(i)) {
-            values[i] =  (Datum) NULL;
-            nulls[i] = 'n';
-        } else {
-            values[i] = PG_GETARG_DATUM(i);
-            nulls[i] = ' ';
-        }
-    }
-
-    proc = run_sql_cmd(TABLE_NAME, sql, types, argcount, values, nulls, false);
-    pfree(values);
-    pfree(nulls);
-    pfree(types);
+    proc = run_sql_cmd_args(fcinfo, TABLE_NAME, sql, false);
     PG_RETURN_INT32(proc);
 }
 
@@ -146,12 +68,7 @@ PG_FUNCTION_INFO_V1(mo_aspect_find_by_id);
 
 Datum
 mo_aspect_find_by_id(PG_FUNCTION_ARGS) {
-    int argcount = PG_NARGS();
-    Oid *types = palloc(sizeof(Oid) * argcount);
-    Datum *values = palloc(sizeof(Datum) * argcount);
-    char *nulls = palloc(sizeof(char) * argcount);
     HeapTuple tuple;
-    TupleDesc tupdesc;
 
     char sql[200];
     sprintf(sql, 
@@ -160,29 +77,8 @@ mo_aspect_find_by_id(PG_FUNCTION_ARGS) {
         where mo_id = $1 and aspect_id = $2", 
         SCHEMA_NAME);
 
-    for (int i = 0; i < argcount; i++) {
-        types[i] = get_fn_expr_argtype(fcinfo->flinfo, i);
-        if (PG_ARGISNULL(i)) {
-            values[i] =  (Datum) NULL;
-            nulls[i] = 'n';
-        } else {
-            values[i] = PG_GETARG_DATUM(i);
-            nulls[i] = ' ';
-        }
-    }
-
-    if (get_call_result_type(fcinfo, NULL, &tupdesc) != TYPEFUNC_COMPOSITE) {
-        ereport(ERROR,
-                (errcode(ERRCODE_FEATURE_NOT_SUPPORTED),
-                    errmsg("function returning record called in context "
-                        "that cannot accept type record")));
-    }
-
-    tuple = run_sql_query_tuple(TABLE_NAME, sql, types, argcount, values, nulls, tupdesc);
-    pfree(values);
-    pfree(nulls);
-    pfree(types);
-
+    tuple = run_sql_query_tuple_args(fcinfo, TABLE_NAME, sql); 
+    
     if (tuple != NULL) {
         PG_RETURN_DATUM(HeapTupleGetDatum(tuple));
     } else {

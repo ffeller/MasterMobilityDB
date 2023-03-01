@@ -14,7 +14,7 @@ OBJS = dbutil.o mastermobilitydb.o \
 	core/point.o \
 	core/point_aspect.o
 EXTENSION = mastermobilitydb
-DATA = mastermobilitydb--0.1.1.sql
+DATA = mastermobilitydb--0.2.1.sql
 PG_CONFIG = pg_config
 PGXS := $(shell $(PG_CONFIG) --pgxs)
 include $(PGXS)
