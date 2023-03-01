@@ -4,7 +4,7 @@
 #include "executor/spi.h"
 #include "funcapi.h"
 #include "utils/lsyscache.h"
- 
+
 #include "dbutil.h"
 
 char *str_lower(char *str){
