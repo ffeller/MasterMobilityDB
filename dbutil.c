@@ -4,6 +4,7 @@
 #include "executor/spi.h"
 #include "funcapi.h"
 #include "utils/lsyscache.h"
+#include "utils/builtins.h"
 
 #include "dbutil.h"
 
@@ -408,12 +409,80 @@ run_sql_cmd(table_name, sql, types, argcount, values, nulls, retid);
 
 }
 
-char * get_table_non_pk_columns(char *table_name, int *attr_qty) {
-    char sql[SQL_LENGTH];
+typ_table_s * get_table_structure(char *schema_name, char *table_name){
+  Datum *elems;
+  SPIPlanPtr stmt; 
+  bool isnull;
+  Datum newid;
+  int ret; 
+  uint64 proc;
+  SPITupleTable *tuptable;
+  char *op = operation(sql);
+  char sql[SQL_LENGTH];
     
-    sprintf(sql, 
-       "select column_name from pg_arr where table_name = '%s' and column_name not in (select column_name from information_schema.key_column_usage where table_name = '%s');", table_name, table_name);
-    SPI_connect();
+  sprintf(sql, 
+    "select n.nspname, c.relname, a.attname, \
+      format_type(atttypid, atttypmod), a.attnotnull, \
+      case when pk.attnum is not null then true else false end as attispk \
+    from pg_catalog.pg_attribute a \
+      inner join pg_catalog.pg_class c on \
+        c.oid = a.attrelid \
+      inner join pg_catalog.pg_namespace n on \
+        n.oid = c.relnamespace \
+      left outer join ( \
+        select k.conrelid, unnest(k.conkey) attnum \
+        from pg_catalog.pg_constraint k \
+        where k.contype = 'p') pk on \
+        pk.conrelid = c.oid \
+        and pk.attnum = a.attnum \
+    where n.nspname = '%s' \
+      and c.relname = '%s' \
+      and c.relkind = 'r' \
+      and a.attnum > 0 \
+    order by c.relname, a.attnum", 
+    schema_name, table_name);
+
+  if (!SPI_connect_called) {
+    elog(ERROR, ERR_MMDB_008);
+  }
+
+  stmt = SPI_prepare(sql, argcount, types);
+  if (!stmt) {
+    elog(ERROR, ERR_MMDB_001, op, SCHEMA_NAME, table);
+  }
+
+  if (SPI_keepplan(stmt) != 0) {
+    elog(ERROR, ERR_MMDB_005, op, SCHEMA_NAME, table);
+  }
+
+  ret = SPI_execp(stmt, values, nulls, 0);
+  if (ret < 0) {
+    elog(ERROR, ERR_MMDB_002, op, SCHEMA_NAME, table);
+  }
+  proc = SPI_processed;
+
+  if (proc == 0) {
+    elog(WARNING, ERR_MMDB_003, op, SCHEMA_NAME, table);
+  }
+
+  tuptable = SPI_tuptable;
+  *n = tuptable->numvals;
+  elems = (Datum *) palloc(*n * sizeof(Datum));
+
+  for (int i = 0; i < *n; i++) {
+    newid = SPI_getbinval(tuptable->vals[i],
+                                tuptable->tupdesc,
+                                1,
+                                &isnull);
+    elems[i] = newid;
+  }
+
+  if (SPI_finish() != SPI_OK_FINISH) {
+    elog(ERROR, ERR_MMDB_006, op, SCHEMA_NAME, table);
+  }
+
+  return elems;
+}
     int result = SPI_exec(query, 0);
     
     if (result < 0) {
