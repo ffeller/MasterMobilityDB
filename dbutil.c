@@ -412,7 +412,7 @@ char * get_table_non_pk_columns(char *table_name, int *attr_qty) {
     char sql[SQL_LENGTH];
     
     sprintf(sql, 
-      "select column_name from pg_arr where table_name = '%s' and column_name not in (select column_name from information_schema.key_column_usage where table_name = '%s');", table_name, table_name);
+       "select column_name from pg_arr where table_name = '%s' and column_name not in (select column_name from information_schema.key_column_usage where table_name = '%s');", table_name, table_name);
     SPI_connect();
     int result = SPI_exec(query, 0);
     
