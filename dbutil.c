@@ -399,7 +399,7 @@ char * temp_table (char *schema_name, char *table_name) {
   strcpy(tmpname, "tmp_");
   strcat(tmpname, table_name);
 
-  sprintf(sql,
+   sprintf(sql,
       "create temp table %s as \
           select description, x, y, t, space_time, aspect_type_id \
           from %s.%s limit 0", tmpname, schema_name, table_name);
