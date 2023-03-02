@@ -393,34 +393,101 @@ ArrayType * make_pg_array(
     return result;
 }
 
-char * temp_table (char *schema_name, char *table_name) {
-  char sql[SQL_LENGTH];
-  char tmpname[50];
-  
-  strcpy(tmpname, "tmp_");
-  strcat(tmpname, table_name);
+int prep_exec_sql(char* table, char *op, char *sql, int argcount, 
+  Oid *types, Datum *values
+) {
+  SPIPlanPtr stmt; 
+  int ret = 0;
+  int proc = 0;
 
-   sprintf(sql,
-      "create temp table %s as \
-          select description, x, y, t, space_time, aspect_type_id \
-          from %s.%s limit 0", tmpname, schema_name, table_name);
+  stmt = SPI_prepare(sql, 2, types);
+  if (!stmt) {
+    elog(ERROR, ERR_MMDB_001, op, SCHEMA_NAME, table);
+  }
 
-run_sql_cmd(table_name, sql, types, argcount, values, nulls, retid);
+  if (SPI_keepplan(stmt) != 0) {
+    elog(ERROR, ERR_MMDB_005, op, SCHEMA_NAME, table);
+  }
 
+  ret = SPI_execp(stmt, values, NULL, 0);
+  if (ret < 0) {
+    elog(ERROR, ERR_MMDB_002, op, SCHEMA_NAME, table);
+  }
+  proc = SPI_processed;
+
+  if (proc == 0) {
+    elog(WARNING, ERR_MMDB_003, op, SCHEMA_NAME, table);
+  }
+
+  return ret;
 }
 
-typ_table_s * get_table_structure(char *schema_name, char *table_name){
-  Datum *elems;
-  SPIPlanPtr stmt; 
-  bool isnull;
-  Datum newid;
-  int ret; 
-  uint64 proc;
-  SPITupleTable *tuptable;
-  char *op = operation(sql);
+int create_temp_table (char *table, typ_table_c type) {
+  // SPIPlanPtr stmt; 
+  char op[20] = "create_temp_table";
+  int ret; //, proc;
   char sql[SQL_LENGTH];
+  char ttable[OBJ_LENGTH];
+  typ_table_s ** tstruct;
+  int nelems;
+  
+  strcpy(ttable, "tmp_");
+  strcat(ttable, table);
+
+  tstruct = get_table_structure(table, &nelems);
+
+  sprintf(sql,
+    "create temp table %s (\n", ttable);
+  
+  for (int i = 0; i < nelems; i++) {
+    if ((type == 'R' && !tstruct[i]->pkey) || type == 'A') {
+      sprintf(sql, "\t%s %s %s %c\n", 
+        tstruct[i]->attribute, 
+        tstruct[i]->datatype, 
+        (tstruct[i]->required)?"not null":"null",
+        (i == nelems - 1)?')':',');
+    }
+  }
+
+  ret = prep_exec_sql(table, op, sql, 0, NULL, NULL);
+
+  return ret;
+
+  // stmt = SPI_prepare(sql, 0, NULL);
+  // if (!stmt) {
+  //   elog(ERROR, ERR_MMDB_001, op, SCHEMA_NAME, table);
+  // }
+
+  // if (SPI_keepplan(stmt) != 0) {
+  //   elog(ERROR, ERR_MMDB_005, op, SCHEMA_NAME, table);
+  // }
+
+  // ret = SPI_execp(stmt, NULL, NULL, 0);
+  // if (ret < 0) {
+  //   elog(ERROR, ERR_MMDB_002, op, SCHEMA_NAME, table);
+  // }
+  // proc = SPI_processed;
+
+  // if (proc == 0) {
+  //   elog(WARNING, ERR_MMDB_003, op, SCHEMA_NAME, table);
+  // }
+}
+
+typ_table_s ** get_table_structure(char *table, int *nelems){
+  // SPIPlanPtr stmt; 
+  bool isnull;
+  typ_table_s **elems;
+  int ret;
+  // uint64 proc;
+  SPITupleTable *tuptable;
+  char op[20] = "get_table_structure";
+  char sql[SQL_LENGTH];
+  Oid types[] = {VARCHAROID,VARCHAROID};
+  Datum *values = {
+    CStringGetTextDatum(cstring_to_text(SCHEMA_NAME)),
+    CStringGetTextDatum(cstring_to_text(table))};
     
-  sprintf(sql, 
+  strcpy(sql, 
     "select n.nspname, c.relname, a.attname, \
       format_type(atttypid, atttypmod), a.attnotnull, \
       case when pk.attnum is not null then true else false end as attispk \
@@ -435,72 +502,76 @@ typ_table_s * get_table_structure(char *schema_name, char *table_name){
         where k.contype = 'p') pk on \
         pk.conrelid = c.oid \
         and pk.attnum = a.attnum \
-    where n.nspname = '%s' \
-      and c.relname = '%s' \
+    where n.nspname = $1 \
+      and c.relname = $2 \
       and c.relkind = 'r' \
       and a.attnum > 0 \
-    order by c.relname, a.attnum", 
-    schema_name, table_name);
+    order by c.relname, a.attnum");
 
-  if (!SPI_connect_called) {
-    elog(ERROR, ERR_MMDB_008);
+  // stmt = SPI_prepare(sql, 2, types);
+  // if (!stmt) {
+  //   elog(ERROR, ERR_MMDB_001, op, SCHEMA_NAME, table);
+  // }
+
+  // if (SPI_keepplan(stmt) != 0) {
+  //   elog(ERROR, ERR_MMDB_005, op, SCHEMA_NAME, table);
+  // }
+
+  // ret = SPI_execp(stmt, values, NULL, 0);
+  // if (ret < 0) {
+  //   elog(ERROR, ERR_MMDB_002, op, SCHEMA_NAME, table);
+  // }
+  // proc = SPI_processed;
+
+  // if (proc == 0) {
+  //   elog(WARNING, ERR_MMDB_003, op, SCHEMA_NAME, table);
+  // }
+
+  ret = prep_exec_sql(table, op, sql, 2, types, values);
+  if (!ret) {
+    elog(ERROR, ERR_MMDB_008, op, SCHEMA_NAME, table);
   }
-
-  stmt = SPI_prepare(sql, argcount, types);
-  if (!stmt) {
-    elog(ERROR, ERR_MMDB_001, op, SCHEMA_NAME, table);
-  }
-
-  if (SPI_keepplan(stmt) != 0) {
-    elog(ERROR, ERR_MMDB_005, op, SCHEMA_NAME, table);
-  }
-
-  ret = SPI_execp(stmt, values, nulls, 0);
-  if (ret < 0) {
-    elog(ERROR, ERR_MMDB_002, op, SCHEMA_NAME, table);
-  }
-  proc = SPI_processed;
-
-  if (proc == 0) {
-    elog(WARNING, ERR_MMDB_003, op, SCHEMA_NAME, table);
-  }
-
+ 
   tuptable = SPI_tuptable;
-  *n = tuptable->numvals;
-  elems = (Datum *) palloc(*n * sizeof(Datum));
+  *nelems = tuptable->numvals;
+  elems = (typ_table_s **) palloc(*nelems * sizeof(typ_table_s));
 
-  for (int i = 0; i < *n; i++) {
-    newid = SPI_getbinval(tuptable->vals[i],
+  for (int i = 0; i < *nelems; i++) {
+    strcpy(elems[i]->schema, 
+      text_to_cstring(
+        (text *)DatumGetVarCharP(SPI_getbinval(tuptable->vals[i],
                                 tuptable->tupdesc,
                                 1,
-                                &isnull);
-    elems[i] = newid;
-  }
-
-  if (SPI_finish() != SPI_OK_FINISH) {
-    elog(ERROR, ERR_MMDB_006, op, SCHEMA_NAME, table);
+                                &isnull))));
+    strcpy(elems[i]->table, 
+      text_to_cstring(
+        (text *)DatumGetVarCharP(SPI_getbinval(tuptable->vals[i],
+                                tuptable->tupdesc,
+                                2,
+                                &isnull))));
+    strcpy(elems[i]->attribute, 
+      text_to_cstring(
+        (text *)DatumGetVarCharP(SPI_getbinval(tuptable->vals[i],
+                                tuptable->tupdesc,
+                                3,
+                                &isnull))));
+    strcpy(elems[i]->datatype, 
+      text_to_cstring(
+        (text *)DatumGetVarCharP(SPI_getbinval(tuptable->vals[i],
+                                tuptable->tupdesc,
+                                4,
+                                &isnull))));
+    elems[i]->required =
+      DatumGetBool(SPI_getbinval(tuptable->vals[i],
+                                tuptable->tupdesc,
+                                5,
+                                &isnull));
+    elems[i]->pkey = 
+      DatumGetBool(SPI_getbinval(tuptable->vals[i],
+                                tuptable->tupdesc,
+                                6,
+                                &isnull));
   }
 
   return elems;
-}
-    int result = SPI_exec(query, 0);
-    
-    if (result < 0) {
-        elog(ERROR, "Query failed: %s", SPI_result_code_string(result));
-        SPI_finish();
-        PG_RETURN_NULL();
-    }
-    
-    int num_rows = SPI_processed;
-    
-    for (int i = 0; i < num_rows; i++) {
-        char *column_name = SPI_getvalue(result, i, 1);
-        char *data_type = SPI_getvalue(result, i, 2);
-        char *is_nullable = SPI_getvalue(result, i, 3);
-        
-        printf("%s\t%s\t%s\n", column_name, data_type, is_nullable);
-    }
-    
-    SPI_finish();
-    PG_RETURN_NULL();
 }
