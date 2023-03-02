@@ -2,7 +2,7 @@
 #include "utils/array.h"
 
 #define SCHEMA_NAME "master"
-#define SQL_LENGTH 400
+#define SQL_LENGTH 800
 #define OBJ_LENGTH 30
 #define BATCH_SIZE 10000
 
@@ -13,7 +13,7 @@
 #define ERR_MMDB_005 "Failure saving %s on table %s.%s"
 #define ERR_MMDB_006 "Failure disconnecting from SPI manager on %s on table %s.%s"
 #define ERR_MMDB_007 "Failure getting results from %s on table %s.%s"
-#define ERR_MMDB_008 "SPI_connect() must be called first"
+#define ERR_MMDB_008 "Failure preparing and executing %s on table %s.%s"
 
 typedef struct {
   char schema[OBJ_LENGTH];
@@ -24,6 +24,7 @@ typedef struct {
   bool pkey;
 } typ_table_s;
 
+typedef enum{R,A} typ_table_c; //Regular or Associative
 char *str_lower(char *);
 char *operation(char *);
 
@@ -38,4 +39,7 @@ HeapTuple run_sql_query_tuple_args(PG_FUNCTION_ARGS, char *, char *);
 Datum * run_sql_cmd_new(char *, char *, Oid *, int, Datum *, char *, uint64 *);
 Datum * run_sql_cmd_args_new(PG_FUNCTION_ARGS, char *, char *, uint64 *);
 ArrayType * make_pg_array(Datum *, uint64);
-typ_table_s * get_table_structure(char *, char *);
+typ_table_s ** get_table_structure(char *, int *);
+int create_temp_table (char *table, typ_table_c type);
+int prep_exec_sql(char *, char *, char *, int, Oid *, Datum *);
+int create_temp_table (char *, typ_table_c);

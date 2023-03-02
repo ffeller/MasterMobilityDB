@@ -33,6 +33,9 @@ aspect_create_many(PG_FUNCTION_ARGS)
     ArrayType *result;
     char      sql[SQL_LENGTH]; 
     uint64    n;
+    int       ret;
+
+    // int ret = create_temp_table(TABLE_NAME, "R");
 
     sprintf(sql, 
         "with inserted as ( \
