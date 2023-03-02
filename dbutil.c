@@ -483,9 +483,9 @@ typ_table_s ** get_table_structure(char *table, int *nelems){
   char op[20] = "get_table_structure";
   char sql[SQL_LENGTH];
   Oid types[] = {VARCHAROID,VARCHAROID};
-  Datum *values = {
-    CStringGetTextDatum(cstring_to_text(SCHEMA_NAME)),
-    CStringGetTextDatum(cstring_to_text(table))};
+  Datum values[] = {
+    CStringGetTextDatum(SCHEMA_NAME),
+    CStringGetTextDatum(table)};
     
   strcpy(sql, 
     "select n.nspname, c.relname, a.attname, \
