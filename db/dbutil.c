@@ -6,7 +6,8 @@
 #include "utils/lsyscache.h"
 #include "utils/builtins.h"
 
-#include "dbutil.h"
+#include "db/dbutil.h"
+#include "db/connection.h"
 
 char *str_lower(char *str){
   int i = 0;
@@ -575,3 +576,4 @@ typ_table_s ** get_table_structure(char *table, int *nelems){
 
   return elems;
 }
+

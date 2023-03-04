@@ -3,7 +3,7 @@
 #include "fmgr.h"
 #include "executor/spi.h"
 
-#include "dbutil.h"
+#include "db/dbutil.h"
 
 #define TABLE_NAME "aspect_attribute"
  
@@ -29,7 +29,7 @@ aspect_attribute_create_many(PG_FUNCTION_ARGS)
     int proc;
     char sql[200];
     sprintf(sql, "insert into %s.aspect_attribute(aspect_id, attribute_id, value, data_type_id) \
-        values(unnest($1), unnest($2), unnest($3), unnest($4))", SCHEMA_NAME);
+        values(unnest($1), $2, unnest($3), $4)", SCHEMA_NAME);
 
     proc = run_sql_cmd_args(fcinfo, TABLE_NAME, sql, false);
     PG_RETURN_INT32(proc);

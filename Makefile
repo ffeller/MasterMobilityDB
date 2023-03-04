@@ -1,5 +1,7 @@
 MODULE_big = mastermobilitydb
-OBJS = dbutil.o mastermobilitydb.o \
+OBJS = mastermobilitydb.o \
+	db/dbutil.o \
+	db/connection.o \
 	core/aspect_attribute.o \
 	core/aspect_type.o \
 	core/aspect.o \

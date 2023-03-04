@@ -4,7 +4,8 @@
 #include "executor/spi.h"
 #include "utils/array.h"
 
-#include "dbutil.h"
+#include "db/dbutil.h"
+#include "db/connection.h"
 
 #define TABLE_NAME "aspect"
 
@@ -32,23 +33,22 @@ aspect_create_many(PG_FUNCTION_ARGS)
     Datum     *newids;
     ArrayType *result;
     char      sql[SQL_LENGTH]; 
-    uint64    n;
-    int       ret;
-
-    // int ret = create_temp_table(TABLE_NAME, "R");
+    uint64    nelems;
+    // int       ret;
+    // char      ttable[OBJ_LENGTH];
 
     sprintf(sql, 
         "with inserted as ( \
-            insert into %s.aspect(aspect_id, description, x, y, t, \
+            insert into %s.%s(description, x, y, t, \
                 space_time, aspect_type_id) \
-            values(nextval('%s.seq_aspect'), unnest($1), unnest($2), \
+            values(unnest($1), unnest($2), \
                 unnest($3), unnest($4), unnest($5), unnest($6)) \
             returning aspect_id) \
-        select aspect_id from inserted", SCHEMA_NAME, SCHEMA_NAME);
+        select aspect_id from inserted", SCHEMA_NAME, TABLE_NAME);
 
-    newids = run_sql_cmd_args_new(fcinfo, TABLE_NAME, sql, &n);
+    newids = run_sql_cmd_args_new(fcinfo, TABLE_NAME, sql, &nelems);
 
-    result = make_pg_array(newids, n);
+    result = make_pg_array(newids, nelems);
     PG_RETURN_ARRAYTYPE_P(result);
 }
 

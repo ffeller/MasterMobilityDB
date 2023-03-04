@@ -12,9 +12,9 @@ LANGUAGE C;
 CREATE OR REPLACE FUNCTION
 aspect_attribute_create_many(
   in aspect_id_array integer[], 
-  in attribute_id_array integer[], 
+  in attribute_id integer, 
   in data_value_array text[], 
-  in data_type_array integer[]) 
+  in data_type integer) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','aspect_attribute_create_many'
 LANGUAGE C;

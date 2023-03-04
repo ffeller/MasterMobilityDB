@@ -6,7 +6,7 @@
 
 #include <string.h>
 
-#include "dbutil.h"
+#include "db/dbutil.h"
 
 #define TABLE_NAME "mo_type"
 
