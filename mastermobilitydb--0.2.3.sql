@@ -110,6 +110,16 @@ AS 'MODULE_PATHNAME','aspect_type_find_by_id'
 LANGUAGE C STRICT;
 
 CREATE OR REPLACE FUNCTION
+aspect_type_find_by_name(
+  in key_name_1 varchar, 
+  out aspect_type_id integer, 
+  out description varchar, 
+  out super_type_id integer) 
+RETURNS record 
+AS 'MODULE_PATHNAME','aspect_type_find_by_name'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
 aspect_type_find_all(
   out aspect_type_id integer, 
   out description varchar, 
@@ -148,13 +158,6 @@ aspect_create_many(
   in aspect_type_id_array integer[]) 
 RETURNS integer[] 
 AS 'MODULE_PATHNAME','aspect_create_many'
-LANGUAGE C;
-
-CREATE OR REPLACE FUNCTION
-fteste(
-  in rows row_type[]) 
-RETURNS integer[] 
-AS 'MODULE_PATHNAME','fteste'
 LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
@@ -211,12 +214,23 @@ AS 'MODULE_PATHNAME','aspect_count'
 LANGUAGE C STRICT;
 -------------------------------------------------------------------------------
 
+CREATE OR REPLACE PROCEDURE
+my_commit()
+AS 'MODULE_PATHNAME','my_commit'
+LANGUAGE C;
+
+CREATE OR REPLACE FUNCTION
+my_commit2()
+RETURNS void
+AS 'MODULE_PATHNAME','my_commit2'
+LANGUAGE C;
+
 --attribute
 CREATE OR REPLACE FUNCTION
 attribute_create(
   in name varchar,
-  in data_type integer,
-  in aspect_type_id integer) 
+  in aspect_type_id integer,
+  in data_type_id integer) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','attribute_create'
 LANGUAGE C;
@@ -238,7 +252,7 @@ attribute_update(
   in aspect_type_id integer) 
 RETURNS integer 
 AS 'MODULE_PATHNAME','attribute_update'
-LANGUAGE C STRICT;
+LANGUAGE C;
 
 CREATE OR REPLACE FUNCTION
 attribute_delete(
@@ -256,6 +270,17 @@ attribute_find_by_id(
   out aspect_type_id integer) 
 RETURNS record 
 AS 'MODULE_PATHNAME','attribute_find_by_id'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+attribute_find_by_name(
+  in id_name_1 varchar,
+  out attribute_id integer, 
+  out name varchar,
+  out data_type integer,
+  out aspect_type_id integer) 
+RETURNS record 
+AS 'MODULE_PATHNAME','attribute_find_by_name'
 LANGUAGE C STRICT;
 
 CREATE OR REPLACE FUNCTION
@@ -312,6 +337,15 @@ data_type_find_by_id(
   out data_type_name varchar) 
 RETURNS record 
 AS 'MODULE_PATHNAME','data_type_find_by_id'
+LANGUAGE C STRICT;
+
+CREATE OR REPLACE FUNCTION
+data_type_find_by_name(
+  in id_name_1 varchar,
+  out data_type_id integer, 
+  out data_type_name varchar) 
+RETURNS record 
+AS 'MODULE_PATHNAME','data_type_find_by_name'
 LANGUAGE C STRICT;
 
 CREATE OR REPLACE FUNCTION

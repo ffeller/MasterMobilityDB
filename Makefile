@@ -15,7 +15,8 @@ OBJS = mastermobilitydb.o \
 	core/mor_aspect.o \
 	core/moving_object.o \
 	core/point.o \
-	core/point_aspect.o
+	core/point_aspect.o \
+	core/mycommit.o
 EXTENSION = mastermobilitydb
 DATA = mastermobilitydb--0.2.3.sql
 PG_CONFIG = pg_config

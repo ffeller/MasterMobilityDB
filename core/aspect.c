@@ -30,25 +30,21 @@ PG_FUNCTION_INFO_V1(aspect_create_many);
 Datum 
 aspect_create_many(PG_FUNCTION_ARGS)
 {
-    Datum     *newids;
     ArrayType *result;
     char      sql[SQL_LENGTH]; 
-    uint64    nelems;
-    // int       ret;
-    // char      ttable[OBJ_LENGTH];
 
     sprintf(sql, 
         "with inserted as ( \
-            insert into %s.%s(description, x, y, t, \
+            insert into %s.%s(aspect_id, description, x, y, t, \
                 space_time, aspect_type_id) \
-            values(unnest($1), unnest($2), \
+            values(nextval('%s.seq_%s'), unnest($1), unnest($2), \
                 unnest($3), unnest($4), unnest($5), unnest($6)) \
             returning aspect_id) \
-        select aspect_id from inserted", SCHEMA_NAME, TABLE_NAME);
+        select aspect_id from inserted", 
+        SCHEMA_NAME, TABLE_NAME, SCHEMA_NAME, TABLE_NAME);
 
-    newids = run_sql_cmd_args_new(fcinfo, TABLE_NAME, sql, &nelems);
+    result = run_sql_cmd_args_new(fcinfo, TABLE_NAME, sql);
 
-    result = make_pg_array(newids, nelems);
     PG_RETURN_ARRAYTYPE_P(result);
 }
 
@@ -181,28 +177,4 @@ aspect_find_all(PG_FUNCTION_ARGS)
         SPI_finish();
         SRF_RETURN_DONE(funcctx);
     }
-}
-
-PG_FUNCTION_INFO_V1(fteste);
-
-Datum 
-fteste(PG_FUNCTION_ARGS)
-{
-    Datum     *newids;
-    ArrayType *result;
-    char      sql[SQL_LENGTH]; 
-    uint64    n;
-
-    strcpy(sql, 
-        "with inserted as ( \
-            INSERT INTO temp_table (id, column1, column2, column3) \
-            SELECT nextval('master.seq_mo_type'),  (row_data).column1, (row_data).column2, (row_data).column3 \
-            FROM UNNEST($1) AS row_data \
-            returning id) \
-            select id from inserted");
-
-    newids = run_sql_cmd_args_new(fcinfo, TABLE_NAME, sql, &n);
-
-    result = make_pg_array(newids, n);
-    PG_RETURN_ARRAYTYPE_P(result);
 }

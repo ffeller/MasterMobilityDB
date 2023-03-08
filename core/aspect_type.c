@@ -13,7 +13,7 @@ Datum
 aspect_type_create(PG_FUNCTION_ARGS)
 {
     int new_aspect_type_id;
-    char sql[200]; 
+    char sql[SQL_LENGTH]; 
     sprintf(sql, "insert into %s.aspect_type(aspect_type_id, description, super_type_id) \
         values(nextval('%s.seq_aspect_type'), $1, $2) \
         returning aspect_type_id", SCHEMA_NAME, SCHEMA_NAME);
@@ -28,7 +28,7 @@ Datum
 aspect_type_create_many(PG_FUNCTION_ARGS)
 {
     int proc;
-    char sql[200]; 
+    char sql[SQL_LENGTH]; 
     sprintf(sql, "insert into %s.aspect_type(aspect_type_id, description, super_type_id) \
         values(nextval('%s.seq_aspect_type'), unnest($1), unnest($2))", SCHEMA_NAME, SCHEMA_NAME);
 
@@ -42,7 +42,7 @@ Datum
 aspect_type_update(PG_FUNCTION_ARGS)
 {
     int proc;
-    char sql[200]; 
+    char sql[SQL_LENGTH]; 
     sprintf(sql, "update %s.aspect_type \
         set description = $2, \
             super_type_id = $3 \
@@ -58,7 +58,7 @@ Datum
 aspect_type_delete(PG_FUNCTION_ARGS)
 {
     int proc;
-    char sql[200]; 
+    char sql[SQL_LENGTH]; 
     sprintf(sql, "delete from %s.aspect_type \
         where aspect_type_id = $1", SCHEMA_NAME);
 
@@ -72,11 +72,33 @@ Datum
 aspect_type_find_by_id(PG_FUNCTION_ARGS) {
     HeapTuple tuple;
 
-    char sql[200];
+    char sql[SQL_LENGTH];
     sprintf(sql, 
         "select aspect_type_id, description, super_type_id \
         from %s.aspect_type \
         where aspect_type_id = $1", 
+        SCHEMA_NAME);
+
+    tuple = run_sql_query_tuple_args(fcinfo, TABLE_NAME, sql); 
+
+    if (tuple != NULL) {
+        PG_RETURN_DATUM(HeapTupleGetDatum(tuple));
+    } else {
+        PG_RETURN_NULL();
+    }
+}
+
+PG_FUNCTION_INFO_V1(aspect_type_find_by_name);
+
+Datum
+aspect_type_find_by_name(PG_FUNCTION_ARGS) {
+    HeapTuple tuple;
+
+    char sql[SQL_LENGTH];
+    sprintf(sql, 
+        "select aspect_type_id, description, super_type_id \
+        from %s.aspect_type \
+        where description = $1", 
         SCHEMA_NAME);
 
     tuple = run_sql_query_tuple_args(fcinfo, TABLE_NAME, sql); 
@@ -93,7 +115,7 @@ PG_FUNCTION_INFO_V1(aspect_type_count);
 Datum
 aspect_type_count(PG_FUNCTION_ARGS) {
     Datum ret;
-    char sql[200];
+    char sql[SQL_LENGTH];
     sprintf(sql, 
         "select count(*) as cnt from %s.aspect_type", SCHEMA_NAME);
 
@@ -117,7 +139,7 @@ aspect_type_find_all(PG_FUNCTION_ARGS)
         MemoryContext   oldcontext;
         Portal          auxcurs;
 
-        char sql[200];
+        char sql[SQL_LENGTH];
         sprintf(sql, 
         "select aspect_type_id, description, super_type_id \
         from %s.aspect_type",

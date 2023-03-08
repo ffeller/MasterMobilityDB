@@ -90,6 +90,27 @@ data_type_find_by_id(PG_FUNCTION_ARGS) {
     }
 }
 
+PG_FUNCTION_INFO_V1(data_type_find_by_name);
+
+Datum
+data_type_find_by_name(PG_FUNCTION_ARGS) {
+    HeapTuple tuple;
+    char sql[SQL_LENGTH];
+    sprintf(sql, 
+        "select data_type_id, data_type_name \
+        from %s.data_type \
+        where data_type_name = $1", 
+        SCHEMA_NAME);
+
+    tuple = run_sql_query_tuple_args(fcinfo, TABLE_NAME, sql); 
+
+    if (tuple != NULL) {
+        PG_RETURN_DATUM(HeapTupleGetDatum(tuple));
+    } else {
+        PG_RETURN_NULL();
+    }
+}
+
 PG_FUNCTION_INFO_V1(data_type_count);
 
 Datum

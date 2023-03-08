@@ -74,7 +74,7 @@ aspect_attribute_find_by_id(PG_FUNCTION_ARGS) {
     HeapTuple tuple;
     char sql[200];
     sprintf(sql, 
-        "select aspect_id, attribute_id, value, data_type \
+        "select aspect_id, attribute_id, value, data_type_id \
         from %s.aspect_attribute \
         where aspect_id = $1 and attribute_id = $2", 
         SCHEMA_NAME);
@@ -119,7 +119,7 @@ aspect_attribute_find_all(PG_FUNCTION_ARGS)
 
         char sql[200];
         sprintf(sql, 
-        "select aspect_id, attribute_id, value, data_type \
+        "select aspect_id, attribute_id, value, data_type_id \
         from %s.aspect_attribute",
         SCHEMA_NAME);
         

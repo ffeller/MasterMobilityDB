@@ -15,7 +15,9 @@ mat_create(PG_FUNCTION_ARGS)
     int new_mat_id;
     char sql[200];
     sprintf(sql, "insert into %s.mat(mat_id, description) \
-        values(nextval('%s.seq_mat'), $1)", SCHEMA_NAME, SCHEMA_NAME);
+        values(nextval('%s.seq_mat'), $1) \
+        returning mat_id", 
+        SCHEMA_NAME, SCHEMA_NAME);
 
     new_mat_id = run_sql_cmd_args(fcinfo, TABLE_NAME, sql, true);
     PG_RETURN_INT32(new_mat_id);

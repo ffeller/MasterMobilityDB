@@ -67,19 +67,16 @@ Portal open_cursor(
     if (!stmt) {
         elog(ERROR, ERR_MMDB_001, op, SCHEMA_NAME, table);
     }
-    SPI_keepplan(stmt);
+
     curs = SPI_cursor_open(curname, stmt, values, nulls, true);
 
     return(curs);
 }
 
-int run_sql_cmd(
+int run_sql_cmd_args(
+  PG_FUNCTION_ARGS,
   char *table,
   char *sql,
-  Oid *types,
-  int argcount,
-  Datum *values,
-  char *nulls,
   bool retid
 ) {
   SPIPlanPtr stmt; 
@@ -87,24 +84,36 @@ int run_sql_cmd(
   int newid = 0;
   int ret, proc;
   char *op = operation(sql);
+  int argcount = PG_NARGS();
+  Oid *types = NULL;
+  Datum *values = NULL;
+  char *nulls = NULL;
 
-  SPI_connect();
-
-  stmt = SPI_prepare(sql, argcount, types);
-  if (!stmt) {
-      elog(ERROR, ERR_MMDB_001, op, SCHEMA_NAME, table);
+  if (SPI_connect_ext(SPI_OPT_NONATOMIC) != SPI_OK_CONNECT) {
+    elog(ERROR, ERR_MMDB_004, op, SCHEMA_NAME, table);
   }
 
-  SPI_keepplan(stmt);
+  if (argcount > 0) {
+    types = (Oid *) palloc0(sizeof(Oid) * argcount);
+    values = (Datum *) palloc0(sizeof(Datum) * argcount);
+    nulls = (char *) palloc0(sizeof(char) * argcount);
+
+    prepare_arrays(fcinfo, argcount, types, values, nulls);
+  }
+    
+  stmt = SPI_prepare(sql, argcount, types);
+  if (!stmt) {
+    elog(ERROR, ERR_MMDB_001, op, SCHEMA_NAME, table);
+  }
 
   ret = SPI_execp(stmt, values, nulls, (retid)?1:0);
   if (ret < 0) {
-      elog(ERROR, ERR_MMDB_002, op, SCHEMA_NAME, table);
+    elog(ERROR, ERR_MMDB_002, op, SCHEMA_NAME, table);
   }
   proc = SPI_processed;
 
   if (proc == 0) {
-      elog(WARNING, ERR_MMDB_003, op, SCHEMA_NAME, table);
+    elog(WARNING, ERR_MMDB_003, op, SCHEMA_NAME, table);
   } else {
     if (retid) {
       newid = DatumGetInt32(SPI_getbinval(SPI_tuptable->vals[0],
@@ -115,36 +124,137 @@ int run_sql_cmd(
   }
 
   if (retid) {
-      ret = newid;
+    ret = newid;
   } else {
-      ret = proc;
+    ret = proc;
   }
 
-  SPI_finish();
+  if (argcount > 0) {
+    pfree(values);
+    pfree(nulls);
+    pfree(types);
+  }
+
+  if (SPI_freeplan(stmt) != 0) {
+     elog(ERROR, ERR_MMDB_009, op, SCHEMA_NAME, table);
+  }
+
+  if (SPI_finish() != SPI_OK_FINISH) {
+    elog(ERROR, ERR_MMDB_006, op, SCHEMA_NAME, table);
+  }
 
   return ret;
 }
 
-Datum * run_sql_cmd_new(
-  char *table,
-  char *sql,
+ParamListInfo prepare_params(
+  int argcount,
   Oid *types,
-  int argcount, 
+  Datum *values,
+  char *nulls
+) {
+	ParamListInfo paramLI;
+
+	if (argcount > 0)
+	{
+		paramLI = makeParamList(argcount);
+
+		for (int i = 0; i < argcount; i++)
+		{
+			ParamExternData *prm = &paramLI->params[i];
+
+			prm->value = values[i];
+			prm->isnull = (nulls && nulls[i] == 'n');
+			prm->pflags = PARAM_FLAG_CONST;
+			prm->ptype = types[i];
+		}
+	}	else {
+    paramLI = NULL;
+  }
+		
+	return paramLI;
+}
+
+SPIExecuteOptions prepare_opts(
+  int argcount,
+  Oid *types,
   Datum *values,
   char *nulls,
-  uint64 *n
+  char *operation
 ) {
-  Datum *elems;
+  SPIExecuteOptions execopts;
+  ParamListInfo paramLI;
+
+  memset(&execopts, 0, sizeof(execopts));
+  paramLI = prepare_params(argcount, types, values, nulls);
+  execopts.params = paramLI;
+  execopts.read_only = (!strcmp(operation, "select"));
+  execopts.allow_nonatomic = true;
+  execopts.must_return_tuples = true;
+  execopts.tcount = BATCH_SIZE;
+  execopts.dest = NULL;
+  execopts.owner = NULL;
+
+  return execopts;
+}
+
+ArrayType * make_pg_array(
+    Datum *carray, 
+    uint64 nelems
+) {
+    ArrayType *result;
+    Oid       elemtype = INT4OID;
+    int16     typlen;
+    bool      typbyval;
+    char      typalign;
+    // int       dims[1];
+    // int       lbs[1];
+    // int       ndims = 1;
+
+    // dims[0] = nelems;
+    // lbs[0] = 1;
+
+    get_typlenbyvalalign(elemtype, &typlen, &typbyval, &typalign);    
+    // result = construct_md_array(carray, NULL, ndims, dims, lbs, elemtype, typlen, typbyval, typalign);
+    result = construct_array(carray, nelems, elemtype, typlen, typbyval, typalign);
+
+    return result;
+}
+
+ArrayType * run_sql_cmd_args_new(
+  PG_FUNCTION_ARGS, 
+  char *table, 
+  char *sql
+) {
+  uint64 n;
   SPIPlanPtr stmt; 
   bool isnull;
   Datum newid;
+  Datum *values = NULL;
+  Datum *newids = NULL;
+  Oid *types = NULL;
+  char *nulls = NULL;
   int ret; 
   uint64 proc;
   SPITupleTable *tuptable;
   char *op = operation(sql);
+  int argcount = PG_NARGS();
+
+  ArrayType *result = NULL;
+  // Oid       elemtype = INT4OID;
+  int16     typlen;
+  bool      typbyval;
+  char      typalign;
 
   if (SPI_connect() != SPI_OK_CONNECT) {
     elog(ERROR, ERR_MMDB_004, op, SCHEMA_NAME, table);
+  }
+
+  if (argcount > 0) {
+    types = (Oid *) palloc0(sizeof(Oid) * argcount);
+    values = (Datum *) palloc0(sizeof(Datum) * argcount);
+    nulls = (char *) palloc0(sizeof(char) * argcount);
+
+    prepare_arrays(fcinfo, argcount, types, values, nulls);
   }
 
   stmt = SPI_prepare(sql, argcount, types);
@@ -152,14 +262,11 @@ Datum * run_sql_cmd_new(
     elog(ERROR, ERR_MMDB_001, op, SCHEMA_NAME, table);
   }
 
-  if (SPI_keepplan(stmt) != 0) {
-    elog(ERROR, ERR_MMDB_005, op, SCHEMA_NAME, table);
-  }
-
   ret = SPI_execp(stmt, values, nulls, 0);
   if (ret < 0) {
     elog(ERROR, ERR_MMDB_002, op, SCHEMA_NAME, table);
   }
+
   proc = SPI_processed;
 
   if (proc == 0) {
@@ -167,22 +274,37 @@ Datum * run_sql_cmd_new(
   }
 
   tuptable = SPI_tuptable;
-  *n = tuptable->numvals;
-  elems = (Datum *) palloc(*n * sizeof(Datum));
+  n = tuptable->numvals;
+  newids = (Datum *) palloc0(n * sizeof(Datum));
 
-  for (int i = 0; i < *n; i++) {
+  for (int i = 0; i < n; i++) {
     newid = SPI_getbinval(tuptable->vals[i],
                                 tuptable->tupdesc,
                                 1,
                                 &isnull);
-    elems[i] = newid;
+    newids[i] = newid;
+  }
+
+  if (n > 0) {
+    get_typlenbyvalalign(INT4OID, &typlen, &typbyval, &typalign);    
+    result = construct_array(newids, n, INT4OID, typlen, typbyval, typalign);
+  }
+
+  if (argcount > 0) {
+    pfree(values);
+    pfree(nulls);
+    pfree(types);
+  }
+
+  if (SPI_freeplan(stmt) != 0) {
+     elog(ERROR, ERR_MMDB_009, op, SCHEMA_NAME, table);
   }
 
   if (SPI_finish() != SPI_OK_FINISH) {
     elog(ERROR, ERR_MMDB_006, op, SCHEMA_NAME, table);
   }
 
-  return elems;
+  return result;
 }
 
 HeapTuple ret_tuple(
@@ -199,8 +321,8 @@ HeapTuple ret_tuple(
     srctuple = srctuptable->vals[0];
     colcount = srctupdesc->natts;
 
-    values = (Datum *) palloc(sizeof(Datum) * colcount);
-    nulls = (bool *) palloc(sizeof(bool) * colcount);
+    values = (Datum *) palloc0(sizeof(Datum) * colcount);
+    nulls = (bool *) palloc0(sizeof(bool) * colcount);
     for (int i = 1; i <= colcount; i++) {
         // elog(INFO, "%s=%s", SPI_fname(srctupdesc, i), SPI_getvalue(srctuple, srctupdesc, i));
         values[i-1] = SPI_getbinval(srctuple, srctupdesc, i, &isnull);
@@ -306,58 +428,15 @@ void prepare_arrays(
     }
 }
 
-Datum * run_sql_cmd_args_new(
-    PG_FUNCTION_ARGS, 
-    char *table_name, 
-    char *sql,
-    uint64 *n
-) {
-    Datum *newids;
-    int argcount = PG_NARGS();
-    Oid *types = (Oid *) palloc(sizeof(Oid) * argcount);
-    Datum *values = (Datum *) palloc(sizeof(Datum) * argcount);
-    char *nulls = (char *) palloc(sizeof(char) * argcount);
-
-    prepare_arrays(fcinfo, argcount, types, values, nulls);
-    
-    newids = run_sql_cmd_new(table_name, sql, types, argcount, values, nulls, n);
-    pfree(values);
-    pfree(nulls);
-    pfree(types);
-
-    return newids;
-}
-
-int run_sql_cmd_args(
-    PG_FUNCTION_ARGS, 
-    char *table_name, 
-    char *sql, 
-    bool retid
-) {
-    int argcount = PG_NARGS();
-    Oid * types = (Oid *) palloc(sizeof(Oid) * argcount);
-    Datum * values = (Datum *) palloc(sizeof(Datum) * argcount);
-    char * nulls = (char *) palloc(sizeof(char) * argcount);
-    int new_id;
-
-    prepare_arrays(fcinfo, argcount, types, values, nulls);
-    
-    new_id = run_sql_cmd(table_name, sql, types, argcount, values, nulls, retid);
-    pfree(values);
-    pfree(nulls);
-    pfree(types);
-    return new_id;
-}
-
 HeapTuple run_sql_query_tuple_args(
     PG_FUNCTION_ARGS, 
     char * table_name, 
     char * sql
 ) {
     int argcount = PG_NARGS();
-    Oid * types = (Oid *) palloc(sizeof(Oid) * argcount);
-    Datum * values = (Datum *) palloc(sizeof(Datum) * argcount);
-    char * nulls = (char *) palloc(sizeof(char) * argcount);
+    Oid * types = (Oid *) palloc0(sizeof(Oid) * argcount);
+    Datum * values = (Datum *) palloc0(sizeof(Datum) * argcount);
+    char * nulls = (char *) palloc0(sizeof(char) * argcount);
     HeapTuple tuple;
     TupleDesc tupdesc;
 
@@ -378,22 +457,6 @@ HeapTuple run_sql_query_tuple_args(
     return tuple;
 }
 
-ArrayType * make_pg_array(
-    Datum *carray, 
-    uint64 nelems
-) {
-    ArrayType *result;
-    Oid       elemtype = INT4OID;
-    int16     typlen;
-    bool      typbyval;
-    char      typalign;
-
-    get_typlenbyvalalign(elemtype, &typlen, &typbyval, &typalign);    
-    result = construct_array(carray, nelems, INT4OID, typlen, typbyval, typalign);
-
-    return result;
-}
-
 int prep_exec_sql(char* table, char *op, char *sql, int argcount, 
   Oid *types, Datum *values
 ) {
@@ -404,10 +467,6 @@ int prep_exec_sql(char* table, char *op, char *sql, int argcount,
   stmt = SPI_prepare(sql, 2, types);
   if (!stmt) {
     elog(ERROR, ERR_MMDB_001, op, SCHEMA_NAME, table);
-  }
-
-  if (SPI_keepplan(stmt) != 0) {
-    elog(ERROR, ERR_MMDB_005, op, SCHEMA_NAME, table);
   }
 
   ret = SPI_execp(stmt, values, NULL, 0);
@@ -457,10 +516,6 @@ int create_temp_table (char *table, typ_table_c type) {
   // stmt = SPI_prepare(sql, 0, NULL);
   // if (!stmt) {
   //   elog(ERROR, ERR_MMDB_001, op, SCHEMA_NAME, table);
-  // }
-
-  // if (SPI_keepplan(stmt) != 0) {
-  //   elog(ERROR, ERR_MMDB_005, op, SCHEMA_NAME, table);
   // }
 
   // ret = SPI_execp(stmt, NULL, NULL, 0);
@@ -535,7 +590,7 @@ typ_table_s ** get_table_structure(char *table, int *nelems){
  
   tuptable = SPI_tuptable;
   *nelems = tuptable->numvals;
-  elems = (typ_table_s **) palloc(*nelems * sizeof(typ_table_s));
+  elems = (typ_table_s **) palloc0(*nelems * sizeof(typ_table_s));
 
   for (int i = 0; i < *nelems; i++) {
     strcpy(elems[i]->schema, 

@@ -13,10 +13,12 @@ Datum
 attribute_create(PG_FUNCTION_ARGS)
 {
     int new_attribute_id;
-    char sql[200]; 
-    sprintf(sql, "insert into %s.attribute( \
-        attribute_id, name, aspect_type_id, data_type_id) \
-        values(nextval('%s.seq_attribute'), $1, $2, $3)",
+    char sql[SQL_LENGTH]; 
+    sprintf(sql, 
+        "insert into %s.attribute(attribute_id, name, \
+        aspect_type_id, data_type_id) \
+        values(nextval('%s.seq_attribute'), $1, $2, $3) \
+        returning attribute_id",
         SCHEMA_NAME, SCHEMA_NAME);
 
     new_attribute_id = run_sql_cmd_args(fcinfo, TABLE_NAME, sql, true);
@@ -29,7 +31,7 @@ Datum
 attribute_create_many(PG_FUNCTION_ARGS)
 {
     int proc;
-    char sql[200]; 
+    char sql[SQL_LENGTH]; 
     sprintf(sql, 
         "insert into %s.attribute(attribute_id, name, aspect_type_id, data_type_id) \
         values(nextval('%s.seq_attribute'), unnest($1), unnest($2), unnest($3))",
@@ -45,7 +47,7 @@ Datum
 attribute_update(PG_FUNCTION_ARGS)
 {
     int proc;
-    char sql[200]; 
+    char sql[SQL_LENGTH]; 
     sprintf(sql, "update %s.attribute \
         set name = $2, aspect_type_id = $3, data_type_id = $4 \
         where attribute_id = $1", SCHEMA_NAME);
@@ -60,7 +62,7 @@ Datum
 attribute_delete(PG_FUNCTION_ARGS)
 {
     int proc;
-    char sql[200]; 
+    char sql[SQL_LENGTH]; 
     sprintf(sql, "delete from %s.attribute \
         where attribute_id = $1", SCHEMA_NAME);
 
@@ -73,7 +75,7 @@ PG_FUNCTION_INFO_V1(attribute_find_by_id);
 Datum
 attribute_find_by_id(PG_FUNCTION_ARGS) {
     HeapTuple tuple;
-    char sql[200];
+    char sql[SQL_LENGTH];
     sprintf(sql, 
         "select attribute_id, name, aspect_type_id, data_type_id \
         from %s.attribute \
@@ -94,7 +96,7 @@ PG_FUNCTION_INFO_V1(attribute_count);
 Datum
 attribute_count(PG_FUNCTION_ARGS) {
     Datum ret;
-    char sql[200];
+    char sql[SQL_LENGTH];
     sprintf(sql, 
         "select count(*) as cnt from %s.attribute", SCHEMA_NAME);
 
@@ -118,7 +120,7 @@ attribute_find_all(PG_FUNCTION_ARGS)
         MemoryContext   oldcontext;
         Portal          auxcurs;
 
-        char sql[200];
+        char sql[SQL_LENGTH];
         sprintf(sql, 
         "select attribute_id, name, aspect_type_id, data_type_id \
         from %s.attribute",
@@ -164,6 +166,27 @@ attribute_find_all(PG_FUNCTION_ARGS)
         SPI_cursor_close(curs);
         SPI_finish();
         SRF_RETURN_DONE(funcctx);
+    }
+}
+
+PG_FUNCTION_INFO_V1(attribute_find_by_name);
+
+Datum
+attribute_find_by_name(PG_FUNCTION_ARGS) {
+    HeapTuple tuple;
+    char sql[SQL_LENGTH];
+    sprintf(sql, 
+        "select attribute_id, name, aspect_type_id, data_type_id \
+        from %s.attribute \
+        where name = $1", 
+        SCHEMA_NAME);
+
+    tuple = run_sql_query_tuple_args(fcinfo, TABLE_NAME, sql); 
+
+    if (tuple != NULL) {
+        PG_RETURN_DATUM(HeapTupleGetDatum(tuple));
+    } else {
+        PG_RETURN_NULL();
     }
 }
 
