@@ -12,8 +12,12 @@ sudo apt-get -y install postgresql-14-postgis-3-scripts=3.2.0+dfsg-1ubuntu1 post
 3. Registro das extensões
 sudo su - postgres
 createdb -e -T template0 mobility
-psql -e -d <<EOF 
+psql -e -d mobility <<EOF 
 create schema if not exists master; 
+create schema if not exists util; 
+create schema if not exists partitions; 
+create schema if not exists staging; 
+
 create extensiom if not exists postgis; 
 create extension if not exists file_fdw; 
 create extension if not exists mobilitydb; 
