@@ -1,0 +1,3 @@
+/usr/lib/postgresql/14/lib/libMobilityDB-1.0.so
+/usr/share/postgresql/14/extension/mobilitydb.control
+/usr/share/postgresql/14/extension/mobilitydb--1.0.0.sql
