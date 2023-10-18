@@ -1,0 +1,2 @@
+disabled_fks
+disabled_indexes

@@ -1,0 +1,14 @@
+aspect_attribute
+mor_aspect
+mo_aspect
+point_aspect
+point
+mat_aspect
+mo_relationship
+attribute
+mat
+aspect
+aspect_type
+moving_object
+mo_type
+data_type

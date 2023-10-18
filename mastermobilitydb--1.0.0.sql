@@ -5476,5 +5476,5 @@ begin
 end;
 $procedure$;
 
-COMMENT ON PROCEDURE create_partitions_by_date
+COMMENT ON PROCEDURE util.create_partitions_by_date
 IS 'Create partitions by date for the relation';

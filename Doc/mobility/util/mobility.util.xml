@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8"?><database name="mobility" schema="util" type="PostgreSQL - 14.9 (Ubuntu 14.9-1.pgdg22.04+1)">
+   <tables>
+      <table name="disabled_fks" numRows="0" remarks="" schema="util" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="fk_id" nullable="true" remarks="" size="10" type="oid" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="rel_id" nullable="false" remarks="" size="10" type="oid" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="fk_name" nullable="true" remarks="" size="2147483647" type="name" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="fk_def" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="schema_name" nullable="true" remarks="" size="2147483647" type="name" typeCode="12"/>
+      </table>
+      <table name="disabled_indexes" numRows="0" remarks="" schema="util" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="ind_id" nullable="true" remarks="" size="10" type="oid" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="ind_name" nullable="false" remarks="" size="2147483647" type="name" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="rel_id" nullable="false" remarks="" size="10" type="oid" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="ind_def" nullable="false" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="schema_name" nullable="false" remarks="" size="2147483647" type="name" typeCode="12"/>
+      </table>
+   </tables>
+   <routines>
+      <routine dataAccess="MODIFIES" deterministic="false" name="create_partitions_by_date(IN p_schemaname text, IN p_tablename text, IN p_startdate date, IN p_enddate date, IN p_columnname text, IN p_interval text, IN p_schemapart text DEFAULT 'partitions'::text)" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Create partitions by date for the relation]]></comment>
+         <definition language="plpgsql"><![CDATA[declare
+  v_d date;
+  v_d1 date;
+  v_partitionname text;
+  v_interval text default '1 ' || p_interval;
+ 
+  c_indexes record;
+begin
+  if not exists (
+    select *
+    from information_schema.tables t
+    where t.table_name = lower(p_tablename)
+    	and t.table_schema = lower(p_schemaname)) 
+  then
+    raise exception 'table %.% does not exist', p_schemaname, p_tablename;
+  end if;
+ 
+  if p_startdate >= p_enddate then
+    raise exception 'the start date % must be before the end date %', 
+    	p_startdate, p_enddate;
+  end if;
+ 
+  v_d := p_startdate;
+
+  while v_d <= p_enddate 
+  loop
+    v_partitionname := p_tablename || '_' || to_char(v_d, 'yyyy_mm_dd');
+   
+    if not exists (
+      select 1
+       from information_schema.tables t
+       where t.table_name = lower(v_partitionname)
+       	 and t.table_schema = lower(p_schemapart)
+    ) then
+      v_d1 := v_d + v_interval::interval;
+     
+      execute format(
+      	'create table %s.%s(
+				 check ( %s >= date ''%s'' and %s < date ''%s'') 
+				) inherits (%s.%s)', 
+        p_schemapart, v_partitionname, p_columnname, to_char(v_d, 'yyyy-mm-dd'), 
+        p_columnname, to_char(v_d1, 'yyyy-mm-dd'), p_schemaname, p_tablename);
+
+      for c_indexes in
+				select 
+					replace(
+						replace(
+							replace(
+								pg_get_indexdef(i.indexrelid), 
+								p_tablename || ' ', 
+								v_partitionname || ' '
+							),
+							p_tablename || '_pkey', 
+							v_partitionname || '_pkey'
+						),
+						p_schemaname,
+						p_schemapart) ind_def 
+				from pg_catalog.pg_index i
+					inner join pg_catalog.pg_class c on
+						c."oid" = i.indrelid 
+					inner join pg_catalog.pg_namespace n on
+						n."oid" = c.relnamespace 
+					where c.relname = p_tablename
+						and n.nspname = p_schemaname
+	  loop 
+	  	execute c_indexes.ind_def;
+	  end loop;
+		
+      raise notice 'partition %.% has been created', 
+     		p_schemapart, v_partitionname;
+    end if;
+   
+    v_d := v_d + v_interval::interval;
+  end loop;
+end;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_schemaname" type="text"/>
+            <parameter mode="IN" name="p_tablename" type="text"/>
+            <parameter mode="IN" name="p_startdate" type="date"/>
+            <parameter mode="IN" name="p_enddate" type="date"/>
+            <parameter mode="IN" name="p_columnname" type="text"/>
+            <parameter mode="IN" name="p_interval" type="text"/>
+            <parameter mode="IN" name="p_schemapart" type="text"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="disable_fks(IN p_schema_name character varying, IN p_table_name character varying)" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Disable foreign key constraints for the specified relation]]></comment>
+         <definition language="plpgsql"><![CDATA[declare 
+	c_fks record;
+begin
+	for c_fks in 
+		select n.nspname schema_name, c."oid" fk_id, c.conrelid rel_id, 
+			c.conname fk_name, pg_get_constraintdef(c."oid") fk_def 
+		from pg_catalog.pg_constraint c
+			inner join pg_catalog.pg_namespace n on
+				c.connamespace = n.oid
+			inner join pg_catalog.pg_class t on
+				t."oid" = c.conrelid 
+		where t.relname = p_table_name
+			and n.nspname = p_schema_name
+			and c.contype = 'f'
+			and t.relkind = 'r'
+	loop
+		insert into util.disabled_fks(fk_id, rel_id, schema_name, fk_name, fk_def)
+		values(c_fks.fk_id, c_fks.rel_id, c_fks.schema_name, c_fks.fk_name, 
+			c_fks.fk_def);
+	
+		execute format(
+			'alter table %s.%s drop constraint %s', p_schema_name, p_table_name, 
+				c_fks.fk_name);	
+	end loop;
+
+	if not found then
+		raise warning 'table %.% has no foreign keys to disable.', p_schema_name, 
+			p_table_name;
+	end if;
+end;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_schema_name" type="character varying"/>
+            <parameter mode="IN" name="p_table_name" type="character varying"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="disable_indexes(IN p_schema_name character varying, IN p_table_name character varying)" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Disable indexes for the specified relation]]></comment>
+         <definition language="plpgsql"><![CDATA[declare 
+	c_indexes record;
+begin
+	for c_indexes in 
+		select i.indexrelid ind_id, i.indrelid rel_id, 
+			n.nspname schema_name,  c.relname ind_name, 
+			pg_get_indexdef(i.indexrelid) ind_def 
+		from pg_catalog.pg_index i
+			inner join pg_catalog.pg_class c on
+				c."oid" = i.indexrelid 
+			inner join pg_catalog.pg_namespace n on
+				n."oid" = c.relnamespace 
+			inner join (
+				select c.oid, c.relname 
+				from pg_catalog.pg_class c
+					inner join pg_catalog.pg_namespace n on
+						n."oid" = c.relnamespace 
+				where n.nspname = p_schema_name
+					and c.relname = p_table_name
+				union all
+				select i.inhrelid, s.relname 
+				from pg_catalog.pg_inherits i
+					inner join pg_catalog.pg_class p on
+						p."oid" = i.inhparent 
+					inner join pg_catalog.pg_class s on
+						s."oid" = i.inhrelid 
+					inner join pg_catalog.pg_namespace n on
+						n."oid" = p.relnamespace 
+				where n.nspname = p_schema_name
+					and p.relname = p_table_name
+			) r on i.indrelid = r.oid
+		where not indisprimary 
+		order by rel_id, ind_id
+	loop
+		insert into util.disabled_indexes(ind_id, rel_id, schema_name, ind_name, 
+			ind_def)
+		values(c_indexes.ind_id, c_indexes.rel_id, c_indexes.schema_name,
+			c_indexes.ind_name, c_indexes.ind_def);
+	
+		execute format(
+			'drop index %s.%s', c_indexes.schema_name, c_indexes.ind_name);	
+	end loop;
+
+	if not found then
+		raise warning 'table % has no indexes to disable.', p_table_name;
+	end if;
+end;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_schema_name" type="character varying"/>
+            <parameter mode="IN" name="p_table_name" type="character varying"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="drop_partitions_by_date(IN p_schemaname text, IN p_tablename text, IN p_startdate date, IN p_enddate date, IN p_interval text, IN p_schemapart text DEFAULT 'partitions'::text)" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Drop partitions by date for the relation]]></comment>
+         <definition language="plpgsql"><![CDATA[declare
+  v_d date;
+  v_partitionname text;
+  v_interval text default '1 ' || p_interval;
+ 
+  c_indexes record;
+begin
+  if not exists (
+    select 1
+    from information_schema.tables t
+    where t.table_name = lower(p_tablename)
+    	and t.table_schema = lower(p_schemaname)
+  ) then
+    raise exception 'table %.% does not exist', 
+   		p_schemaname, p_tablename;
+  end if;
+ 
+  if p_startdate > p_enddate then
+    raise exception 'the start date % must be before the end date %', 
+   		p_startdate, p_enddate;
+  end if;
+ 
+  v_d := p_startdate;
+ 
+  while v_d <= p_enddate 
+  loop
+    v_partitionname := p_tablename || '_' || to_char(v_d, 'yyyy_mm_dd');
+   
+    if exists (
+      select 1
+      from information_schema.tables t 
+      where t.table_name = lower(v_partitionname)
+       	and t.table_schema = lower(p_schemapart) 
+				and exists (
+					select 1 from pg_catalog.pg_inherits i
+						inner join pg_catalog.pg_class p on
+							p."oid" = i.inhparent
+						inner join pg_catalog.pg_class c on
+							c."oid" = i.inhrelid
+						inner join pg_catalog.pg_namespace n on
+							n."oid" = c.relnamespace
+					where c.relname = t.table_name and 
+						n.nspname = t.table_schema and
+						p.relname = lower(p_tablename)) 
+       )
+    then
+      execute format('drop table %s.%s', p_schemapart, v_partitionname);
+		
+      raise notice 'partition %.% has been dropped', 
+     		p_schemapart, v_partitionname;
+    end if;
+   
+    v_d := v_d + v_interval::interval;
+  end loop;
+end;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_schemaname" type="text"/>
+            <parameter mode="IN" name="p_tablename" type="text"/>
+            <parameter mode="IN" name="p_startdate" type="date"/>
+            <parameter mode="IN" name="p_enddate" type="date"/>
+            <parameter mode="IN" name="p_interval" type="text"/>
+            <parameter mode="IN" name="p_schemapart" type="text"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="duplicate_table(IN p_schemaname text, IN p_tablename text, IN p_targetschema text, IN p_targettable text, IN p_percenttuples integer, IN p_startdate date, IN p_enddate date, IN p_columnname text, IN p_interval text, IN p_schemapart text)" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Duplicates a sample of the source relation to a target relation with partitions]]></comment>
+         <definition language="plpgsql"><![CDATA[declare
+  c_indexes record;
+begin
+  if not exists (
+    select *
+    from information_schema.tables t
+    where t.table_name = lower(p_tablename)
+    	and t.table_schema = lower(p_schemaname)) 
+  then
+    raise exception 'table %.% does not exist', p_schemaname, p_tablename;
+  end if;
+ 
+  if not exists (
+    select 1
+     from information_schema.tables t
+     where t.table_name = lower(p_targettable)
+     	 and t.table_schema = lower(p_targetschema)
+  ) then
+   
+    execute format(
+    	'create table %s.%s as select * from %s.%s with no data', 
+      p_targetschema, p_targettable, p_schemaname, p_tablename);
+
+    for c_indexes in
+			select 
+				replace(
+					replace(
+						replace(
+							pg_get_indexdef(i.indexrelid), 
+							p_tablename || ' ', 
+							p_targettable || ' '
+						),
+						p_tablename || '_pkey', 
+						p_targettable || '_pkey'
+					),
+					p_schemaname,
+					p_targetschema) ind_def 
+			from pg_catalog.pg_index i
+				inner join pg_catalog.pg_class c on
+					c."oid" = i.indrelid 
+				inner join pg_catalog.pg_namespace n on
+					n."oid" = c.relnamespace 
+				where c.relname = p_tablename
+					and n.nspname = p_schemaname
+	  loop 
+	  	execute c_indexes.ind_def;
+	  end loop;
+
+	 	call util.create_partitions_by_date(p_targetschema, p_targettable, p_startdate
+	 		, p_enddate, p_columnname, p_interval, p_schemapart);
+	 	
+	 	execute format('create or replace trigger insert_mat_trigger
+    	before insert on %s.%s
+    	for each row execute function master.mat_insert_trigger()',
+    	p_targetschema, p_targettable);
+ 	
+	 	call util.disable_fks(p_targetschema, p_targettable);
+	 	call util.disable_indexes(p_targetschema, p_targettable);
+	 
+    execute format(
+    	'insert into %s.%s select * from %s.%s tablesample system(%s)', 
+      p_targetschema, p_targettable, p_schemaname, p_tablename, p_percenttuples);
+	 	
+	 	call util.enable_fks(p_targetschema, p_targettable);
+	 	call util.enable_indexes(p_targetschema, p_targettable);
+
+	 	raise notice 'Table %.% has been created', 
+   		p_targetschema, p_targettable;
+  end if;
+   
+end;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_schemaname" type="text"/>
+            <parameter mode="IN" name="p_tablename" type="text"/>
+            <parameter mode="IN" name="p_targetschema" type="text"/>
+            <parameter mode="IN" name="p_targettable" type="text"/>
+            <parameter mode="IN" name="p_percenttuples" type="integer"/>
+            <parameter mode="IN" name="p_startdate" type="date"/>
+            <parameter mode="IN" name="p_enddate" type="date"/>
+            <parameter mode="IN" name="p_columnname" type="text"/>
+            <parameter mode="IN" name="p_interval" type="text"/>
+            <parameter mode="IN" name="p_schemapart" type="text"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="enable_fks(IN p_schema_name character varying, IN p_table_name character varying)" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Enables foreign key constraints for the specified relation]]></comment>
+         <definition language="plpgsql"><![CDATA[declare 
+	c_fks record;
+begin
+	for c_fks in 
+		select c.fk_id, c.rel_id, c.fk_name, c.fk_def 
+		from util.disabled_fks c
+			inner join pg_catalog.pg_class t on
+				c.rel_id = t."oid" 
+		where t.relname = p_table_name
+			and c.schema_name = p_schema_name
+			and t.relkind = 'r'
+	loop
+		execute format(
+			'alter table %s.%s add constraint %s %s', p_schema_name, p_table_name, 
+				c_fks.fk_name, c_fks.fk_def);
+
+		delete from util.disabled_fks
+		where fk_id = c_fks.fk_id;
+	end loop;
+
+	if not found then
+		raise warning 'table %.% has no disabled foreign keys.', p_schema_name, p_table_name;
+	end if;
+end;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_schema_name" type="character varying"/>
+            <parameter mode="IN" name="p_table_name" type="character varying"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="enable_indexes(IN p_schema_name character varying, IN p_table_name character varying)" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Enable the disabled indexes for the specified relation]]></comment>
+         <definition language="plpgsql"><![CDATA[declare 
+	c_indexes record;
+begin
+	for c_indexes in 
+		select i.ind_id, i.rel_id, i.schema_name, i.ind_name, i.ind_def 
+		from util.disabled_indexes i
+			inner join (
+				select c.oid, c.relname 
+				from pg_catalog.pg_class c
+					inner join pg_catalog.pg_namespace n on
+						n."oid" = c.relnamespace 
+				where c.relname = p_table_name
+					and n.nspname = p_schema_name
+				union all
+				select i.inhrelid, s.relname 
+				from pg_catalog.pg_inherits i
+					inner join pg_catalog.pg_class p on
+						p."oid" = i.inhparent 
+					inner join pg_catalog.pg_class s on
+						s."oid" = i.inhrelid
+					inner join pg_catalog.pg_namespace n on
+						n."oid" = p.relnamespace 
+				where p.relname = p_table_name and
+					n.nspname = p_schema_name
+			) r on i.rel_id = r.oid
+	loop
+		execute format(c_indexes.ind_def);
+	
+		delete from util.disabled_indexes
+		where ind_id = c_indexes.ind_id;
+	end loop;
+
+	if not found then
+		raise warning 'table %.% has no disabled indexes.', p_schema_name, p_table_name;
+	end if;
+end;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_schema_name" type="character varying"/>
+            <parameter mode="IN" name="p_table_name" type="character varying"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="get_partition_by_date(p_schema_name text, p_table_name text, p_date date, p_schemapart text DEFAULT 'partitions'::text)" returnType="text" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find the nearest partition for the specified table and date]]></comment>
+         <definition language="sql"><![CDATA[select max(s.relname)
+	from pg_catalog.pg_inherits i
+		inner join pg_catalog.pg_class p on
+			p."oid" = i.inhparent 
+		inner join pg_catalog.pg_class s on
+			s."oid" = i.inhrelid 
+		inner join pg_catalog.pg_namespace n on
+			n."oid" = p.relnamespace 
+		inner join pg_catalog.pg_namespace n2 on
+			n2."oid" = s.relnamespace 
+	where n.nspname = p_schema_name
+		and p.relname = p_table_name
+		and s.relkind = 'r'
+		and s.relname <= format('%s_%s', p_table_name, to_char(p_date, 'yyyy_mm_dd'))
+		and n2.nspname = p_schemapart;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_schema_name" type="text"/>
+            <parameter mode="IN" name="p_table_name" type="text"/>
+            <parameter mode="IN" name="p_date" type="date"/>
+            <parameter mode="IN" name="p_schemapart" type="text"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="reset_sequence(IN p_schema_name character varying, IN p_table_name character varying)" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Reset the sequence value to the max value of the related table]]></comment>
+         <definition language="plpgsql"><![CDATA[declare
+	v_att_name varchar;
+begin
+	select atr.attname into v_att_name
+	from pg_catalog.pg_index i
+		inner join pg_catalog.pg_class c on
+			i.indrelid = c.oid
+		inner join pg_catalog.pg_namespace n on
+			c.relnamespace = n.oid
+		inner join pg_catalog.pg_attribute atr on
+	  	atr.attrelid = c.oid and 
+	  	atr.attnum = any(i.indkey)
+	where 
+	  c.relname = p_table_name 
+	  and n.nspname = p_schema_name
+	 	and indisprimary
+	 	and c.relkind = 'r';
+
+	execute format(
+		'select setval(''%1$s.%2$s_seq'', coalesce(max(%3$s), 1)) from %1$s.%2$s'
+			, p_schema_name, p_table_name, v_att_name);
+end;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_schema_name" type="character varying"/>
+            <parameter mode="IN" name="p_table_name" type="character varying"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="reset_sequences(IN p_schema_name character varying)" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Reset the sequences' value at the specified schema]]></comment>
+         <definition language="plpgsql"><![CDATA[begin
+	call util.reset_sequence(p_schema_name, 'aspect');
+	call util.reset_sequence(p_schema_name, 'aspect_type');
+	call util.reset_sequence(p_schema_name, 'attribute');
+	call util.reset_sequence(p_schema_name, 'data_type');
+	call util.reset_sequence(p_schema_name, 'mat');
+	call util.reset_sequence(p_schema_name, 'mo_relationship');
+	call util.reset_sequence(p_schema_name, 'mo_type');
+	call util.reset_sequence(p_schema_name, 'moving_object');
+	call util.reset_sequence(p_schema_name, 'point');
+end;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_schema_name" type="character varying"/>
+         </parameters>
+      </routine>
+   </routines>
+</database>

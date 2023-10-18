@@ -1,0 +1,2639 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>mobility.master</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+
+        <!-- Theme style -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="schemaSpy.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="bower/html5shiv/html5shiv.min.js"></script>
+        <script src="bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="../index.html" class="navbar-brand"><b>mobility</b></a><span class="navbar-brand" style="padding-left: 0">.master</span>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>Routines</h1>
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-file-code-o" aria-hidden="true"></i>
+                            <h3 class="box-title">Routines</h3>
+                        </div>
+                        <div class="box-body">
+                            <table
+                                    id="routine_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="true"
+                                    data-page-length="50"
+                                    data-length-change="false">
+                                <thead align='left'>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Language</th>
+                                        <th>Deterministic</th>
+                                        <th>Return Type</th>
+                                        <th>Security Restriction</th>
+                                        <th title='Comments' class="toggle"><span>Comments</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><a href="routines/predicate_aspect_type_find_all__638fd422.html">predicate_aspect_type_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF predicate_aspect_type_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on PREDICATE_ASPECT_TYPE</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/repr_point_update_IN_p_repr_poi_8eb51741.html">repr_point_update(IN p_repr_point_a repr_point_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on REPR_POINT based on array of REPR_POINT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_delete_by_name_IN_p_desc_6883f23c.html">aspect_delete_by_name(IN p_description character varying)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on ASPECT based on name</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_aspect_delete_all___3f343df6.html">mat_aspect_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on MAT_ASPECT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dataset_find_by_name_p_descript_6c09e277.html">dataset_find_by_name(p_description character varying)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF dataset_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on DATASET based on name or description</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dataset_update_IN_p_dataset_a_d_d3d04edb.html">dataset_update(IN p_dataset_a dataset_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on DATASET based on array of DATASET_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mor_dr_find_by_id_p_rule_id_int_807329a5.html">mor_dr_find_by_id(p_rule_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mor_dr_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MOR_DR based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_relationship_delete_all___f1196518.html">mo_relationship_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on MO_RELATIONSHIP</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mor_aspect_delete_IN_p_mor_aspe_75acaec2.html">mor_aspect_delete(IN p_mor_aspect_a mor_aspect_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on MOR_ASPECT based on array of MOR_ASPECT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/moving_object_delete_IN_p_moving_59d3f35.html">moving_object_delete(IN p_moving_object_a moving_object_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on MOVING_OBJECT based on array of MOVING_OBJECT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_dr_find_all___c55fe4d0.html">mo_dr_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mo_dr_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MO_DR</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_dr_update_IN_p_mo_dr_a_mo_dr_57a39882.html">mo_dr_update(IN p_mo_dr_a mo_dr_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on MO_DR based on array of MO_DR_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/data_type_count___cb1468c0.html">data_type_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on DATA_TYPE</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_dr_delete_all___781cea42.html">mo_dr_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on MO_DR</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/data_type_update_IN_p_data_type_26842e56.html">data_type_update(IN p_data_type_a data_type_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on DATA_TYPE based on array of DATA_TYPE_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_aspect_delete_IN_p_mat_aspe_77eabb12.html">mat_aspect_delete(IN p_mat_aspect_a mat_aspect_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on MAT_ASPECT based on array of MAT_ASPECT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_relationship_find_all___33c91d26.html">mo_relationship_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mo_relationship_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MO_RELATIONSHIP</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/attribute_create_INOUT_p_attrib_cf250454.html">attribute_create(INOUT p_attribute attribute_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on ATTRIBUTE from a ATTRIBUTE_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_dr_delete_IN_p_point_dr_a_c902cb4c.html">point_dr_delete(IN p_point_dr_a point_dr_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on POINT_DR based on array of POINT_DR_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/attribute_update_IN_p_attribute_1f40b76f.html">attribute_update(IN p_attribute_a attribute_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on ATTRIBUTE based on array of ATTRIBUTE_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/data_type_delete_all___2760425e.html">data_type_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on DATA_TYPE</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_relationship_mor_dr_count___b579dbf8.html">mo_relationship_mor_dr_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on MO_RELATIONSHIP_MOR_DR</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_aspect_delete_by_id_IN_p_ma_7fae9c6e.html">mat_aspect_delete_by_id(IN p_mat_id integer, IN p_aspect_id integer)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on MAT_ASPECT based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_type_update_IN_p_aspect__83b72d20.html">aspect_type_update(IN p_aspect_type_a aspect_type_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on ASPECT_TYPE based on array of ASPECT_TYPE_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/moving_object_mo_dr_find_by_id__f71db9ef.html">moving_object_mo_dr_find_by_id(p_mo_id integer, p_rule_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF moving_object_mo_dr_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MOVING_OBJECT_MO_DR based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_aspect_delete_IN_p_point__ce50ac82.html">point_aspect_delete(IN p_point_aspect_a point_aspect_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on POINT_ASPECT based on array of POINT_ASPECT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/predicate_aspect_find_all___28b3d21b.html">predicate_aspect_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF predicate_aspect_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on PREDICATE_ASPECT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_attribute_delete_by_id_IN_634dc5c.html">aspect_attribute_delete_by_id(IN p_aspect_id integer, IN p_attribute_id integer)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on ASPECT_ATTRIBUTE based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_relationship_mor_dr_update_I_276b56e0.html">mo_relationship_mor_dr_update(IN p_mo_relationship_mor_dr_a mo_relationship_mor_dr_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on MO_RELATIONSHIP_MOR_DR based on array of MO_RELATIONSHIP_MOR_DR_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_aspect_create_many_INOUT_p_m_69e790e5.html">mo_aspect_create_many(INOUT p_mo_aspect_a mo_aspect_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on MO_ASPECT from an array of MO_ASPECT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/predicate_find_all___4d4c47e4.html">predicate_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF predicate_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on PREDICATE</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/predicate_aspect_type_delete_al_4a0e4d14.html">predicate_aspect_type_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on PREDICATE_ASPECT_TYPE</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_attribute_count___357edb86.html">aspect_attribute_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on ASPECT_ATTRIBUTE</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dependency_rule_dataset_update__2eb87be8.html">dependency_rule_dataset_update(IN p_dependency_rule_dataset_a dependency_rule_dataset_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on DEPENDENCY_RULE_DATASET based on array of DEPENDENCY_RULE_DATASET_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_mat_dr_update_IN_p_mat_mat_d_ca69a7b.html">mat_mat_dr_update(IN p_mat_mat_dr_a mat_mat_dr_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on MAT_MAT_DR based on array of MAT_MAT_DR_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_aspect_find_by_id_p_mo_id_in_42c8cbf2.html">mo_aspect_find_by_id(p_mo_id integer, p_aspect_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mo_aspect_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MO_ASPECT based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_mat_dr_delete_IN_p_mat_mat__60ff9e5d.html">mat_mat_dr_delete(IN p_mat_mat_dr_a mat_mat_dr_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on MAT_MAT_DR based on array of MAT_MAT_DR_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_type_delete_all___5acdd78c.html">aspect_type_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on ASPECT_TYPE</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/moving_object_mo_dr_delete_all__bb940a91.html">moving_object_mo_dr_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on MOVING_OBJECT_MO_DR</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_aspect_find_all___46399b4.html">point_aspect_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF point_aspect_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on POINT_ASPECT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_relationship_delete_IN_p_mo__888f62a6.html">mo_relationship_delete(IN p_mo_relationship_a mo_relationship_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on MO_RELATIONSHIP based on array of MO_RELATIONSHIP_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/attribute_find_by_name_p_name_c_23ee8c3e.html">attribute_find_by_name(p_name character varying)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF attribute_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on ATTRIBUTE based on name or description</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dependency_rule_delete_IN_p_dep_bb312455.html">dependency_rule_delete(IN p_dependency_rule_a dependency_rule_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on DEPENDENCY_RULE based on array of DEPENDENCY_RULE_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_update_IN_p_point_a_point__f8b7313.html">point_update(IN p_point_a point_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on POINT based on array of POINT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_count___42e83169.html">aspect_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on ASPECT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_dr_create_many_INOUT_p_mo_dr_ed91a083.html">mo_dr_create_many(INOUT p_mo_dr_a mo_dr_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on MO_DR from an array of MO_DR_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_count___e9dd3a71.html">mat_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on MAT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_attribute_delete_IN_p_as_a3dfb074.html">aspect_attribute_delete(IN p_aspect_attribute_a aspect_attribute_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on ASPECT_ATTRIBUTE based on array of ASPECT_ATTRIBUTE_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_type_find_all___991f9c9a.html">aspect_type_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF aspect_type_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on ASPECT_TYPE</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_dr_find_by_id_p_rule_id_inte_7c775d53.html">mo_dr_find_by_id(p_rule_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mo_dr_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MO_DR based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/predicate_aspect_type_find_by_i_6d6f9a7a.html">predicate_aspect_type_find_by_id(p_predicate_id integer, p_aspect_type_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF predicate_aspect_type_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on PREDICATE_ASPECT_TYPE based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_aspect_update_IN_p_mo_aspect_fb236fe4.html">mo_aspect_update(IN p_mo_aspect_a mo_aspect_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on MO_ASPECT based on array of MO_ASPECT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_dr_create_many_INOUT_p_mat__f7229c3b.html">mat_dr_create_many(INOUT p_mat_dr_a mat_dr_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on MAT_DR from an array of MAT_DR_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_attribute_find_by_id_p_as_48c3e9a.html">aspect_attribute_find_by_id(p_aspect_id integer, p_attribute_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF aspect_attribute_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on ASPECT_ATTRIBUTE based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_aspect_count___13e78e28.html">mat_aspect_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on MAT_ASPECT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_aspect_create_INOUT_p_mat_a_b86b43a7.html">mat_aspect_create(INOUT p_mat_aspect mat_aspect_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on MAT_ASPECT from a MAT_ASPECT_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_aspect_delete_by_id_IN_p__cf70b8ae.html">point_aspect_delete_by_id(IN p_point_id integer, IN p_aspect_id integer)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on POINT_ASPECT based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/repr_point_find_by_id_p_repr_poi_da8d198.html">repr_point_find_by_id(p_repr_point_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF repr_point_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on REPR_POINT based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/moving_object_count___93f14961.html">moving_object_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on MOVING_OBJECT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_type_find_by_name_p_desc_6c13c100.html">aspect_type_find_by_name(p_description character varying)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF aspect_type_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on ASPECT_TYPE based on name or description</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/moving_object_find_by_id_p_mo_i_6acf06fe.html">moving_object_find_by_id(p_mo_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF moving_object_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MOVING_OBJECT based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/predicate_aspect_type_update_IN_3b4ccef8.html">predicate_aspect_type_update(IN p_predicate_aspect_type_a predicate_aspect_type_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on PREDICATE_ASPECT_TYPE based on array of PREDICATE_ASPECT_TYPE_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_dr_delete_IN_p_mat_dr_a_mat_96b0b45c.html">mat_dr_delete(IN p_mat_dr_a mat_dr_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on MAT_DR based on array of MAT_DR_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_type_delete_by_name_IN_p_ed956d33.html">aspect_type_delete_by_name(IN p_description character varying)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on ASPECT_TYPE based on name</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_repr_point_count___d8809e66.html">point_repr_point_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on POINT_REPR_POINT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_dr_create_INOUT_p_point_d_f58808ad.html">point_dr_create(INOUT p_point_dr point_dr_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on POINT_DR from a POINT_DR_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/predicate_find_by_id_p_predicat_dee9f656.html">predicate_find_by_id(p_predicate_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF predicate_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on PREDICATE based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/data_type_find_all___f69293ec.html">data_type_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF data_type_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on DATA_TYPE</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_relationship_mor_dr_create_I_56443ef7.html">mo_relationship_mor_dr_create(INOUT p_mo_relationship_mor_dr mo_relationship_mor_dr_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on MO_RELATIONSHIP_MOR_DR from a MO_RELATIONSHIP_MOR_DR_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/predicate_aspect_count___75ac70f1.html">predicate_aspect_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on PREDICATE_ASPECT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_find_by_id_p_mat_id_integer_99e81ff6.html">mat_find_by_id(p_mat_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mat_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MAT based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/data_type_delete_by_id_IN_p_dat_a6eafabf.html">data_type_delete_by_id(IN p_data_type_id integer)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on DATA_TYPE based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dependency_rule_create_INOUT_p__14ce5900.html">dependency_rule_create(INOUT p_dependency_rule dependency_rule_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on DEPENDENCY_RULE from a DEPENDENCY_RULE_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_delete_all___50c7b55.html">aspect_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on ASPECT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_find_by_name_p_description__d1547d5f.html">mat_find_by_name(p_description character varying)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mat_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MAT based on name or description</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_attribute_update_IN_p_as_f4476f92.html">aspect_attribute_update(IN p_aspect_attribute_a aspect_attribute_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on ASPECT_ATTRIBUTE based on array of ASPECT_ATTRIBUTE_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mor_aspect_update_IN_p_mor_aspe_2153aae0.html">mor_aspect_update(IN p_mor_aspect_a mor_aspect_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on MOR_ASPECT based on array of MOR_ASPECT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dataset_delete_IN_p_dataset_a_d_90aa643d.html">dataset_delete(IN p_dataset_a dataset_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on DATASET based on array of DATASET_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mor_dr_create_many_INOUT_p_mor__584a8feb.html">mor_dr_create_many(INOUT p_mor_dr_a mor_dr_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on MOR_DR from an array of MOR_DR_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_type_delete_by_name_IN_p_des_8b12007d.html">mo_type_delete_by_name(IN p_description character varying)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on MO_TYPE based on name</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/data_type_create_INOUT_p_data_t_e693d8c1.html">data_type_create(INOUT p_data_type data_type_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on DATA_TYPE from a DATA_TYPE_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/repr_point_find_all___ec2a9f5.html">repr_point_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF repr_point_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on REPR_POINT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_dr_find_by_id_p_rule_id_i_dcc64b25.html">point_dr_find_by_id(p_rule_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF point_dr_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on POINT_DR based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_find_by_id_p_aspect_id_i_a49cff3c.html">aspect_find_by_id(p_aspect_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF aspect_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on ASPECT based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_delete_all___d87bd74d.html">mat_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on MAT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_repr_point_find_all___fa09b486.html">point_repr_point_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF point_repr_point_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on POINT_REPR_POINT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dependency_rule_update_IN_p_dep_221a12f3.html">dependency_rule_update(IN p_dependency_rule_a dependency_rule_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on DEPENDENCY_RULE based on array of DEPENDENCY_RULE_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_type_create_many_INOUT_p_d00f51a1.html">aspect_type_create_many(INOUT p_aspect_type_a aspect_type_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on ASPECT_TYPE from an array of ASPECT_TYPE_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_find_all___9d40ea6b.html">point_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF point_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on POINT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_repr_point_delete_IN_p_po_e0ec7d94.html">point_repr_point_delete(IN p_point_repr_point_a point_repr_point_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on POINT_REPR_POINT based on array of POINT_REPR_POINT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/predicate_delete_all___b67cd856.html">predicate_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on PREDICATE</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dependency_rule_find_by_name_p__a1dd8f6f.html">dependency_rule_find_by_name(p_description character varying)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF dependency_rule_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on DEPENDENCY_RULE based on name or description</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dependency_rule_dataset_find_al_b06107b2.html">dependency_rule_dataset_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF dependency_rule_dataset_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on DEPENDENCY_RULE_DATASET</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/moving_object_mo_dr_create_INOU_ebf568d4.html">moving_object_mo_dr_create(INOUT p_moving_object_mo_dr moving_object_mo_dr_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on MOVING_OBJECT_MO_DR from a MOVING_OBJECT_MO_DR_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_type_find_all___9718c1e4.html">mo_type_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mo_type_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MO_TYPE</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_delete_all___dbd2f51d.html">point_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on POINT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dataset_find_by_id_p_dataset_id_ac24d476.html">dataset_find_by_id(p_dataset_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF dataset_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on DATASET based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_mat_dr_find_by_id_p_mat_id__2e6a9cef.html">mat_mat_dr_find_by_id(p_mat_id integer, p_rule_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mat_mat_dr_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MAT_MAT_DR based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_aspect_delete_all___506f626.html">point_aspect_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on POINT_ASPECT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_point_dr_update_IN_p_poin_e2c6699b.html">point_point_dr_update(IN p_point_point_dr_a point_point_dr_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on POINT_POINT_DR based on array of POINT_POINT_DR_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mor_aspect_delete_all___815287a6.html">mor_aspect_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on MOR_ASPECT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/repr_point_create_INOUT_p_repr__bf136876.html">repr_point_create(INOUT p_repr_point repr_point_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on REPR_POINT from a REPR_POINT_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/repr_point_delete_IN_p_repr_poi_e30e1b23.html">repr_point_delete(IN p_repr_point_a repr_point_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on REPR_POINT based on array of REPR_POINT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dataset_count___e4ccb189.html">dataset_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on DATASET</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dependency_rule_dataset_delete__e294894a.html">dependency_rule_dataset_delete(IN p_dependency_rule_dataset_a dependency_rule_dataset_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on DEPENDENCY_RULE_DATASET based on array of DEPENDENCY_RULE_DATASET_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_delete_by_id_IN_p_mat_id_in_8b688da1.html">mat_delete_by_id(IN p_mat_id integer)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on MAT based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/repr_point_create_many_INOUT_p__ac00dd02.html">repr_point_create_many(INOUT p_repr_point_a repr_point_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on REPR_POINT from an array of REPR_POINT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_point_dr_create_INOUT_p_p_dc42a6dc.html">point_point_dr_create(INOUT p_point_point_dr point_point_dr_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on POINT_POINT_DR from a POINT_POINT_DR_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_aspect_create_INOUT_p_mo_asp_58263adb.html">mo_aspect_create(INOUT p_mo_aspect mo_aspect_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on MO_ASPECT from a MO_ASPECT_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_aspect_find_all___a9e09584.html">mat_aspect_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mat_aspect_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MAT_ASPECT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_attribute_create_many_INO_8051ad3.html">aspect_attribute_create_many(INOUT p_aspect_attribute_a aspect_attribute_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on ASPECT_ATTRIBUTE from an array of ASPECT_ATTRIBUTE_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_dr_update_IN_p_point_dr_a_da58866a.html">point_dr_update(IN p_point_dr_a point_dr_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on POINT_DR based on array of POINT_DR_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_delete_IN_p_point_a_point_c8fb8975.html">point_delete(IN p_point_a point_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on POINT based on array of POINT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/data_type_delete_IN_p_data_type_13b0c2b8.html">data_type_delete(IN p_data_type_a data_type_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on DATA_TYPE based on array of DATA_TYPE_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/moving_object_update_IN_p_movin_b2122cd3.html">moving_object_update(IN p_moving_object_a moving_object_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on MOVING_OBJECT based on array of MOVING_OBJECT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_dr_count___bc6679ae.html">point_dr_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on POINT_DR</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mor_aspect_create_INOUT_p_mor_a_466fa9f7.html">mor_aspect_create(INOUT p_mor_aspect mor_aspect_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on MOR_ASPECT from a MOR_ASPECT_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dependency_rule_dataset_find_by_fe398c8e.html">dependency_rule_dataset_find_by_id(p_rule_id integer, p_dataset_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF dependency_rule_dataset_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on DEPENDENCY_RULE_DATASET based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_repr_point_delete_by_id_IN_9bf918a.html">point_repr_point_delete_by_id(IN p_point_id integer, IN p_repr_point_id integer)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on POINT_REPR_POINT based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/moving_object_mo_dr_count___b0fb0cad.html">moving_object_mo_dr_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on MOVING_OBJECT_MO_DR</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/moving_object_mo_dr_delete_IN_p_70137651.html">moving_object_mo_dr_delete(IN p_moving_object_mo_dr_a moving_object_mo_dr_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on MOVING_OBJECT_MO_DR based on array of MOVING_OBJECT_MO_DR_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_type_count___204dced2.html">aspect_type_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on ASPECT_TYPE</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_mat_dr_find_all___90f00eef.html">mat_mat_dr_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mat_mat_dr_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MAT_MAT_DR</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/predicate_create_INOUT_p_predic_753e4db9.html">predicate_create(INOUT p_predicate predicate_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on PREDICATE from a PREDICATE_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_relationship_mor_dr_create_m_a28efaa1.html">mo_relationship_mor_dr_create_many(INOUT p_mo_relationship_mor_dr_a mo_relationship_mor_dr_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on MO_RELATIONSHIP_MOR_DR from an array of MO_RELATIONSHIP_MOR_DR_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dependency_rule_find_by_id_p_ru_3b03f9b8.html">dependency_rule_find_by_id(p_rule_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF dependency_rule_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on DEPENDENCY_RULE based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/data_type_delete_by_name_IN_p_d_35202244.html">data_type_delete_by_name(IN p_data_type_name character varying)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on DATA_TYPE based on name</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_type_find_by_name_p_descript_e0e6c776.html">mo_type_find_by_name(p_description character varying)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mo_type_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MO_TYPE based on name or description</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mor_dr_create_INOUT_p_mor_dr_mor_eecca6d.html">mor_dr_create(INOUT p_mor_dr mor_dr_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on MOR_DR from a MOR_DR_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mor_dr_delete_all___84c9e7b0.html">mor_dr_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on MOR_DR</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_point_dr_count___6ef5587d.html">point_point_dr_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on POINT_POINT_DR</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_update_IN_p_mat_a_mat_typ___f2d3ce23.html">mat_update(IN p_mat_a mat_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on MAT based on array of MAT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mor_aspect_count___ba0df678.html">mor_aspect_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on MOR_ASPECT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_aspect_find_by_id_p_point_e20fd6b6.html">point_aspect_find_by_id(p_point_id integer, p_aspect_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF point_aspect_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on POINT_ASPECT based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_aspect_delete_all___b75df138.html">mo_aspect_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on MO_ASPECT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_relationship_count___a40af9c6.html">mo_relationship_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on MO_RELATIONSHIP</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/data_type_create_many_INOUT_p_da_ef4c957.html">data_type_create_many(INOUT p_data_type_a data_type_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on DATA_TYPE from an array of DATA_TYPE_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/moving_object_delete_by_name_IN_3e588f44.html">moving_object_delete_by_name(IN p_description character varying)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on MOVING_OBJECT based on name</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dependency_rule_create_many_INO_d794e574.html">dependency_rule_create_many(INOUT p_dependency_rule_a dependency_rule_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on DEPENDENCY_RULE from an array of DEPENDENCY_RULE_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dependency_rule_dataset_delete__a760dca4.html">dependency_rule_dataset_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on DEPENDENCY_RULE_DATASET</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mor_dr_find_all___ee6965be.html">mor_dr_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mor_dr_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MOR_DR</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_delete_IN_p_mat_a_mat_typ___9e026585.html">mat_delete(IN p_mat_a mat_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on MAT based on array of MAT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_create_INOUT_p_aspect_as_74ee4c48.html">aspect_create(INOUT p_aspect aspect_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on ASPECT from a ASPECT_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_create_INOUT_p_point_poin_465b4260.html">point_create(INOUT p_point point_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on POINT from a POINT_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_create_many_INOUT_p_aspe_1dbdf670.html">aspect_create_many(INOUT p_aspect_a aspect_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on ASPECT from an array of ASPECT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/predicate_aspect_find_by_id_p_p_d4be4568.html">predicate_aspect_find_by_id(p_predicate_id integer, p_aspect_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF predicate_aspect_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on PREDICATE_ASPECT based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_type_count___b595bdc8.html">mo_type_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on MO_TYPE</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_aspect_count___c1e759a6.html">mo_aspect_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on MO_ASPECT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_dr_delete_IN_p_mo_dr_a_mo_dr_1113aee4.html">mo_dr_delete(IN p_mo_dr_a mo_dr_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on MO_DR based on array of MO_DR_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_count___ad5ebaa1.html">point_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on POINT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_aspect_count___9dee77f8.html">point_aspect_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on POINT_ASPECT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_relationship_mor_dr_find_by__369b059a.html">mo_relationship_mor_dr_find_by_id(p_mor_id integer, p_rule_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mo_relationship_mor_dr_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MO_RELATIONSHIP_MOR_DR based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/attribute_create_many_INOUT_p_a_7f34ef70.html">attribute_create_many(INOUT p_attribute_a attribute_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on ATTRIBUTE from an array of ATTRIBUTE_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_type_find_by_id_p_mo_type_id_b4b791d6.html">mo_type_find_by_id(p_mo_type_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mo_type_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MO_TYPE based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/data_type_find_by_name_p_data_t_74189fbb.html">data_type_find_by_name(p_data_type_name character varying)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF data_type_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on DATA_TYPE based on name or description</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_type_create_INOUT_p_mo_type__3e943af9.html">mo_type_create(INOUT p_mo_type mo_type_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on MO_TYPE from a MO_TYPE_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_attribute_delete_all___898c9b58.html">aspect_attribute_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on ASPECT_ATTRIBUTE</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_type_delete_by_id_IN_p_mo_ty_7944668f.html">mo_type_delete_by_id(IN p_mo_type_id integer)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on MO_TYPE based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_dr_delete_all___66234600.html">mat_dr_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on MAT_DR</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_type_delete_IN_p_aspect__25dec082.html">aspect_type_delete(IN p_aspect_type_a aspect_type_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on ASPECT_TYPE based on array of ASPECT_TYPE_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/repr_point_delete_by_id_IN_p_re_35ef2d81.html">repr_point_delete_by_id(IN p_repr_point_id integer)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on REPR_POINT based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_relationship_find_by_name_p__f78d14f4.html">mo_relationship_find_by_name(p_description character varying)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mo_relationship_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MO_RELATIONSHIP based on name or description</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mor_aspect_delete_by_id_IN_p_mo_db193a6e.html">mor_aspect_delete_by_id(IN p_mor_id integer, IN p_aspect_id integer)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on MOR_ASPECT based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/predicate_aspect_type_delete_IN_eb7add5a.html">predicate_aspect_type_delete(IN p_predicate_aspect_type_a predicate_aspect_type_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on PREDICATE_ASPECT_TYPE based on array of PREDICATE_ASPECT_TYPE_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_point_dr_find_all___b3ad2f0f.html">point_point_dr_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF point_point_dr_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on POINT_POINT_DR</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_find_by_name_p_descripti_b9667a57.html">aspect_find_by_name(p_description character varying)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF aspect_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on ASPECT based on name or description</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dataset_create_INOUT_p_dataset__f50abbf8.html">dataset_create(INOUT p_dataset dataset_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on DATASET from a DATASET_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_type_find_by_id_p_aspect_dc887a16.html">aspect_type_find_by_id(p_aspect_type_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF aspect_type_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on ASPECT_TYPE based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/moving_object_delete_all___d84b9e5d.html">moving_object_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on MOVING_OBJECT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_point_dr_create_many_INOU_5e75245c.html">point_point_dr_create_many(INOUT p_point_point_dr_a point_point_dr_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on POINT_POINT_DR from an array of POINT_POINT_DR_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/predicate_count___997ff7c8.html">predicate_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on PREDICATE</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_mat_dr_delete_all___a04b08a1.html">mat_mat_dr_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on MAT_MAT_DR</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_type_create_many_INOUT_p_mo__d92204ff.html">mo_type_create_many(INOUT p_mo_type_a mo_type_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on MO_TYPE from an array of MO_TYPE_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_attribute_find_all___b014e366.html">aspect_attribute_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF aspect_attribute_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on ASPECT_ATTRIBUTE</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_repr_point_update_IN_p_po_31543cb2.html">point_repr_point_update(IN p_point_repr_point_a point_repr_point_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on POINT_REPR_POINT based on array of POINT_REPR_POINT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dependency_rule_count___ad5d5881.html">dependency_rule_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on DEPENDENCY_RULE</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_aspect_create_many_INOUT_p__13b87df1.html">mat_aspect_create_many(INOUT p_mat_aspect_a mat_aspect_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on MAT_ASPECT from an array of MAT_ASPECT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_delete_by_name_IN_p_descrip_41869434.html">mat_delete_by_name(IN p_description character varying)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on MAT based on name</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/repr_point_delete_all___f3e2fa27.html">repr_point_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on REPR_POINT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/predicate_aspect_delete_IN_p_pr_cc68e589.html">predicate_aspect_delete(IN p_predicate_aspect_a predicate_aspect_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on PREDICATE_ASPECT based on array of PREDICATE_ASPECT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/moving_object_mo_dr_find_all___c970ccdf.html">moving_object_mo_dr_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF moving_object_mo_dr_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MOVING_OBJECT_MO_DR</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_relationship_delete_by_name__e85671bf.html">mo_relationship_delete_by_name(IN p_description character varying)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on MO_RELATIONSHIP based on name</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_repr_point_create_INOUT_p_1ccfd765.html">point_repr_point_create(INOUT p_point_repr_point point_repr_point_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on POINT_REPR_POINT from a POINT_REPR_POINT_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/attribute_delete_by_id_IN_p_att_a4d27e19.html">attribute_delete_by_id(IN p_attribute_id integer)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on ATTRIBUTE based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_dr_create_INOUT_p_mat_dr_ma_f9e2c41d.html">mat_dr_create(INOUT p_mat_dr mat_dr_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on MAT_DR from a MAT_DR_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/moving_object_find_all___9652e3ab.html">moving_object_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF moving_object_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MOVING_OBJECT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/moving_object_create_many_INOUT_81e747d4.html">moving_object_create_many(INOUT p_moving_object_a moving_object_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on MOVING_OBJECT from an array of MOVING_OBJECT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_dr_update_IN_p_mat_dr_a_mat_78ecae7a.html">mat_dr_update(IN p_mat_dr_a mat_dr_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on MAT_DR based on array of MAT_DR_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/predicate_aspect_create_many_IN_55964ae8.html">predicate_aspect_create_many(INOUT p_predicate_aspect_a predicate_aspect_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on PREDICATE_ASPECT from an array of PREDICATE_ASPECT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_aspect_delete_by_id_IN_p_mo__a8c95744.html">mo_aspect_delete_by_id(IN p_mo_id integer, IN p_aspect_id integer)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on MO_ASPECT based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_relationship_find_by_id_p_mo_db99b171.html">mo_relationship_find_by_id(p_mor_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mo_relationship_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MO_RELATIONSHIP based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/attribute_delete_all___e613391.html">attribute_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on ATTRIBUTE</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mor_dr_delete_IN_p_mor_dr_a_mor_eb59580c.html">mor_dr_delete(IN p_mor_dr_a mor_dr_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on MOR_DR based on array of MOR_DR_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/attribute_count___dad843ad.html">attribute_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on ATTRIBUTE</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dependency_rule_dataset_count___c081faba.html">dependency_rule_dataset_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on DEPENDENCY_RULE_DATASET</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_relationship_mor_dr_delete_I_844f54c2.html">mo_relationship_mor_dr_delete(IN p_mo_relationship_mor_dr_a mo_relationship_mor_dr_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on MO_RELATIONSHIP_MOR_DR based on array of MO_RELATIONSHIP_MOR_DR_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/predicate_aspect_create_INOUT_p_ea472350.html">predicate_aspect_create(INOUT p_predicate_aspect predicate_aspect_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on PREDICATE_ASPECT from a PREDICATE_ASPECT_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_dr_create_many_INOUT_p_po_86907bab.html">point_dr_create_many(INOUT p_point_dr_a point_dr_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on POINT_DR from an array of POINT_DR_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_repr_point_create_many_IN_106ec7f3.html">point_repr_point_create_many(INOUT p_point_repr_point_a point_repr_point_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on POINT_REPR_POINT from an array of POINT_REPR_POINT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/predicate_aspect_delete_all___562ab0cd.html">predicate_aspect_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on PREDICATE_ASPECT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_aspect_update_IN_p_point__17c069a0.html">point_aspect_update(IN p_point_aspect_a point_aspect_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on POINT_ASPECT based on array of POINT_ASPECT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_point_dr_delete_IN_p_poin_7fd66b7d.html">point_point_dr_delete(IN p_point_point_dr_a point_point_dr_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on POINT_POINT_DR based on array of POINT_POINT_DR_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_aspect_update_IN_p_mat_aspe_2391b730.html">mat_aspect_update(IN p_mat_aspect_a mat_aspect_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on MAT_ASPECT based on array of MAT_ASPECT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dataset_find_all___2f0aa83.html">dataset_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF dataset_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on DATASET</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_delete_by_id_IN_p_aspect_308aaac1.html">aspect_delete_by_id(IN p_aspect_id integer)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on ASPECT based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_aspect_create_INOUT_p_poin_4eca8b7.html">point_aspect_create(INOUT p_point_aspect point_aspect_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on POINT_ASPECT from a POINT_ASPECT_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/moving_object_mo_dr_update_IN_p_906ae6ef.html">moving_object_mo_dr_update(IN p_moving_object_mo_dr_a moving_object_mo_dr_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on MOVING_OBJECT_MO_DR based on array of MOVING_OBJECT_MO_DR_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mor_dr_update_IN_p_mor_dr_a_mor_cd95522a.html">mor_dr_update(IN p_mor_dr_a mor_dr_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on MOR_DR based on array of MOR_DR_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_type_delete_all___bf12d256.html">mo_type_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on MO_TYPE</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_create_many_INOUT_p_point_454df014.html">point_create_many(INOUT p_point_a point_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on POINT from an array of POINT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/moving_object_find_by_name_p_de_cad5d84f.html">moving_object_find_by_name(p_description character varying)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF moving_object_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MOVING_OBJECT based on name or description</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dependency_rule_delete_all___91ac033d.html">dependency_rule_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on DEPENDENCY_RULE</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_create_many_INOUT_p_mat_a_m_60c9c3a4.html">mat_create_many(INOUT p_mat_a mat_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on MAT from an array of MAT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_relationship_update_IN_p_mo__ef785144.html">mo_relationship_update(IN p_mo_relationship_a mo_relationship_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on MO_RELATIONSHIP based on array of MO_RELATIONSHIP_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_point_dr_delete_all___840a0c1.html">point_point_dr_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on POINT_POINT_DR</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_repr_point_find_by_id_p_p_291ab992.html">point_repr_point_find_by_id(p_point_id integer, p_repr_point_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF point_repr_point_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on POINT_REPR_POINT based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/predicate_aspect_update_IN_p_pr_1cd0a4a7.html">predicate_aspect_update(IN p_predicate_aspect_a predicate_aspect_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on PREDICATE_ASPECT based on array of PREDICATE_ASPECT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_update_IN_p_aspect_a_asp_9cfa6daf.html">aspect_update(IN p_aspect_a aspect_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on ASPECT based on array of ASPECT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_dr_create_INOUT_p_mo_dr_mo_d_d00e0da5.html">mo_dr_create(INOUT p_mo_dr mo_dr_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on MO_DR from a MO_DR_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_dr_delete_all___1cf99630.html">point_dr_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on POINT_DR</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_point_dr_find_by_id_p_poi_82138cdf.html">point_point_dr_find_by_id(p_point_id integer, p_rule_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF point_point_dr_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on POINT_POINT_DR based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_delete_IN_p_aspect_a_asp_babe7391.html">aspect_delete(IN p_aspect_a aspect_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on ASPECT based on array of ASPECT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_aspect_find_by_id_p_mat_id__ce30fb96.html">mat_aspect_find_by_id(p_mat_id integer, p_aspect_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mat_aspect_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MAT_ASPECT based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/predicate_update_IN_p_predicate_b0894c3e.html">predicate_update(IN p_predicate_a predicate_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on PREDICATE based on array of PREDICATE_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/attribute_delete_IN_p_attribute__c6d4bd1.html">attribute_delete(IN p_attribute_a attribute_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on ATTRIBUTE based on array of ATTRIBUTE_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_relationship_delete_by_id_IN_b7db1666.html">mo_relationship_delete_by_id(IN p_mor_id integer)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on MO_RELATIONSHIP based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_type_delete_IN_p_mo_type_a_m_bd974ee0.html">mo_type_delete(IN p_mo_type_a mo_type_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on MO_TYPE based on array of MO_TYPE_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/data_type_find_by_id_p_data_typ_8e11df56.html">data_type_find_by_id(p_data_type_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF data_type_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on DATA_TYPE based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/moving_object_mo_dr_create_many_61e51470.html">moving_object_mo_dr_create_many(INOUT p_moving_object_mo_dr_a moving_object_mo_dr_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on MOVING_OBJECT_MO_DR from an array of MOVING_OBJECT_MO_DR_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_create_INOUT_p_mat_mat_typ__40456410.html">mat_create(INOUT p_mat mat_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on MAT from a MAT_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_relationship_create_INOUT_p__42b8aa7b.html">mo_relationship_create(INOUT p_mo_relationship mo_relationship_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on MO_RELATIONSHIP from a MO_RELATIONSHIP_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_relationship_mor_dr_delete_a_90fa1226.html">mo_relationship_mor_dr_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on MO_RELATIONSHIP_MOR_DR</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/predicate_aspect_type_create_ma_7dc8a0f9.html">predicate_aspect_type_create_many(INOUT p_predicate_aspect_type_a predicate_aspect_type_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on PREDICATE_ASPECT_TYPE from an array of PREDICATE_ASPECT_TYPE_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_dr_count___5d7f625c.html">mo_dr_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on MO_DR</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dataset_create_many_INOUT_p_dat_e312cb5c.html">dataset_create_many(INOUT p_dataset_a dataset_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on DATASET from an array of DATASET_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/attribute_find_by_id_p_attribut_318c34b6.html">attribute_find_by_id(p_attribute_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF attribute_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on ATTRIBUTE based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_find_all___621c989b.html">mat_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mat_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MAT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_relationship_create_many_INO_a8b418c5.html">mo_relationship_create_many(INOUT p_mo_relationship_a mo_relationship_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on MO_RELATIONSHIP from an array of MO_RELATIONSHIP_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dependency_rule_find_all___fc47008b.html">dependency_rule_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF dependency_rule_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on DEPENDENCY_RULE</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dependency_rule_dataset_create__b478d569.html">dependency_rule_dataset_create_many(INOUT p_dependency_rule_dataset_a dependency_rule_dataset_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on DEPENDENCY_RULE_DATASET from an array of DEPENDENCY_RULE_DATASET_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_dr_find_all___b3b2b43e.html">point_dr_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF point_dr_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on POINT_DR</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_dr_find_by_id_p_rule_id_int_5ad83555.html">mat_dr_find_by_id(p_rule_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mat_dr_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MAT_DR based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_type_update_IN_p_mo_type_a_mo__bd397e.html">mo_type_update(IN p_mo_type_a mo_type_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Updates all ocurrences on MO_TYPE based on array of MO_TYPE_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/moving_object_create_INOUT_p_mo_a5ebbda0.html">moving_object_create(INOUT p_moving_object moving_object_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on MOVING_OBJECT from a MOVING_OBJECT_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_mat_dr_create_many_INOUT_p__680ac63c.html">mat_mat_dr_create_many(INOUT p_mat_mat_dr_a mat_mat_dr_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on MAT_MAT_DR from an array of MAT_MAT_DR_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/predicate_aspect_type_count___716c044a.html">predicate_aspect_type_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on PREDICATE_ASPECT_TYPE</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mor_aspect_create_many_INOUT_p__4981c1a1.html">mor_aspect_create_many(INOUT p_mor_aspect_a mor_aspect_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on MOR_ASPECT from an array of MOR_ASPECT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/moving_object_delete_by_id_IN_p_cdd32013.html">moving_object_delete_by_id(IN p_mo_id integer)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on MOVING_OBJECT based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mor_aspect_find_by_id_p_mor_id__c3e2f436.html">mor_aspect_find_by_id(p_mor_id integer, p_aspect_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mor_aspect_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MOR_ASPECT based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/predicate_create_many_INOUT_p_p_f0446f3f.html">predicate_create_many(INOUT p_predicate_a predicate_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on PREDICATE from an array of PREDICATE_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_attribute_create_INOUT_p_b23cb885.html">aspect_attribute_create(INOUT p_aspect_attribute aspect_attribute_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on ASPECT_ATTRIBUTE from a ASPECT_ATTRIBUTE_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_type_create_INOUT_p_aspe_aea9cdef.html">aspect_type_create(INOUT p_aspect_type aspect_type_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on ASPECT_TYPE from a ASPECT_TYPE_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_delete_by_id_IN_p_point_i_2bee1201.html">point_delete_by_id(IN p_point_id integer)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on POINT based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_aspect_create_many_INOUT__f51cb7e1.html">point_aspect_create_many(INOUT p_point_aspect_a point_aspect_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates tuples on POINT_ASPECT from an array of POINT_ASPECT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_relationship_mor_dr_find_all_ea6db5b4.html">mo_relationship_mor_dr_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mo_relationship_mor_dr_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MO_RELATIONSHIP_MOR_DR</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/attribute_find_all___8f7435df.html">attribute_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF attribute_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on ATTRIBUTE</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_dr_count___814227de.html">mat_dr_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on MAT_DR</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_type_delete_by_id_IN_p_a_a83955a3.html">aspect_type_delete_by_id(IN p_aspect_type_id integer)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on ASPECT_TYPE based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_find_by_id_p_point_id_int_62af54b6.html">point_find_by_id(p_point_id integer)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF point_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on POINT based on primary key</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dataset_delete_all___94930f35.html">dataset_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on DATASET</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/point_repr_point_delete_all___2991a478.html">point_repr_point_delete_all()</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete all ocurrences on POINT_REPR_POINT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mor_dr_count___7d09382e.html">mor_dr_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on MOR_DR</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/predicate_delete_IN_p_predicate_9db5e0a0.html">predicate_delete(IN p_predicate_a predicate_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on PREDICATE based on array of PREDICATE_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mor_aspect_find_all___b9658b34.html">mor_aspect_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mor_aspect_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MOR_ASPECT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/predicate_aspect_type_create_IN_bdfe6bb7.html">predicate_aspect_type_create(INOUT p_predicate_aspect_type predicate_aspect_type_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on PREDICATE_ASPECT_TYPE from a PREDICATE_ASPECT_TYPE_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/repr_point_count___8e2e3757.html">repr_point_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on REPR_POINT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_aspect_find_all___24023146.html">mo_aspect_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mo_aspect_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MO_ASPECT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/aspect_find_all___65169ea3.html">aspect_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF aspect_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on ASPECT</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_mat_dr_create_INOUT_p_mat_m_a5f7b3fc.html">mat_mat_dr_create(INOUT p_mat_mat_dr mat_mat_dr_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on MAT_MAT_DR from a MAT_MAT_DR_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mo_aspect_delete_IN_p_mo_aspect_e8500446.html">mo_aspect_delete(IN p_mo_aspect_a mo_aspect_typ[])</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on MO_ASPECT based on array of MO_ASPECT_TYP objects</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_mat_dr_count___5241849d.html">mat_mat_dr_count()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Counts ocurrences on MAT_MAT_DR</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/dependency_rule_dataset_create__80603d87.html">dependency_rule_dataset_create(INOUT p_dependency_rule_dataset dependency_rule_dataset_typ)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates one tuple on DEPENDENCY_RULE_DATASET from a DEPENDENCY_RULE_DATASET_TYP object</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/predicate_find_by_name_p_descri_bd558176.html">predicate_find_by_name(p_description character varying)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF predicate_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on PREDICATE based on name or description</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/attribute_delete_by_name_IN_p_n_eb669701.html">attribute_delete_by_name(IN p_name character varying)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Delete ocurrences on ATTRIBUTE based on name</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/mat_dr_find_all___4c26180e.html">mat_dr_find_all()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>SETOF mat_dr_typ</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Find all ocurrences on MAT_DR</p></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <script>
+                    var config = {
+                        pagination: true
+                    }
+                </script>
+            </div>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div>
+                    <div class="pull-right hidden-xs">
+                        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+                        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+                    </div>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.2.4</a></strong>
+                </div>
+                <!-- /.container -->
+            </footer>
+        </div>
+        <!-- ./wrapper -->
+
+        <!-- jQuery 2.2.3 -->
+        <script src="bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="bower/pdfmake/pdfmake.min.js"></script>
+        <script src="bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="bower/codemirror/codemirror.js"></script>
+        <script src="bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="routines.js"></script>
+        <script src="schemaSpy.js"></script>
+    </body>
+</html>

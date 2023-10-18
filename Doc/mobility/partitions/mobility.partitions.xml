@@ -1,0 +1,947 @@
+<?xml version="1.0" encoding="UTF-8"?><database name="mobility" schema="partitions" type="PostgreSQL - 14.9 (Ubuntu 14.9-1.pgdg22.04+1)">
+   <tables>
+      <table name="mat_2007_05_27" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_05_27_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_05_27" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_05_27" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-05-27'::date) AND (mat_date &lt; '2007-05-28'::date)))" name="mat_2007_05_27_mat_date_check"/>
+      </table>
+      <table name="mat_2007_05_28" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_05_28_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_05_28" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_05_28" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-05-28'::date) AND (mat_date &lt; '2007-05-29'::date)))" name="mat_2007_05_28_mat_date_check"/>
+      </table>
+      <table name="mat_2007_05_29" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_05_29_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_05_29" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_05_29" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-05-29'::date) AND (mat_date &lt; '2007-05-30'::date)))" name="mat_2007_05_29_mat_date_check"/>
+      </table>
+      <table name="mat_2007_05_30" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_05_30_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_05_30" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_05_30" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-05-30'::date) AND (mat_date &lt; '2007-05-31'::date)))" name="mat_2007_05_30_mat_date_check"/>
+      </table>
+      <table name="mat_2007_05_31" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_05_31_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_05_31" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_05_31" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-05-31'::date) AND (mat_date &lt; '2007-06-01'::date)))" name="mat_2007_05_31_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_01" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_01_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_01" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_01" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-01'::date) AND (mat_date &lt; '2007-06-02'::date)))" name="mat_2007_06_01_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_02" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_02_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_02" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_02" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-02'::date) AND (mat_date &lt; '2007-06-03'::date)))" name="mat_2007_06_02_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_03" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_03_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_03" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_03" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-03'::date) AND (mat_date &lt; '2007-06-04'::date)))" name="mat_2007_06_03_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_04" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_04_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_04" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_04" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-04'::date) AND (mat_date &lt; '2007-06-05'::date)))" name="mat_2007_06_04_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_05" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_05_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_05" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_05" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-05'::date) AND (mat_date &lt; '2007-06-06'::date)))" name="mat_2007_06_05_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_06" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_06_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_06" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_06" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-06'::date) AND (mat_date &lt; '2007-06-07'::date)))" name="mat_2007_06_06_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_07" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_07_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_07" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_07" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-07'::date) AND (mat_date &lt; '2007-06-08'::date)))" name="mat_2007_06_07_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_08" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_08_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_08" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_08" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-08'::date) AND (mat_date &lt; '2007-06-09'::date)))" name="mat_2007_06_08_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_09" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_09_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_09" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_09" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-09'::date) AND (mat_date &lt; '2007-06-10'::date)))" name="mat_2007_06_09_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_10" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_10_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_10" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_10" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-10'::date) AND (mat_date &lt; '2007-06-11'::date)))" name="mat_2007_06_10_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_11" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_11_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_11" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_11" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-11'::date) AND (mat_date &lt; '2007-06-12'::date)))" name="mat_2007_06_11_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_12" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_12_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_12" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_12" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-12'::date) AND (mat_date &lt; '2007-06-13'::date)))" name="mat_2007_06_12_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_13" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_13_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_13" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_13" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-13'::date) AND (mat_date &lt; '2007-06-14'::date)))" name="mat_2007_06_13_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_14" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_14_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_14" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_14" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-14'::date) AND (mat_date &lt; '2007-06-15'::date)))" name="mat_2007_06_14_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_15" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_15_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_15" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_15" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-15'::date) AND (mat_date &lt; '2007-06-16'::date)))" name="mat_2007_06_15_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_16" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_16_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_16" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_16" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-16'::date) AND (mat_date &lt; '2007-06-17'::date)))" name="mat_2007_06_16_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_17" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_17_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_17" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_17" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-17'::date) AND (mat_date &lt; '2007-06-18'::date)))" name="mat_2007_06_17_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_18" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_18_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_18" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_18" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-18'::date) AND (mat_date &lt; '2007-06-19'::date)))" name="mat_2007_06_18_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_19" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_19_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_19" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_19" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-19'::date) AND (mat_date &lt; '2007-06-20'::date)))" name="mat_2007_06_19_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_20" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_20_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_20" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_20" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-20'::date) AND (mat_date &lt; '2007-06-21'::date)))" name="mat_2007_06_20_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_21" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_21_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_21" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_21" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-21'::date) AND (mat_date &lt; '2007-06-22'::date)))" name="mat_2007_06_21_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_22" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_22_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_22" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_22" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-22'::date) AND (mat_date &lt; '2007-06-23'::date)))" name="mat_2007_06_22_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_23" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_23_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_23" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_23" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-23'::date) AND (mat_date &lt; '2007-06-24'::date)))" name="mat_2007_06_23_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_24" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_24_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_24" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_24" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-24'::date) AND (mat_date &lt; '2007-06-25'::date)))" name="mat_2007_06_24_mat_date_check"/>
+      </table>
+      <table name="mat_2007_06_25" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="mat_2007_06_25_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat_2007_06_25" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat_2007_06_25" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <checkConstraint constraint="(((mat_date &gt;= '2007-06-25'::date) AND (mat_date &lt; '2007-06-26'::date)))" name="mat_2007_06_25_mat_date_check"/>
+      </table>
+      <table name="point_2007_05_27" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_05_27_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_05_27" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-05-27'::date) AND (t &lt; '2007-05-28'::date)))" name="point_2007_05_27_t_check"/>
+      </table>
+      <table name="point_2007_05_28" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_05_28_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_05_28" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-05-28'::date) AND (t &lt; '2007-05-29'::date)))" name="point_2007_05_28_t_check"/>
+      </table>
+      <table name="point_2007_05_29" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_05_29_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_05_29" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-05-29'::date) AND (t &lt; '2007-05-30'::date)))" name="point_2007_05_29_t_check"/>
+      </table>
+      <table name="point_2007_05_30" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_05_30_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_05_30" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-05-30'::date) AND (t &lt; '2007-05-31'::date)))" name="point_2007_05_30_t_check"/>
+      </table>
+      <table name="point_2007_05_31" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_05_31_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_05_31" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-05-31'::date) AND (t &lt; '2007-06-01'::date)))" name="point_2007_05_31_t_check"/>
+      </table>
+      <table name="point_2007_06_01" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_01_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_01" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-01'::date) AND (t &lt; '2007-06-02'::date)))" name="point_2007_06_01_t_check"/>
+      </table>
+      <table name="point_2007_06_02" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_02_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_02" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-02'::date) AND (t &lt; '2007-06-03'::date)))" name="point_2007_06_02_t_check"/>
+      </table>
+      <table name="point_2007_06_03" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_03_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_03" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-03'::date) AND (t &lt; '2007-06-04'::date)))" name="point_2007_06_03_t_check"/>
+      </table>
+      <table name="point_2007_06_04" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_04_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_04" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-04'::date) AND (t &lt; '2007-06-05'::date)))" name="point_2007_06_04_t_check"/>
+      </table>
+      <table name="point_2007_06_05" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_05_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_05" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-05'::date) AND (t &lt; '2007-06-06'::date)))" name="point_2007_06_05_t_check"/>
+      </table>
+      <table name="point_2007_06_06" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_06_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_06" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-06'::date) AND (t &lt; '2007-06-07'::date)))" name="point_2007_06_06_t_check"/>
+      </table>
+      <table name="point_2007_06_07" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_07_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_07" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-07'::date) AND (t &lt; '2007-06-08'::date)))" name="point_2007_06_07_t_check"/>
+      </table>
+      <table name="point_2007_06_08" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_08_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_08" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-08'::date) AND (t &lt; '2007-06-09'::date)))" name="point_2007_06_08_t_check"/>
+      </table>
+      <table name="point_2007_06_09" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_09_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_09" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-09'::date) AND (t &lt; '2007-06-10'::date)))" name="point_2007_06_09_t_check"/>
+      </table>
+      <table name="point_2007_06_10" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_10_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_10" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-10'::date) AND (t &lt; '2007-06-11'::date)))" name="point_2007_06_10_t_check"/>
+      </table>
+      <table name="point_2007_06_11" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_11_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_11" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-11'::date) AND (t &lt; '2007-06-12'::date)))" name="point_2007_06_11_t_check"/>
+      </table>
+      <table name="point_2007_06_12" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_12_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_12" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-12'::date) AND (t &lt; '2007-06-13'::date)))" name="point_2007_06_12_t_check"/>
+      </table>
+      <table name="point_2007_06_13" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_13_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_13" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-13'::date) AND (t &lt; '2007-06-14'::date)))" name="point_2007_06_13_t_check"/>
+      </table>
+      <table name="point_2007_06_14" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_14_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_14" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-14'::date) AND (t &lt; '2007-06-15'::date)))" name="point_2007_06_14_t_check"/>
+      </table>
+      <table name="point_2007_06_15" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_15_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_15" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-15'::date) AND (t &lt; '2007-06-16'::date)))" name="point_2007_06_15_t_check"/>
+      </table>
+      <table name="point_2007_06_16" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_16_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_16" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-16'::date) AND (t &lt; '2007-06-17'::date)))" name="point_2007_06_16_t_check"/>
+      </table>
+      <table name="point_2007_06_17" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_17_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_17" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-17'::date) AND (t &lt; '2007-06-18'::date)))" name="point_2007_06_17_t_check"/>
+      </table>
+      <table name="point_2007_06_18" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_18_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_18" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-18'::date) AND (t &lt; '2007-06-19'::date)))" name="point_2007_06_18_t_check"/>
+      </table>
+      <table name="point_2007_06_19" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_19_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_19" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-19'::date) AND (t &lt; '2007-06-20'::date)))" name="point_2007_06_19_t_check"/>
+      </table>
+      <table name="point_2007_06_20" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_20_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_20" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-20'::date) AND (t &lt; '2007-06-21'::date)))" name="point_2007_06_20_t_check"/>
+      </table>
+      <table name="point_2007_06_21" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_21_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_21" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-21'::date) AND (t &lt; '2007-06-22'::date)))" name="point_2007_06_21_t_check"/>
+      </table>
+      <table name="point_2007_06_22" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_22_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_22" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-22'::date) AND (t &lt; '2007-06-23'::date)))" name="point_2007_06_22_t_check"/>
+      </table>
+      <table name="point_2007_06_23" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_23_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_23" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-23'::date) AND (t &lt; '2007-06-24'::date)))" name="point_2007_06_23_t_check"/>
+      </table>
+      <table name="point_2007_06_24" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_24_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_24" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-24'::date) AND (t &lt; '2007-06-25'::date)))" name="point_2007_06_24_t_check"/>
+      </table>
+      <table name="point_2007_06_25" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_25_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_25" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-25'::date) AND (t &lt; '2007-06-26'::date)))" name="point_2007_06_25_t_check"/>
+      </table>
+      <table name="point_2007_06_26" numRows="0" remarks="" schema="partitions" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="t" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <index name="point_2007_06_26_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point_2007_06_26" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <checkConstraint constraint="(((t &gt;= '2007-06-26'::date) AND (t &lt; '2007-06-27'::date)))" name="point_2007_06_26_t_check"/>
+      </table>
+   </tables>
+</database>

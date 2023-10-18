@@ -1,0 +1,2193 @@
+<?xml version="1.0" encoding="UTF-8"?><database name="mobility" schema="master" type="PostgreSQL - 14.9 (Ubuntu 14.9-1.pgdg22.04+1)">
+   <sequences>
+      <sequence increment="1" name="aspect_seq" startValue="1"/>
+      <sequence increment="1" name="aspect_type_seq" startValue="1"/>
+      <sequence increment="1" name="attribute_seq" startValue="1"/>
+      <sequence increment="1" name="data_type_seq" startValue="1"/>
+      <sequence increment="1" name="mat_seq" startValue="1"/>
+      <sequence increment="1" name="mo_relationship_seq" startValue="1"/>
+      <sequence increment="1" name="mo_type_seq" startValue="1"/>
+      <sequence increment="1" name="moving_object_seq" startValue="1"/>
+      <sequence increment="1" name="point_seq" startValue="1"/>
+   </sequences>
+   <tables>
+      <table name="aspect" numRows="100191" remarks="" schema="master" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="aspect_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <child column="aspect_id" foreignKey="r_49" implied="false" onDeleteCascade="true" schema="master" table="aspect_attribute"/>
+            <child column="aspect_id" foreignKey="r_46" implied="false" onDeleteCascade="true" schema="master" table="mat_aspect"/>
+            <child column="aspect_id" foreignKey="r_48" implied="false" onDeleteCascade="true" schema="master" table="mo_aspect"/>
+            <child column="aspect_id" foreignKey="r_38" implied="false" onDeleteCascade="true" schema="master" table="mor_aspect"/>
+            <child column="aspect_id" foreignKey="r_43" implied="false" onDeleteCascade="true" schema="master" table="point_aspect"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="8" id="2" name="x" nullable="true" remarks="" size="8" type="float4" typeCode="7"/>
+         <column autoUpdated="false" defaultValue="null" digits="8" id="3" name="y" nullable="true" remarks="" size="8" type="float4" typeCode="7"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="4" name="t" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="space_time" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="aspect_type_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="aspect_type_id" foreignKey="r_31" implied="false" onDeleteCascade="false" schema="master" table="aspect_type"/>
+         </column>
+         <primaryKey column="aspect_id" sequenceNumberInPK="1"/>
+         <index name="aspect_pkey" unique="true">
+            <column ascending="true" name="aspect_id"/>
+         </index>
+         <index name="xie1aspect" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1aspect" unique="false">
+            <column ascending="true" name="aspect_type_id"/>
+         </index>
+      </table>
+      <table name="aspect_attribute" numRows="200382" remarks="" schema="master" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="aspect_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="aspect_id" foreignKey="r_49" implied="false" onDeleteCascade="true" schema="master" table="aspect"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="attribute_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="attribute_id" foreignKey="r_50" implied="false" onDeleteCascade="true" schema="master" table="attribute"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="value" nullable="false" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="data_type_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="data_type_id" foreignKey="r_52" implied="false" onDeleteCascade="false" schema="master" table="data_type"/>
+         </column>
+         <primaryKey column="aspect_id" sequenceNumberInPK="1"/>
+         <primaryKey column="attribute_id" sequenceNumberInPK="2"/>
+         <index name="aspect_attribute_pkey" unique="true">
+            <column ascending="true" name="aspect_id"/>
+            <column ascending="true" name="attribute_id"/>
+         </index>
+         <index name="xif1aspect_attribute" unique="false">
+            <column ascending="true" name="aspect_id"/>
+         </index>
+         <index name="xif2aspect_attribute" unique="false">
+            <column ascending="true" name="attribute_id"/>
+         </index>
+         <index name="xif3aspect_attribute" unique="false">
+            <column ascending="true" name="data_type_id"/>
+         </index>
+      </table>
+      <table name="aspect_type" numRows="1" remarks="" schema="master" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="aspect_type_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <child column="aspect_type_id" foreignKey="r_31" implied="false" onDeleteCascade="false" schema="master" table="aspect"/>
+            <child column="super_type_id" foreignKey="r_51" implied="false" onDeleteCascade="false" schema="master" table="aspect_type"/>
+            <child column="aspect_type_id" foreignKey="r_39" implied="false" onDeleteCascade="false" schema="master" table="attribute"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="super_type_id" nullable="true" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="aspect_type_id" foreignKey="r_51" implied="false" onDeleteCascade="false" schema="master" table="aspect_type"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="description" nullable="true" remarks="" size="50" type="varchar" typeCode="12"/>
+         <primaryKey column="aspect_type_id" sequenceNumberInPK="1"/>
+         <index name="aspect_type_pkey" unique="true">
+            <column ascending="true" name="aspect_type_id"/>
+         </index>
+         <index name="xif1aspect_type" unique="false">
+            <column ascending="true" name="super_type_id"/>
+         </index>
+      </table>
+      <table name="attribute" numRows="2" remarks="" schema="master" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="attribute_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <child column="attribute_id" foreignKey="r_50" implied="false" onDeleteCascade="true" schema="master" table="aspect_attribute"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="true" remarks="" size="30" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="aspect_type_id" nullable="true" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="aspect_type_id" foreignKey="r_39" implied="false" onDeleteCascade="false" schema="master" table="aspect_type"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="data_type_id" nullable="true" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="data_type_id" foreignKey="r_53" implied="false" onDeleteCascade="false" schema="master" table="data_type"/>
+         </column>
+         <primaryKey column="attribute_id" sequenceNumberInPK="1"/>
+         <index name="attribute_pkey" unique="true">
+            <column ascending="true" name="attribute_id"/>
+         </index>
+         <index name="xif1atribute" unique="false">
+            <column ascending="true" name="aspect_type_id"/>
+         </index>
+         <index name="xif2atribute" unique="false">
+            <column ascending="true" name="data_type_id"/>
+         </index>
+      </table>
+      <table name="data_type" numRows="1" remarks="" schema="master" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="data_type_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <child column="data_type_id" foreignKey="r_52" implied="false" onDeleteCascade="false" schema="master" table="aspect_attribute"/>
+            <child column="data_type_id" foreignKey="r_53" implied="false" onDeleteCascade="false" schema="master" table="attribute"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="data_type_name" nullable="true" remarks="" size="30" type="varchar" typeCode="12"/>
+         <primaryKey column="data_type_id" sequenceNumberInPK="1"/>
+         <index name="data_type_pkey" unique="true">
+            <column ascending="true" name="data_type_id"/>
+         </index>
+      </table>
+      <table name="mat" numRows="0" remarks="" schema="master" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <child column="mat_id" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="master" table="point"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="mo_id" foreignKey="r_54" implied="false" onDeleteCascade="false" schema="master" table="moving_object"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="raw_trajectory" nullable="false" remarks="" size="2147483647" type="tgeompoint" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="trajectory_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mat_date" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <primaryKey column="mat_id" sequenceNumberInPK="1"/>
+         <index name="mat_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xie1mat" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1mat" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+      </table>
+      <table name="mat_aspect" numRows="0" remarks="" schema="master" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="aspect_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="aspect_id" foreignKey="r_46" implied="false" onDeleteCascade="true" schema="master" table="aspect"/>
+         </column>
+         <primaryKey column="mat_id" sequenceNumberInPK="1"/>
+         <primaryKey column="aspect_id" sequenceNumberInPK="2"/>
+         <index name="mat_aspect_pkey" unique="true">
+            <column ascending="true" name="mat_id"/>
+            <column ascending="true" name="aspect_id"/>
+         </index>
+         <index name="xif1mat_aspect" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+         <index name="xif2mat_aspect" unique="false">
+            <column ascending="true" name="aspect_id"/>
+         </index>
+      </table>
+      <table name="mo_aspect" numRows="0" remarks="" schema="master" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="mo_id" foreignKey="r_47" implied="false" onDeleteCascade="true" schema="master" table="moving_object"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="aspect_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="aspect_id" foreignKey="r_48" implied="false" onDeleteCascade="true" schema="master" table="aspect"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="2" name="start_time" nullable="false" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="3" name="end_time" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <primaryKey column="mo_id" sequenceNumberInPK="1"/>
+         <primaryKey column="aspect_id" sequenceNumberInPK="2"/>
+         <index name="mo_aspect_pkey" unique="true">
+            <column ascending="true" name="mo_id"/>
+            <column ascending="true" name="aspect_id"/>
+         </index>
+         <index name="xif1mo_aspect" unique="false">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <index name="xif2mo_aspect" unique="false">
+            <column ascending="true" name="aspect_id"/>
+         </index>
+      </table>
+      <table name="mo_relationship" numRows="0" remarks="" schema="master" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mor_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <child column="mor_id" foreignKey="r_37" implied="false" onDeleteCascade="true" schema="master" table="mor_aspect"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="2" name="start_time" nullable="false" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="3" name="end_time" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="mo_target" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="mo_id" foreignKey="r_20" implied="false" onDeleteCascade="false" schema="master" table="moving_object"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mo_source" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="mo_id" foreignKey="r_21" implied="false" onDeleteCascade="false" schema="master" table="moving_object"/>
+         </column>
+         <primaryKey column="mor_id" sequenceNumberInPK="1"/>
+         <index name="mo_relationship_pkey" unique="true">
+            <column ascending="true" name="mor_id"/>
+         </index>
+         <index name="xif1mo_relationship" unique="false">
+            <column ascending="true" name="mo_target"/>
+         </index>
+         <index name="xif2mo_relationship" unique="false">
+            <column ascending="true" name="mo_source"/>
+         </index>
+      </table>
+      <table name="mo_type" numRows="1" remarks="" schema="master" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mo_type_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <child column="mo_type_id" foreignKey="r_19" implied="false" onDeleteCascade="false" schema="master" table="moving_object"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <primaryKey column="mo_type_id" sequenceNumberInPK="1"/>
+         <index name="mo_type_pkey" unique="true">
+            <column ascending="true" name="mo_type_id"/>
+         </index>
+      </table>
+      <table name="mor_aspect" numRows="0" remarks="" schema="master" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mor_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="mor_id" foreignKey="r_37" implied="false" onDeleteCascade="true" schema="master" table="mo_relationship"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="aspect_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="aspect_id" foreignKey="r_38" implied="false" onDeleteCascade="true" schema="master" table="aspect"/>
+         </column>
+         <primaryKey column="mor_id" sequenceNumberInPK="1"/>
+         <primaryKey column="aspect_id" sequenceNumberInPK="2"/>
+         <index name="mor_aspect_pkey" unique="true">
+            <column ascending="true" name="mor_id"/>
+            <column ascending="true" name="aspect_id"/>
+         </index>
+         <index name="xif1mo_relationship_aspect" unique="false">
+            <column ascending="true" name="mor_id"/>
+         </index>
+         <index name="xif2mo_relationship_aspect" unique="false">
+            <column ascending="true" name="aspect_id"/>
+         </index>
+      </table>
+      <table name="moving_object" numRows="3376" remarks="" schema="master" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="mo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <child column="mo_id" foreignKey="r_54" implied="false" onDeleteCascade="false" schema="master" table="mat"/>
+            <child column="mo_id" foreignKey="r_47" implied="false" onDeleteCascade="true" schema="master" table="mo_aspect"/>
+            <child column="mo_source" foreignKey="r_21" implied="false" onDeleteCascade="false" schema="master" table="mo_relationship"/>
+            <child column="mo_target" foreignKey="r_20" implied="false" onDeleteCascade="false" schema="master" table="mo_relationship"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="description" nullable="false" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mo_type_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="mo_type_id" foreignKey="r_19" implied="false" onDeleteCascade="false" schema="master" table="mo_type"/>
+         </column>
+         <primaryKey column="mo_id" sequenceNumberInPK="1"/>
+         <index name="moving_object_pkey" unique="true">
+            <column ascending="true" name="mo_id"/>
+         </index>
+         <index name="xie1moving_object" unique="false">
+            <column ascending="true" name="description"/>
+         </index>
+         <index name="xif1moving_object" unique="false">
+            <column ascending="true" name="mo_type_id"/>
+         </index>
+      </table>
+      <table name="point" numRows="0" remarks="" schema="master" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="p_order" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="mat_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="mat_id" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="master" table="mat"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="3" name="t" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <primaryKey column="point_id" sequenceNumberInPK="1"/>
+         <index name="point_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif1point" unique="false">
+            <column ascending="true" name="mat_id"/>
+         </index>
+      </table>
+      <table name="point_aspect" numRows="800114" remarks="" schema="master" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="point_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="aspect_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="aspect_id" foreignKey="r_43" implied="false" onDeleteCascade="true" schema="master" table="aspect"/>
+         </column>
+         <primaryKey column="point_id" sequenceNumberInPK="1"/>
+         <primaryKey column="aspect_id" sequenceNumberInPK="2"/>
+         <index name="point_aspect_pkey" unique="true">
+            <column ascending="true" name="point_id"/>
+            <column ascending="true" name="aspect_id"/>
+         </index>
+         <index name="xif1point_aspect" unique="false">
+            <column ascending="true" name="point_id"/>
+         </index>
+         <index name="xif2point_aspect" unique="false">
+            <column ascending="true" name="aspect_id"/>
+         </index>
+      </table>
+   </tables>
+   <routines>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_attribute_count()" returnType="integer" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Counts ocurrences on ASPECT_ATTRIBUTE]]></comment>
+         <definition language="sql"><![CDATA[SELECT COUNT(*) AS CNT FROM ASPECT_ATTRIBUTE;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_attribute_create(INOUT p_aspect_attribute aspect_attribute_typ)" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates one tuple on ASPECT_ATTRIBUTE from a ASPECT_ATTRIBUTE_TYP object]]></comment>
+         <definition language="plpgsql"><![CDATA[BEGIN
+  INSERT INTO ASPECT_ATTRIBUTE(
+    ASPECT_ID, ATTRIBUTE_ID, VALUE, DATA_TYPE_ID)
+  VALUES(
+    P_ASPECT_ATTRIBUTE.ASPECT_ID, P_ASPECT_ATTRIBUTE.ATTRIBUTE_ID, P_ASPECT_ATTRIBUTE.VALUE, P_ASPECT_ATTRIBUTE.DATA_TYPE_ID);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_aspect_attribute" type="aspect_attribute_typ"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_attribute_create_many(INOUT p_aspect_attribute_a aspect_attribute_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates tuples on ASPECT_ATTRIBUTE from an array of ASPECT_ATTRIBUTE_TYP objects]]></comment>
+         <definition language="plpgsql"><![CDATA[BEGIN
+  INSERT INTO ASPECT_ATTRIBUTE(
+    ASPECT_ID, ATTRIBUTE_ID, VALUE, DATA_TYPE_ID)
+  SELECT
+    ASPECT_ID, ATTRIBUTE_ID, VALUE, DATA_TYPE_ID
+  FROM UNNEST(P_ASPECT_ATTRIBUTE_A);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_aspect_attribute_a" type="aspect_attribute_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_attribute_delete(IN p_aspect_attribute_a aspect_attribute_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete ocurrences on ASPECT_ATTRIBUTE based on array of ASPECT_ATTRIBUTE_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[DELETE FROM 
+    ASPECT_ATTRIBUTE T
+  WHERE EXISTS (
+    SELECT 1
+    FROM UNNEST(P_ASPECT_ATTRIBUTE_A) P
+    WHERE 
+      P.ASPECT_ID = T.ASPECT_ID AND
+      P.ATTRIBUTE_ID = T.ATTRIBUTE_ID);]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_aspect_attribute_a" type="aspect_attribute_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_attribute_delete_all()" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete all ocurrences on ASPECT_ATTRIBUTE]]></comment>
+         <definition language="sql"><![CDATA[DELETE    
+  FROM ASPECT_ATTRIBUTE;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_attribute_find_all()" returnType="SETOF aspect_attribute_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on ASPECT_ATTRIBUTE]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    ASPECT_ID, ATTRIBUTE_ID, VALUE, DATA_TYPE_ID
+  FROM ASPECT_ATTRIBUTE;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_attribute_find_by_id(p_aspect_id integer, p_attribute_id integer)" returnType="SETOF aspect_attribute_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on ASPECT_ATTRIBUTE based on primary key]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    ASPECT_ID, ATTRIBUTE_ID, VALUE, DATA_TYPE_ID
+  FROM ASPECT_ATTRIBUTE
+  WHERE 
+    ASPECT_ID = P_ASPECT_ID AND
+    ATTRIBUTE_ID = P_ATTRIBUTE_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_aspect_id" type="integer"/>
+            <parameter mode="IN" name="p_attribute_id" type="integer"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_attribute_update(IN p_aspect_attribute_a aspect_attribute_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Updates all ocurrences on ASPECT_ATTRIBUTE based on array of ASPECT_ATTRIBUTE_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[UPDATE ASPECT_ATTRIBUTE E
+  SET 
+    ASPECT_ID=P.ASPECT_ID, 
+    ATTRIBUTE_ID=P.ATTRIBUTE_ID, 
+    VALUE=P.VALUE, 
+    DATA_TYPE_ID=P.DATA_TYPE_ID
+  FROM UNNEST(P_ASPECT_ATTRIBUTE_A) P
+  WHERE 
+    E.ASPECT_ID = P.ASPECT_ID AND
+    E.ATTRIBUTE_ID = P.ATTRIBUTE_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_aspect_attribute_a" type="aspect_attribute_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_count()" returnType="integer" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Counts ocurrences on ASPECT]]></comment>
+         <definition language="sql"><![CDATA[SELECT COUNT(*) AS CNT FROM ASPECT;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_create(INOUT p_aspect aspect_typ)" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates one tuple on ASPECT from a ASPECT_TYP object]]></comment>
+         <definition language="plpgsql"><![CDATA[BEGIN
+  P_ASPECT.ASPECT_ID := NEXTVAL('ASPECT_SEQ');
+  INSERT INTO ASPECT(
+    ASPECT_ID, DESCRIPTION, X, Y, T, SPACE_TIME, ASPECT_TYPE_ID)
+  VALUES(
+    P_ASPECT.ASPECT_ID, P_ASPECT.DESCRIPTION, P_ASPECT.X, P_ASPECT.Y, P_ASPECT.T, P_ASPECT.SPACE_TIME, P_ASPECT.ASPECT_TYPE_ID);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_aspect" type="aspect_typ"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_create_many(INOUT p_aspect_a aspect_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates tuples on ASPECT from an array of ASPECT_TYP objects]]></comment>
+         <definition language="plpgsql"><![CDATA[DECLARE
+  V_INPUT_LENGTH INTEGER;
+BEGIN
+  V_INPUT_LENGTH := ARRAY_LENGTH(P_ASPECT_A, 1);
+  FOR I IN 1..V_INPUT_LENGTH LOOP
+    P_ASPECT_A[I].ASPECT_ID := NEXTVAL('ASPECT_SEQ');
+  END LOOP;
+  INSERT INTO ASPECT(
+    ASPECT_ID, DESCRIPTION, X, Y, T, SPACE_TIME, ASPECT_TYPE_ID)
+  SELECT
+    ASPECT_ID, DESCRIPTION, X, Y, T, SPACE_TIME, ASPECT_TYPE_ID
+  FROM UNNEST(P_ASPECT_A);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_aspect_a" type="aspect_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_delete(IN p_aspect_a aspect_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete ocurrences on ASPECT based on array of ASPECT_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[DELETE FROM 
+    ASPECT T
+  WHERE EXISTS (
+    SELECT 1
+    FROM UNNEST(P_ASPECT_A) P
+    WHERE 
+      P.ASPECT_ID = T.ASPECT_ID);]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_aspect_a" type="aspect_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_delete_all()" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete all ocurrences on ASPECT]]></comment>
+         <definition language="sql"><![CDATA[DELETE    
+  FROM ASPECT;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_find_all()" returnType="SETOF aspect_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on ASPECT]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    ASPECT_ID, DESCRIPTION, X, Y, T, SPACE_TIME, ASPECT_TYPE_ID
+  FROM ASPECT;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_find_by_id(p_aspect_id integer)" returnType="SETOF aspect_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on ASPECT based on primary key]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    ASPECT_ID, DESCRIPTION, X, Y, T, SPACE_TIME, ASPECT_TYPE_ID
+  FROM ASPECT
+  WHERE 
+    ASPECT_ID = P_ASPECT_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_aspect_id" type="integer"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_find_by_name(p_description character varying)" returnType="SETOF aspect_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on ASPECT based on name or description]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    ASPECT_ID, DESCRIPTION, X, Y, T, SPACE_TIME, ASPECT_TYPE_ID
+  FROM ASPECT
+  WHERE DESCRIPTION = P_DESCRIPTION;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_description" type="character varying"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_type_count()" returnType="integer" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Counts ocurrences on ASPECT_TYPE]]></comment>
+         <definition language="sql"><![CDATA[SELECT COUNT(*) AS CNT FROM ASPECT_TYPE;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_type_create(INOUT p_aspect_type aspect_type_typ)" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates one tuple on ASPECT_TYPE from a ASPECT_TYPE_TYP object]]></comment>
+         <definition language="plpgsql"><![CDATA[BEGIN
+  P_ASPECT_TYPE.ASPECT_TYPE_ID := NEXTVAL('ASPECT_TYPE_SEQ');
+  INSERT INTO ASPECT_TYPE(
+    ASPECT_TYPE_ID, SUPER_TYPE_ID, DESCRIPTION)
+  VALUES(
+    P_ASPECT_TYPE.ASPECT_TYPE_ID, P_ASPECT_TYPE.SUPER_TYPE_ID, P_ASPECT_TYPE.DESCRIPTION);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_aspect_type" type="aspect_type_typ"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_type_create_many(INOUT p_aspect_type_a aspect_type_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates tuples on ASPECT_TYPE from an array of ASPECT_TYPE_TYP objects]]></comment>
+         <definition language="plpgsql"><![CDATA[DECLARE
+  V_INPUT_LENGTH INTEGER;
+BEGIN
+  V_INPUT_LENGTH := ARRAY_LENGTH(P_ASPECT_TYPE_A, 1);
+  FOR I IN 1..V_INPUT_LENGTH LOOP
+    P_ASPECT_TYPE_A[I].ASPECT_TYPE_ID := NEXTVAL('ASPECT_TYPE_SEQ');
+  END LOOP;
+  INSERT INTO ASPECT_TYPE(
+    ASPECT_TYPE_ID, SUPER_TYPE_ID, DESCRIPTION)
+  SELECT
+    ASPECT_TYPE_ID, SUPER_TYPE_ID, DESCRIPTION
+  FROM UNNEST(P_ASPECT_TYPE_A);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_aspect_type_a" type="aspect_type_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_type_delete(IN p_aspect_type_a aspect_type_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete ocurrences on ASPECT_TYPE based on array of ASPECT_TYPE_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[DELETE FROM 
+    ASPECT_TYPE T
+  WHERE EXISTS (
+    SELECT 1
+    FROM UNNEST(P_ASPECT_TYPE_A) P
+    WHERE 
+      P.ASPECT_TYPE_ID = T.ASPECT_TYPE_ID);]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_aspect_type_a" type="aspect_type_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_type_delete_all()" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete all ocurrences on ASPECT_TYPE]]></comment>
+         <definition language="sql"><![CDATA[DELETE    
+  FROM ASPECT_TYPE;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_type_find_all()" returnType="SETOF aspect_type_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on ASPECT_TYPE]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    ASPECT_TYPE_ID, SUPER_TYPE_ID, DESCRIPTION
+  FROM ASPECT_TYPE;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_type_find_by_id(p_aspect_type_id integer)" returnType="SETOF aspect_type_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on ASPECT_TYPE based on primary key]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    ASPECT_TYPE_ID, SUPER_TYPE_ID, DESCRIPTION
+  FROM ASPECT_TYPE
+  WHERE 
+    ASPECT_TYPE_ID = P_ASPECT_TYPE_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_aspect_type_id" type="integer"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_type_find_by_name(p_description character varying)" returnType="SETOF aspect_type_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on ASPECT_TYPE based on name or description]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    ASPECT_TYPE_ID, SUPER_TYPE_ID, DESCRIPTION
+  FROM ASPECT_TYPE
+  WHERE DESCRIPTION = P_DESCRIPTION;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_description" type="character varying"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_type_update(IN p_aspect_type_a aspect_type_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Updates all ocurrences on ASPECT_TYPE based on array of ASPECT_TYPE_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[UPDATE ASPECT_TYPE E
+  SET 
+    ASPECT_TYPE_ID=P.ASPECT_TYPE_ID, 
+    SUPER_TYPE_ID=P.SUPER_TYPE_ID, 
+    DESCRIPTION=P.DESCRIPTION
+  FROM UNNEST(P_ASPECT_TYPE_A) P
+  WHERE 
+    E.ASPECT_TYPE_ID = P.ASPECT_TYPE_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_aspect_type_a" type="aspect_type_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="aspect_update(IN p_aspect_a aspect_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Updates all ocurrences on ASPECT based on array of ASPECT_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[UPDATE ASPECT E
+  SET 
+    ASPECT_ID=P.ASPECT_ID, 
+    DESCRIPTION=P.DESCRIPTION, 
+    X=P.X, 
+    Y=P.Y, 
+    T=P.T, 
+    SPACE_TIME=P.SPACE_TIME, 
+    ASPECT_TYPE_ID=P.ASPECT_TYPE_ID
+  FROM UNNEST(P_ASPECT_A) P
+  WHERE 
+    E.ASPECT_ID = P.ASPECT_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_aspect_a" type="aspect_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="attribute_count()" returnType="integer" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Counts ocurrences on ATTRIBUTE]]></comment>
+         <definition language="sql"><![CDATA[SELECT COUNT(*) AS CNT FROM ATTRIBUTE;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="attribute_create(INOUT p_attribute attribute_typ)" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates one tuple on ATTRIBUTE from a ATTRIBUTE_TYP object]]></comment>
+         <definition language="plpgsql"><![CDATA[BEGIN
+  P_ATTRIBUTE.ATTRIBUTE_ID := NEXTVAL('ATTRIBUTE_SEQ');
+  INSERT INTO ATTRIBUTE(
+    ATTRIBUTE_ID, NAME, ASPECT_TYPE_ID, DATA_TYPE_ID)
+  VALUES(
+    P_ATTRIBUTE.ATTRIBUTE_ID, P_ATTRIBUTE.NAME, P_ATTRIBUTE.ASPECT_TYPE_ID, P_ATTRIBUTE.DATA_TYPE_ID);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_attribute" type="attribute_typ"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="attribute_create_many(INOUT p_attribute_a attribute_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates tuples on ATTRIBUTE from an array of ATTRIBUTE_TYP objects]]></comment>
+         <definition language="plpgsql"><![CDATA[DECLARE
+  V_INPUT_LENGTH INTEGER;
+BEGIN
+  V_INPUT_LENGTH := ARRAY_LENGTH(P_ATTRIBUTE_A, 1);
+  FOR I IN 1..V_INPUT_LENGTH LOOP
+    P_ATTRIBUTE_A[I].ATTRIBUTE_ID := NEXTVAL('ATTRIBUTE_SEQ');
+  END LOOP;
+  INSERT INTO ATTRIBUTE(
+    ATTRIBUTE_ID, NAME, ASPECT_TYPE_ID, DATA_TYPE_ID)
+  SELECT
+    ATTRIBUTE_ID, NAME, ASPECT_TYPE_ID, DATA_TYPE_ID
+  FROM UNNEST(P_ATTRIBUTE_A);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_attribute_a" type="attribute_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="attribute_delete(IN p_attribute_a attribute_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete ocurrences on ATTRIBUTE based on array of ATTRIBUTE_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[DELETE FROM 
+    ATTRIBUTE T
+  WHERE EXISTS (
+    SELECT 1
+    FROM UNNEST(P_ATTRIBUTE_A) P
+    WHERE 
+      P.ATTRIBUTE_ID = T.ATTRIBUTE_ID);]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_attribute_a" type="attribute_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="attribute_delete_all()" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete all ocurrences on ATTRIBUTE]]></comment>
+         <definition language="sql"><![CDATA[DELETE    
+  FROM ATTRIBUTE;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="attribute_find_all()" returnType="SETOF attribute_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on ATTRIBUTE]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    ATTRIBUTE_ID, NAME, ASPECT_TYPE_ID, DATA_TYPE_ID
+  FROM ATTRIBUTE;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="attribute_find_by_id(p_attribute_id integer)" returnType="SETOF attribute_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on ATTRIBUTE based on primary key]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    ATTRIBUTE_ID, NAME, ASPECT_TYPE_ID, DATA_TYPE_ID
+  FROM ATTRIBUTE
+  WHERE 
+    ATTRIBUTE_ID = P_ATTRIBUTE_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_attribute_id" type="integer"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="attribute_find_by_name(p_name character varying)" returnType="SETOF attribute_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on ATTRIBUTE based on name or description]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    ATTRIBUTE_ID, NAME, ASPECT_TYPE_ID, DATA_TYPE_ID
+  FROM ATTRIBUTE
+  WHERE NAME = P_NAME;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_name" type="character varying"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="attribute_update(IN p_attribute_a attribute_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Updates all ocurrences on ATTRIBUTE based on array of ATTRIBUTE_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[UPDATE ATTRIBUTE E
+  SET 
+    ATTRIBUTE_ID=P.ATTRIBUTE_ID, 
+    NAME=P.NAME, 
+    ASPECT_TYPE_ID=P.ASPECT_TYPE_ID, 
+    DATA_TYPE_ID=P.DATA_TYPE_ID
+  FROM UNNEST(P_ATTRIBUTE_A) P
+  WHERE 
+    E.ATTRIBUTE_ID = P.ATTRIBUTE_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_attribute_a" type="attribute_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="data_type_count()" returnType="integer" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Counts ocurrences on DATA_TYPE]]></comment>
+         <definition language="sql"><![CDATA[SELECT COUNT(*) AS CNT FROM DATA_TYPE;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="data_type_create(INOUT p_data_type data_type_typ)" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates one tuple on DATA_TYPE from a DATA_TYPE_TYP object]]></comment>
+         <definition language="plpgsql"><![CDATA[BEGIN
+  P_DATA_TYPE.DATA_TYPE_ID := NEXTVAL('DATA_TYPE_SEQ');
+  INSERT INTO DATA_TYPE(
+    DATA_TYPE_ID, DATA_TYPE_NAME)
+  VALUES(
+    P_DATA_TYPE.DATA_TYPE_ID, P_DATA_TYPE.DATA_TYPE_NAME);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_data_type" type="data_type_typ"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="data_type_create_many(INOUT p_data_type_a data_type_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates tuples on DATA_TYPE from an array of DATA_TYPE_TYP objects]]></comment>
+         <definition language="plpgsql"><![CDATA[DECLARE
+  V_INPUT_LENGTH INTEGER;
+BEGIN
+  V_INPUT_LENGTH := ARRAY_LENGTH(P_DATA_TYPE_A, 1);
+  FOR I IN 1..V_INPUT_LENGTH LOOP
+    P_DATA_TYPE_A[I].DATA_TYPE_ID := NEXTVAL('DATA_TYPE_SEQ');
+  END LOOP;
+  INSERT INTO DATA_TYPE(
+    DATA_TYPE_ID, DATA_TYPE_NAME)
+  SELECT
+    DATA_TYPE_ID, DATA_TYPE_NAME
+  FROM UNNEST(P_DATA_TYPE_A);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_data_type_a" type="data_type_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="data_type_delete(IN p_data_type_a data_type_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete ocurrences on DATA_TYPE based on array of DATA_TYPE_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[DELETE FROM 
+    DATA_TYPE T
+  WHERE EXISTS (
+    SELECT 1
+    FROM UNNEST(P_DATA_TYPE_A) P
+    WHERE 
+      P.DATA_TYPE_ID = T.DATA_TYPE_ID);]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_data_type_a" type="data_type_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="data_type_delete_all()" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete all ocurrences on DATA_TYPE]]></comment>
+         <definition language="sql"><![CDATA[DELETE    
+  FROM DATA_TYPE;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="data_type_find_all()" returnType="SETOF data_type_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on DATA_TYPE]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    DATA_TYPE_ID, DATA_TYPE_NAME
+  FROM DATA_TYPE;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="data_type_find_by_id(p_data_type_id integer)" returnType="SETOF data_type_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on DATA_TYPE based on primary key]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    DATA_TYPE_ID, DATA_TYPE_NAME
+  FROM DATA_TYPE
+  WHERE 
+    DATA_TYPE_ID = P_DATA_TYPE_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_data_type_id" type="integer"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="data_type_find_by_name(p_data_type_name character varying)" returnType="SETOF data_type_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on DATA_TYPE based on name or description]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    DATA_TYPE_ID, DATA_TYPE_NAME
+  FROM DATA_TYPE
+  WHERE DATA_TYPE_NAME = P_DATA_TYPE_NAME;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_data_type_name" type="character varying"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="data_type_update(IN p_data_type_a data_type_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Updates all ocurrences on DATA_TYPE based on array of DATA_TYPE_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[UPDATE DATA_TYPE E
+  SET 
+    DATA_TYPE_ID=P.DATA_TYPE_ID, 
+    DATA_TYPE_NAME=P.DATA_TYPE_NAME
+  FROM UNNEST(P_DATA_TYPE_A) P
+  WHERE 
+    E.DATA_TYPE_ID = P.DATA_TYPE_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_data_type_a" type="data_type_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="drop_partitions_by_date(IN p_schemaname text, IN p_tablename text, IN p_startdate date, IN p_enddate date, IN p_interval text)" securityType="INVOKER" type="PROCEDURE">
+         <comment/>
+         <definition language="plpgsql"><![CDATA[declare
+  v_d date;
+  v_partitionname text;
+  v_schemaname text default 'partitions';
+  v_interval text default '1 ' || p_interval;
+ 
+  c_indexes record;
+begin
+  if not exists (
+    select 1
+    from information_schema.tables t
+    where t.table_name = lower(p_tablename)
+    	and t.table_schema = lower(p_schemaname)
+  ) then
+    raise exception 'table %.% does not exist', 
+   		p_schemaname, p_tablename;
+  end if;
+ 
+  if p_startdate >= p_enddate then
+    raise exception 'the start date % must be before the end date %', 
+   		startdate, enddate;
+  end if;
+ 
+  v_d := p_startdate;
+ 
+  while v_d <= p_enddate 
+  loop
+    v_partitionname := p_tablename || '_' || to_char(d, 'yyyy_mm_dd');
+   
+    if exists (
+      select 1
+      from information_schema.tables t 
+      where t.table_name = lower(v_partitionname)
+       	and t.table_schema = lower(v_schemaname) 
+				and exists (
+					select 1 from pg_catalog.pg_inherits i
+						inner join pg_catalog.pg_class p on
+							p."oid" = i.inhparent
+						inner join pg_catalog.pg_class c on
+							c."oid" = i.inhrelid
+						inner join pg_catalog.pg_namespace n on
+							n."oid" = c.relnamespace
+					where c.relname = t.table_name and 
+						n.nspname = t.table_schema and
+						p.relname = lower(p_tablename)) 
+       )
+    then
+      execute format('drop table %s.%s', v_schemaname, v_partitionname);
+		
+      raise notice 'partition %.% has been dropped', 
+     		v_schemaname, v_partitionname;
+    end if;
+   
+    v_d := v_d + v_interval::interval;
+  end loop;
+end;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_schemaname" type="text"/>
+            <parameter mode="IN" name="p_tablename" type="text"/>
+            <parameter mode="IN" name="p_startdate" type="date"/>
+            <parameter mode="IN" name="p_enddate" type="date"/>
+            <parameter mode="IN" name="p_interval" type="text"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="load_aspects_from_regions()" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates aspects from regions]]></comment>
+         <definition language="plpgsql"><![CDATA[declare
+	region_asp 		aspect_type_typ;
+	geometry_type	data_type_typ;
+	geometry_att	attribute_typ default null;
+
+	t							timestamp default now();
+	
+	limit_rows		integer default 10000;
+	start_row			integer default 0;
+	processed			integer default 1;
+
+	c_region cursor for
+		WITH RegionsSegs AS (
+		  SELECT ri.Region_Id, ri.Seg_No,
+		    ST_Transform(ST_SetSRID(St_MakeLine(ST_MakePoint(ri.X_Start, ri.Y_Start), 
+		    ST_MakePoint(ri.X_End, ri.Y_End)), 4326), 5676) AS Geom
+		  FROM staging.regions_input ri  )
+		select region_id, st_x(st_centroid(geom)) latitude, 
+			st_y(st_centroid(geom)) longitude, st_astext(geom) geom 
+		from (  
+			SELECT Region_Id, 
+				ST_Polygon(ST_LineMerge(ST_Union(Geom ORDER BY Seg_No)), 5676) AS Geom
+			FROM RegionsSegs
+			GROUP BY Region_Id
+		) reg;
+begin
+	--Create if not exists the Venue aspect type
+	region_asp := aspect_type_find_by_name('Region');
+	if not found then
+		region_asp.description := 'Region';
+		call aspect_type_create(region_asp);
+	end if;
+	
+	--Create if not exists the Geometry data type
+	geometry_type := data_type_find_by_name('Geometry');
+	if not found then
+		geometry_type.data_type_name := 'Geometry';
+		call data_type_create(geometry_type);
+	end if;
+
+	--Create if not exists the geometry attribute
+	geometry_att := attribute_find_by_name('geometry');
+	if not found then
+		geometry_att.name := 'geometry';
+		geometry_att.data_type_id := geometry_type.data_type_id;
+		call attribute_create(geometry_att);
+	end if;
+
+	call disable_indexes('aspect_attribute');
+	call disable_fks('aspect_attribute');
+
+	call disable_indexes('aspect');
+	call disable_fks('aspect');
+
+	open c_region;
+
+	while processed > 0 loop
+		declare
+			aspect_a					aspect_typ[10000];
+			geometry_a				text[10000];
+			aspect_geometry_a	aspect_attribute_typ[10000];
+			aspect_id_a				integer[10000];
+		
+			i									integer default 0;
+		
+			region_id					staging.regions_input.region_id%type;
+			latitude					float;
+			longitude					float;
+			geometry					text;
+		begin
+			--Iterate through the POI cursor to populate the ascpets and attributes
+			fetch next from c_region into 
+				region_id, latitude, longitude, geometry;
+	
+			while i < limit_rows and found loop
+				i := i + 1;
+			
+				aspect_a[i] := row(null, region_id, latitude, longitude, 
+					t, 1, region_asp.aspect_type_id);
+				
+				geometry_a[i] := geometry;
+			
+				fetch next from c_region into 
+					region_id, latitude, longitude, geometry;
+			end loop;
+
+			processed := i;
+		
+			--Associate the each POI (aspect) with its attributes in batches of 10000
+			if processed > 0 then					
+				call aspect_create_many(aspect_a);
+				
+				select array_agg(r.aspect_id)
+				into aspect_id_a
+				from unnest(aspect_a) r;
+			
+				select array_agg(row(r.aspect_id, r.attribute_id, r.geometry,
+					r.geometry_type))
+				into aspect_geometry_a
+				from (
+					select unnest(aspect_id_a) aspect_id, 
+						geometry_att.attribute_id attribute_id, 
+						unnest(geometry_a) geometry, 
+						geometry_type.data_type_id geometry_type) r;
+				
+				call aspect_attribute_create_many(aspect_geometry_a);
+	
+				start_row := start_row + processed;
+				raise notice '% processed records.', start_row;
+			end if;
+		end;
+	end loop;
+
+	close c_region;
+
+	call enable_indexes('aspect_attribute');
+	call enable_fks('aspect_attribute');
+
+	call enable_indexes('aspect');
+	call enable_fks('aspect');
+end;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="load_mats_from_trips()" securityType="INVOKER" type="PROCEDURE">
+         <comment/>
+         <definition language="plpgsql"><![CDATA[declare
+	limit_rows	integer default 10000;
+	start_row	integer default 0;
+	processed	integer default 1;
+
+	--Find trips, with respective cars (moving object)  
+	c_trip cursor for
+		select mo.mo_id, ti.trip_id, min(ti.t) mat_date,
+			tgeompoint_seq(
+				array_agg(
+					tgeompoint_inst(
+						ST_Transform(ST_SetSRID(
+							ST_MakePoint(ti.lon , ti.lat), 4326), 5676)
+							, ti.t
+					) 
+					order by ti.t asc
+				)
+			)
+		from staging.trips_input ti 
+			inner join moving_object mo on
+				mo.description = ti.car_id::text
+		group by mo.mo_id, ti.trip_id;
+begin
+	call disable_fks('mat');
+	call disable_indexes('mat');
+
+	open c_trip;
+
+	while processed > 0 loop
+		declare
+			mat_a						mat_typ[10000];
+			i 							integer default 0;
+			mo_id						mat.mo_id%type;
+			description			mat.description%type;
+			raw_trajectory	mat.raw_trajectory%type;
+			mat_date				mat.mat_date%type;
+			trip_id					staging.trips_input.trip_id%type;
+		begin
+			fetch next from c_trip
+			into mo_id, trip_id, mat_date, raw_trajectory;
+		
+			description := trip_id;
+
+			--Load multiple aspect trajectories in batches of 10000 records
+			while i < limit_rows and found loop
+				i := i + 1;
+				mat_a[i] := row(null, description, mo_id, raw_trajectory, mat_date);
+			
+				fetch next from c_trip
+				into mo_id, trip_id, mat_date, raw_trajectory;
+			
+				description := trip_id;
+			end loop;
+
+			processed := i;
+
+			if processed > 0 then					
+				call mat_create_many(mat_a);
+
+				start_row := start_row + processed;
+				raise notice '% processed records.', start_row;
+			end if;			
+		end;
+	end loop;
+
+	close c_trip;
+
+	call enable_indexes('mat');
+	call enable_fks('mat');
+end;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="load_moving_objects_from_cars()" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates moving objects from trips' cars]]></comment>
+         <definition language="plpgsql"><![CDATA[declare
+	car_mot			mo_type_typ;
+	text_type		data_type_typ;
+	car_asp			aspect_type_typ;
+	licence_att	attribute_typ;
+	type_att		attribute_typ;
+	model_att		attribute_typ;
+	t						timestamp default now();
+
+	limit_rows	integer default 10000;
+	start_row		integer default 0;
+	processed		integer default 1;
+
+	c_car cursor for
+		select c.car_id, c.licence, c.type, c.model  
+		from staging.car c;
+begin
+	--Creates if not exists the Car moving object type
+	car_mot := mo_type_find_by_name('Car');
+	if not found then
+		car_mot.description := 'Car';
+		call mo_type_create(car_mot);
+	end if;
+
+	--Creates if not exists the Car aspect type
+	car_asp := aspect_type_find_by_name('Car');
+	if not found then
+		car_asp.description := 'Car';
+		call aspect_type_create(car_asp);
+	end if;
+
+	--Create if not exists the Text data type
+	text_type := data_type_find_by_name('Text');
+	if not found then
+		text_type.data_type_name := 'Text';
+		call data_type_create(text_type);
+	end if;
+
+	--Creates if not exists the licence attribute
+	licence_att := aspect_type_find_by_name('licence');
+	if not found then
+		licence_att.name := 'licence';
+		call attribute_create(licence_att);
+	end if;
+
+	--Creates if not exists the type attribute
+	type_att := aspect_type_find_by_name('type');
+	if not found then
+		type_att.name := 'type';
+		call attribute_create(type_att);
+	end if;
+
+	--Creates if not exists the model attribute
+	model_att := aspect_type_find_by_name('model');
+	if not found then
+		model_att.name := 'model';
+		call attribute_create(model_att);
+	end if;
+
+	call disable_indexes('moving_object');
+	call disable_fks('moving_object');
+
+	call disable_indexes('aspect_attribute');
+	call disable_fks('aspect_attribute');
+
+	call disable_indexes('aspect');
+	call disable_fks('aspect');
+
+  --Iterate through the cursor to locate trips' cars
+	open c_car;
+	while processed > 0 loop
+		declare
+			car_a							moving_object_typ[10000];
+			aspect_a					aspect_typ[10000];
+		
+			aspect_licence_a	aspect_attribute_typ[10000];
+			aspect_type_a			aspect_attribute_typ[10000];
+			aspect_model_a		aspect_attribute_typ[10000];
+		
+			licence_a					text[10000];
+			type_a						text[10000];
+			model_a						text[10000];
+			aspect_id_a				integer[10000];
+		
+			i 								integer default 0;
+		
+			car_id						staging.car.car_id%type;
+		  licence						staging.car.licence%type;
+		 	type							staging.car.type%type;
+		 	model							staging.car.model%type;
+		begin
+			fetch next from c_car
+			into car_id, licence, type, model;
+		
+			--Create moving objects in batches of 10000 records
+			while i < limit_rows and found loop
+				i 						:= i + 1;
+				car_a[i] 			:= row(null, car_id, car_mot.mo_type_id);
+				aspect_a[i] 	:= row(null, car_id, null, null, t, 2, car_asp.aspect_type_id);
+				licence_a[i]	:= licence;
+				type_a[i]			:= type;
+				model_a[i]		:= model;
+												
+				fetch next from c_car 
+				into car_id, licence, type, model;
+			end loop;
+		
+			processed := i;
+		
+			if processed > 0 then
+				call moving_object_create_many(car_a);
+				call aspect_create_many(aspect_a);
+			
+				select array_agg(r.aspect_id)
+				into aspect_id_a
+				from unnest(aspect_a) r;
+
+				select array_agg(row(r.aspect_id, r.attribute_id, r.licence,
+					r.text_type))
+				into aspect_licence_a
+				from (
+					select unnest(aspect_id_a) aspect_id, 
+						licence_att.attribute_id attribute_id, 
+						unnest(licence_a) licence, 
+						text_type.data_type_id text_type) r;
+			
+				call aspect_attribute_create_many(aspect_licence_a);
+			
+				select array_agg(row(r.aspect_id, r.attribute_id, r.type,
+					r.text_type))
+				into aspect_type_a
+				from (
+					select unnest(aspect_id_a) aspect_id, 
+						type_att.attribute_id attribute_id, 
+						unnest(type_a) type, 
+						text_type.data_type_id text_type) r;
+					
+				call aspect_attribute_create_many(aspect_type_a);
+
+				select array_agg(row(r.aspect_id, r.attribute_id, r.model,
+					r.text_type))
+				into aspect_model_a
+				from (
+					select unnest(aspect_id_a) aspect_id, 
+						model_att.attribute_id attribute_id, 
+						unnest(model_a) model, 
+						text_type.data_type_id text_type) r;
+					
+				call aspect_attribute_create_many(aspect_model_a);
+
+				start_row := start_row + processed;
+				raise notice '% processed records.', start_row;
+			end if;			
+		end;
+	end loop;
+
+	close c_car;
+
+	call enable_indexes('moving_object');
+	call enable_fks('moving_object');
+	call enable_indexes('aspect_attribute');
+	call enable_fks('aspect_attribute');
+	call enable_indexes('aspect');
+	call enable_fks('aspect');
+end;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mat_aspect_count()" returnType="integer" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Counts ocurrences on MAT_ASPECT]]></comment>
+         <definition language="sql"><![CDATA[SELECT COUNT(*) AS CNT FROM MAT_ASPECT;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mat_aspect_create(INOUT p_mat_aspect mat_aspect_typ)" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates one tuple on MAT_ASPECT from a MAT_ASPECT_TYP object]]></comment>
+         <definition language="plpgsql"><![CDATA[BEGIN
+  INSERT INTO MAT_ASPECT(
+    MAT_ID, ASPECT_ID)
+  VALUES(
+    P_MAT_ASPECT.MAT_ID, P_MAT_ASPECT.ASPECT_ID);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_mat_aspect" type="mat_aspect_typ"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mat_aspect_create_many(INOUT p_mat_aspect_a mat_aspect_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates tuples on MAT_ASPECT from an array of MAT_ASPECT_TYP objects]]></comment>
+         <definition language="plpgsql"><![CDATA[BEGIN
+  INSERT INTO MAT_ASPECT(
+    MAT_ID, ASPECT_ID)
+  SELECT
+    MAT_ID, ASPECT_ID
+  FROM UNNEST(P_MAT_ASPECT_A);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_mat_aspect_a" type="mat_aspect_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mat_aspect_delete(IN p_mat_aspect_a mat_aspect_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete ocurrences on MAT_ASPECT based on array of MAT_ASPECT_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[DELETE FROM 
+    MAT_ASPECT T
+  WHERE EXISTS (
+    SELECT 1
+    FROM UNNEST(P_MAT_ASPECT_A) P
+    WHERE 
+      P.MAT_ID = T.MAT_ID AND
+      P.ASPECT_ID = T.ASPECT_ID);]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_mat_aspect_a" type="mat_aspect_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mat_aspect_delete_all()" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete all ocurrences on MAT_ASPECT]]></comment>
+         <definition language="sql"><![CDATA[DELETE    
+  FROM MAT_ASPECT;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mat_aspect_find_all()" returnType="SETOF mat_aspect_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on MAT_ASPECT]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    MAT_ID, ASPECT_ID
+  FROM MAT_ASPECT;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mat_aspect_find_by_id(p_mat_id integer, p_aspect_id integer)" returnType="SETOF mat_aspect_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on MAT_ASPECT based on primary key]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    MAT_ID, ASPECT_ID
+  FROM MAT_ASPECT
+  WHERE 
+    MAT_ID = P_MAT_ID AND
+    ASPECT_ID = P_ASPECT_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_mat_id" type="integer"/>
+            <parameter mode="IN" name="p_aspect_id" type="integer"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mat_aspect_update(IN p_mat_aspect_a mat_aspect_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Updates all ocurrences on MAT_ASPECT based on array of MAT_ASPECT_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[UPDATE MAT_ASPECT E
+  SET 
+    MAT_ID=P.MAT_ID, 
+    ASPECT_ID=P.ASPECT_ID
+  FROM UNNEST(P_MAT_ASPECT_A) P
+  WHERE 
+    E.MAT_ID = P.MAT_ID AND
+    E.ASPECT_ID = P.ASPECT_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_mat_aspect_a" type="mat_aspect_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mat_count()" returnType="integer" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Counts ocurrences on MAT]]></comment>
+         <definition language="sql"><![CDATA[SELECT COUNT(*) AS CNT FROM MAT;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mat_create(INOUT p_mat mat_typ)" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates one tuple on MAT from a MAT_TYP object]]></comment>
+         <definition language="plpgsql"><![CDATA[BEGIN
+  P_MAT.MAT_ID := NEXTVAL('MAT_SEQ');
+  INSERT INTO MAT(
+    MAT_ID, DESCRIPTION, MO_ID, RAW_TRAJECTORY, TRAJECTORY_GEOM)
+  VALUES(
+    P_MAT.MAT_ID, P_MAT.DESCRIPTION, P_MAT.MO_ID, P_MAT.RAW_TRAJECTORY,
+      trajectory(P_MAT.RAW_TRAJECTORY)); 
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_mat" type="mat_typ"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mat_create_many(INOUT p_mat_a mat_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates tuples on MAT from an array of MAT_TYP objects]]></comment>
+         <definition language="plpgsql"><![CDATA[DECLARE
+  V_INPUT_LENGTH INTEGER;
+BEGIN
+  V_INPUT_LENGTH := ARRAY_LENGTH(P_MAT_A, 1);
+  FOR I IN 1..V_INPUT_LENGTH LOOP
+    P_MAT_A[I].MAT_ID := NEXTVAL('MAT_SEQ');
+  END LOOP;
+  INSERT INTO MAT(
+    MAT_ID, DESCRIPTION, MO_ID, RAW_TRAJECTORY, TRAJECTORY_GEOM)
+  SELECT
+    MAT_ID, DESCRIPTION, MO_ID, RAW_TRAJECTORY, TRAJECTORY(RAW_TRAJECTORY)
+  FROM UNNEST(P_MAT_A);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_mat_a" type="mat_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mat_delete(IN p_mat_a mat_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete ocurrences on MAT based on array of MAT_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[DELETE FROM 
+    MAT T
+  WHERE EXISTS (
+    SELECT 1
+    FROM UNNEST(P_MAT_A) P
+    WHERE 
+      P.MAT_ID = T.MAT_ID);]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_mat_a" type="mat_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mat_delete_all()" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete all ocurrences on MAT]]></comment>
+         <definition language="sql"><![CDATA[DELETE    
+  FROM MAT;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mat_find_all()" returnType="SETOF mat_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on MAT]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    MAT_ID, DESCRIPTION, MO_ID, RAW_TRAJECTORY, TRAJECTORY_GEOM
+  FROM MAT;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mat_find_by_aspect_attribute(p_aspect_type character varying, p_attribute character varying, p_value text)" returnType="SETOF mat_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find trajectories by points' aspects aspect type and value]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    M.MAT_ID, M.DESCRIPTION, M.MO_ID, M.RAW_TRAJECTORY, M.TRAJECTORY_GEOM
+  FROM MAT M
+  	inner join POINT P USING(MAT_ID)
+  	inner join POINT_ASPECT PA USING(POINT_ID)
+  	inner join ASPECT A USING(ASPECT_ID)
+  	inner join ASPECT_TYPE_FIND_BY_NAME(P_ASPECT_TYPE) ATY USING(ASPECT_TYPE_ID)
+  	inner join ASPECT_ATTRIBUTE AA USING(ASPECT_ID)
+  	inner join ATTRIBUTE_FIND_BY_NAME(P_ATTRIBUTE) ATR USING(ATTRIBUTE_ID)
+  WHERE AA.VALUE = P_VALUE;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_aspect_type" type="character varying"/>
+            <parameter mode="IN" name="p_attribute" type="character varying"/>
+            <parameter mode="IN" name="p_value" type="text"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mat_find_by_id(p_mat_id integer)" returnType="SETOF mat_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on MAT based on primary key]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    MAT_ID, DESCRIPTION, MO_ID, RAW_TRAJECTORY, TRAJECTORY_GEOM
+  FROM MAT
+  WHERE 
+    MAT_ID = P_MAT_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_mat_id" type="integer"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mat_find_by_name(p_description character varying)" returnType="SETOF mat_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on MAT based on name or description]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    MAT_ID, DESCRIPTION, MO_ID, RAW_TRAJECTORY, TRAJECTORY_GEOM
+  FROM MAT
+  WHERE DESCRIPTION = P_DESCRIPTION;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_description" type="character varying"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mat_insert_trigger()" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="plpgsql"><![CDATA[declare 
+	v_schemaname text default 'partitions';
+	v_partitionname text;
+	v_firstdate timestamp;
+	v_matdate timestamp;
+	v_interval text default format('%s days', 
+		to_char(getTimestamp(startInstant(new.raw_trajectory)), 'D')::int - 1);
+begin
+	v_matdate := getTimestamp(startInstant(new.raw_trajectory)) - v_interval::interval;
+	v_partitionname := 'mat_' || to_char(v_matdate, 'yyyy_mm_dd');
+	execute format(
+		'insert into %s.%s(MAT_ID, DESCRIPTION, MO_ID, RAW_TRAJECTORY, TRAJECTORY_GEOM, MAT_DATE) values($1, $2, $3, $4, $5, $6)',
+		v_schemaname, v_partitionname)
+	using new.MAT_ID, new.DESCRIPTION, new.MO_ID, new.RAW_TRAJECTORY, new.TRAJECTORY_GEOM, v_matdate;
+	return null;
+--EXCEPTION 
+--	when others then 
+--		raise exception 'Date out of range.  Fix the mat_insert_trigger() function!';
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mat_update(IN p_mat_a mat_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Updates all ocurrences on MAT based on array of MAT_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[UPDATE MAT E
+  SET 
+    MAT_ID=P.MAT_ID, 
+    DESCRIPTION=P.DESCRIPTION, 
+    MO_ID=P.MO_ID, 
+    RAW_TRAJECTORY=P.RAW_TRAJECTORY, 
+    TRAJECTORY_GEOM=P.TRAJECTORY_GEOM
+  FROM UNNEST(P_MAT_A) P
+  WHERE 
+    E.MAT_ID = P.MAT_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_mat_a" type="mat_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_aspect_count()" returnType="integer" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Counts ocurrences on MO_ASPECT]]></comment>
+         <definition language="sql"><![CDATA[SELECT COUNT(*) AS CNT FROM MO_ASPECT;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_aspect_create(INOUT p_mo_aspect mo_aspect_typ)" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates one tuple on MO_ASPECT from a MO_ASPECT_TYP object]]></comment>
+         <definition language="plpgsql"><![CDATA[BEGIN
+  INSERT INTO MO_ASPECT(
+    MO_ID, ASPECT_ID, START_TIME, END_TIME)
+  VALUES(
+    P_MO_ASPECT.MO_ID, P_MO_ASPECT.ASPECT_ID, P_MO_ASPECT.START_TIME, P_MO_ASPECT.END_TIME);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_mo_aspect" type="mo_aspect_typ"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_aspect_create_many(INOUT p_mo_aspect_a mo_aspect_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates tuples on MO_ASPECT from an array of MO_ASPECT_TYP objects]]></comment>
+         <definition language="plpgsql"><![CDATA[BEGIN
+  INSERT INTO MO_ASPECT(
+    MO_ID, ASPECT_ID, START_TIME, END_TIME)
+  SELECT
+    MO_ID, ASPECT_ID, START_TIME, END_TIME
+  FROM UNNEST(P_MO_ASPECT_A);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_mo_aspect_a" type="mo_aspect_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_aspect_delete(IN p_mo_aspect_a mo_aspect_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete ocurrences on MO_ASPECT based on array of MO_ASPECT_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[DELETE FROM 
+    MO_ASPECT T
+  WHERE EXISTS (
+    SELECT 1
+    FROM UNNEST(P_MO_ASPECT_A) P
+    WHERE 
+      P.MO_ID = T.MO_ID AND
+      P.ASPECT_ID = T.ASPECT_ID);]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_mo_aspect_a" type="mo_aspect_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_aspect_delete_all()" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete all ocurrences on MO_ASPECT]]></comment>
+         <definition language="sql"><![CDATA[DELETE    
+  FROM MO_ASPECT;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_aspect_find_all()" returnType="SETOF mo_aspect_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on MO_ASPECT]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    MO_ID, ASPECT_ID, START_TIME, END_TIME
+  FROM MO_ASPECT;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_aspect_find_by_id(p_mo_id integer, p_aspect_id integer)" returnType="SETOF mo_aspect_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on MO_ASPECT based on primary key]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    MO_ID, ASPECT_ID, START_TIME, END_TIME
+  FROM MO_ASPECT
+  WHERE 
+    MO_ID = P_MO_ID AND
+    ASPECT_ID = P_ASPECT_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_mo_id" type="integer"/>
+            <parameter mode="IN" name="p_aspect_id" type="integer"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_aspect_update(IN p_mo_aspect_a mo_aspect_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Updates all ocurrences on MO_ASPECT based on array of MO_ASPECT_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[UPDATE MO_ASPECT E
+  SET 
+    MO_ID=P.MO_ID, 
+    ASPECT_ID=P.ASPECT_ID, 
+    START_TIME=P.START_TIME, 
+    END_TIME=P.END_TIME
+  FROM UNNEST(P_MO_ASPECT_A) P
+  WHERE 
+    E.MO_ID = P.MO_ID AND
+    E.ASPECT_ID = P.ASPECT_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_mo_aspect_a" type="mo_aspect_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_relationship_count()" returnType="integer" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Counts ocurrences on MO_RELATIONSHIP]]></comment>
+         <definition language="sql"><![CDATA[SELECT COUNT(*) AS CNT FROM MO_RELATIONSHIP;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_relationship_create(INOUT p_mo_relationship mo_relationship_typ)" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates one tuple on MO_RELATIONSHIP from a MO_RELATIONSHIP_TYP object]]></comment>
+         <definition language="plpgsql"><![CDATA[BEGIN
+  P_MO_RELATIONSHIP.MOR_ID := NEXTVAL('MO_RELATIONSHIP_SEQ');
+  INSERT INTO MO_RELATIONSHIP(
+    MOR_ID, DESCRIPTION, START_TIME, END_TIME, MO_TARGET, MO_SOURCE)
+  VALUES(
+    P_MO_RELATIONSHIP.MOR_ID, P_MO_RELATIONSHIP.DESCRIPTION, P_MO_RELATIONSHIP.START_TIME, P_MO_RELATIONSHIP.END_TIME, P_MO_RELATIONSHIP.MO_TARGET, P_MO_RELATIONSHIP.MO_SOURCE);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_mo_relationship" type="mo_relationship_typ"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_relationship_create_many(INOUT p_mo_relationship_a mo_relationship_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates tuples on MO_RELATIONSHIP from an array of MO_RELATIONSHIP_TYP objects]]></comment>
+         <definition language="plpgsql"><![CDATA[DECLARE
+  V_INPUT_LENGTH INTEGER;
+BEGIN
+  V_INPUT_LENGTH := ARRAY_LENGTH(P_MO_RELATIONSHIP_A, 1);
+  FOR I IN 1..V_INPUT_LENGTH LOOP
+    P_MO_RELATIONSHIP_A[I].MOR_ID := NEXTVAL('MO_RELATIONSHIP_SEQ');
+  END LOOP;
+  INSERT INTO MO_RELATIONSHIP(
+    MOR_ID, DESCRIPTION, START_TIME, END_TIME, MO_TARGET, MO_SOURCE)
+  SELECT
+    MOR_ID, DESCRIPTION, START_TIME, END_TIME, MO_TARGET, MO_SOURCE
+  FROM UNNEST(P_MO_RELATIONSHIP_A);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_mo_relationship_a" type="mo_relationship_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_relationship_delete(IN p_mo_relationship_a mo_relationship_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete ocurrences on MO_RELATIONSHIP based on array of MO_RELATIONSHIP_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[DELETE FROM 
+    MO_RELATIONSHIP T
+  WHERE EXISTS (
+    SELECT 1
+    FROM UNNEST(P_MO_RELATIONSHIP_A) P
+    WHERE 
+      P.MOR_ID = T.MOR_ID);]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_mo_relationship_a" type="mo_relationship_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_relationship_delete_all()" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete all ocurrences on MO_RELATIONSHIP]]></comment>
+         <definition language="sql"><![CDATA[DELETE    
+  FROM MO_RELATIONSHIP;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_relationship_find_all()" returnType="SETOF mo_relationship_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on MO_RELATIONSHIP]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    MOR_ID, DESCRIPTION, START_TIME, END_TIME, MO_TARGET, MO_SOURCE
+  FROM MO_RELATIONSHIP;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_relationship_find_by_id(p_mor_id integer)" returnType="SETOF mo_relationship_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on MO_RELATIONSHIP based on primary key]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    MOR_ID, DESCRIPTION, START_TIME, END_TIME, MO_TARGET, MO_SOURCE
+  FROM MO_RELATIONSHIP
+  WHERE 
+    MOR_ID = P_MOR_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_mor_id" type="integer"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_relationship_find_by_name(p_description character varying)" returnType="SETOF mo_relationship_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on MO_RELATIONSHIP based on name or description]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    MOR_ID, DESCRIPTION, START_TIME, END_TIME, MO_TARGET, MO_SOURCE
+  FROM MO_RELATIONSHIP
+  WHERE DESCRIPTION = P_DESCRIPTION;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_description" type="character varying"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_relationship_update(IN p_mo_relationship_a mo_relationship_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Updates all ocurrences on MO_RELATIONSHIP based on array of MO_RELATIONSHIP_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[UPDATE MO_RELATIONSHIP E
+  SET 
+    MOR_ID=P.MOR_ID, 
+    DESCRIPTION=P.DESCRIPTION, 
+    START_TIME=P.START_TIME, 
+    END_TIME=P.END_TIME, 
+    MO_TARGET=P.MO_TARGET, 
+    MO_SOURCE=P.MO_SOURCE
+  FROM UNNEST(P_MO_RELATIONSHIP_A) P
+  WHERE 
+    E.MOR_ID = P.MOR_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_mo_relationship_a" type="mo_relationship_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_type_count()" returnType="integer" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Counts ocurrences on MO_TYPE]]></comment>
+         <definition language="sql"><![CDATA[SELECT COUNT(*) AS CNT FROM MO_TYPE;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_type_create(INOUT p_mo_type mo_type_typ)" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates one tuple on MO_TYPE from a MO_TYPE_TYP object]]></comment>
+         <definition language="plpgsql"><![CDATA[BEGIN
+  P_MO_TYPE.MO_TYPE_ID := NEXTVAL('MO_TYPE_SEQ');
+  INSERT INTO MO_TYPE(
+    MO_TYPE_ID, DESCRIPTION)
+  VALUES(
+    P_MO_TYPE.MO_TYPE_ID, P_MO_TYPE.DESCRIPTION);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_mo_type" type="mo_type_typ"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_type_create_many(INOUT p_mo_type_a mo_type_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates tuples on MO_TYPE from an array of MO_TYPE_TYP objects]]></comment>
+         <definition language="plpgsql"><![CDATA[DECLARE
+  V_INPUT_LENGTH INTEGER;
+BEGIN
+  V_INPUT_LENGTH := ARRAY_LENGTH(P_MO_TYPE_A, 1);
+  FOR I IN 1..V_INPUT_LENGTH LOOP
+    P_MO_TYPE_A[I].MO_TYPE_ID := NEXTVAL('MO_TYPE_SEQ');
+  END LOOP;
+  INSERT INTO MO_TYPE(
+    MO_TYPE_ID, DESCRIPTION)
+  SELECT
+    MO_TYPE_ID, DESCRIPTION
+  FROM UNNEST(P_MO_TYPE_A);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_mo_type_a" type="mo_type_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_type_delete(IN p_mo_type_a mo_type_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete ocurrences on MO_TYPE based on array of MO_TYPE_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[DELETE FROM 
+    MO_TYPE T
+  WHERE EXISTS (
+    SELECT 1
+    FROM UNNEST(P_MO_TYPE_A) P
+    WHERE 
+      P.MO_TYPE_ID = T.MO_TYPE_ID);]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_mo_type_a" type="mo_type_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_type_delete_all()" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete all ocurrences on MO_TYPE]]></comment>
+         <definition language="sql"><![CDATA[DELETE    
+  FROM MO_TYPE;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_type_find_all()" returnType="SETOF mo_type_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on MO_TYPE]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    MO_TYPE_ID, DESCRIPTION
+  FROM MO_TYPE;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_type_find_by_id(p_mo_type_id integer)" returnType="SETOF mo_type_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on MO_TYPE based on primary key]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    MO_TYPE_ID, DESCRIPTION
+  FROM MO_TYPE
+  WHERE 
+    MO_TYPE_ID = P_MO_TYPE_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_mo_type_id" type="integer"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_type_find_by_name(p_description character varying)" returnType="SETOF mo_type_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on MO_TYPE based on name or description]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    MO_TYPE_ID, DESCRIPTION
+  FROM MO_TYPE
+  WHERE DESCRIPTION = P_DESCRIPTION;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_description" type="character varying"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mo_type_update(IN p_mo_type_a mo_type_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Updates all ocurrences on MO_TYPE based on array of MO_TYPE_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[UPDATE MO_TYPE E
+  SET 
+    MO_TYPE_ID=P.MO_TYPE_ID, 
+    DESCRIPTION=P.DESCRIPTION
+  FROM UNNEST(P_MO_TYPE_A) P
+  WHERE 
+    E.MO_TYPE_ID = P.MO_TYPE_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_mo_type_a" type="mo_type_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mor_aspect_count()" returnType="integer" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Counts ocurrences on MOR_ASPECT]]></comment>
+         <definition language="sql"><![CDATA[SELECT COUNT(*) AS CNT FROM MOR_ASPECT;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mor_aspect_create(INOUT p_mor_aspect mor_aspect_typ)" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates one tuple on MOR_ASPECT from a MOR_ASPECT_TYP object]]></comment>
+         <definition language="plpgsql"><![CDATA[BEGIN
+  INSERT INTO MOR_ASPECT(
+    MOR_ID, ASPECT_ID)
+  VALUES(
+    P_MOR_ASPECT.MOR_ID, P_MOR_ASPECT.ASPECT_ID);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_mor_aspect" type="mor_aspect_typ"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mor_aspect_create_many(INOUT p_mor_aspect_a mor_aspect_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates tuples on MOR_ASPECT from an array of MOR_ASPECT_TYP objects]]></comment>
+         <definition language="plpgsql"><![CDATA[BEGIN
+  INSERT INTO MOR_ASPECT(
+    MOR_ID, ASPECT_ID)
+  SELECT
+    MOR_ID, ASPECT_ID
+  FROM UNNEST(P_MOR_ASPECT_A);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_mor_aspect_a" type="mor_aspect_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mor_aspect_delete(IN p_mor_aspect_a mor_aspect_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete ocurrences on MOR_ASPECT based on array of MOR_ASPECT_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[DELETE FROM 
+    MOR_ASPECT T
+  WHERE EXISTS (
+    SELECT 1
+    FROM UNNEST(P_MOR_ASPECT_A) P
+    WHERE 
+      P.MOR_ID = T.MOR_ID AND
+      P.ASPECT_ID = T.ASPECT_ID);]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_mor_aspect_a" type="mor_aspect_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mor_aspect_delete_all()" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete all ocurrences on MOR_ASPECT]]></comment>
+         <definition language="sql"><![CDATA[DELETE    
+  FROM MOR_ASPECT;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mor_aspect_find_all()" returnType="SETOF mor_aspect_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on MOR_ASPECT]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    MOR_ID, ASPECT_ID
+  FROM MOR_ASPECT;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mor_aspect_find_by_id(p_mor_id integer, p_aspect_id integer)" returnType="SETOF mor_aspect_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on MOR_ASPECT based on primary key]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    MOR_ID, ASPECT_ID
+  FROM MOR_ASPECT
+  WHERE 
+    MOR_ID = P_MOR_ID AND
+    ASPECT_ID = P_ASPECT_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_mor_id" type="integer"/>
+            <parameter mode="IN" name="p_aspect_id" type="integer"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="mor_aspect_update(IN p_mor_aspect_a mor_aspect_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Updates all ocurrences on MOR_ASPECT based on array of MOR_ASPECT_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[UPDATE MOR_ASPECT E
+  SET 
+    MOR_ID=P.MOR_ID, 
+    ASPECT_ID=P.ASPECT_ID
+  FROM UNNEST(P_MOR_ASPECT_A) P
+  WHERE 
+    E.MOR_ID = P.MOR_ID AND
+    E.ASPECT_ID = P.ASPECT_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_mor_aspect_a" type="mor_aspect_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="moving_object_count()" returnType="integer" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Counts ocurrences on MOVING_OBJECT]]></comment>
+         <definition language="sql"><![CDATA[SELECT COUNT(*) AS CNT FROM MOVING_OBJECT;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="moving_object_create(INOUT p_moving_object moving_object_typ)" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates one tuple on MOVING_OBJECT from a MOVING_OBJECT_TYP object]]></comment>
+         <definition language="plpgsql"><![CDATA[BEGIN
+  P_MOVING_OBJECT.MO_ID := NEXTVAL('MOVING_OBJECT_SEQ');
+  INSERT INTO MOVING_OBJECT(
+    MO_ID, DESCRIPTION, MO_TYPE_ID)
+  VALUES(
+    P_MOVING_OBJECT.MO_ID, P_MOVING_OBJECT.DESCRIPTION, P_MOVING_OBJECT.MO_TYPE_ID);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_moving_object" type="moving_object_typ"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="moving_object_create_many(INOUT p_moving_object_a moving_object_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates tuples on MOVING_OBJECT from an array of MOVING_OBJECT_TYP objects]]></comment>
+         <definition language="plpgsql"><![CDATA[DECLARE
+  V_INPUT_LENGTH INTEGER;
+BEGIN
+  V_INPUT_LENGTH := ARRAY_LENGTH(P_MOVING_OBJECT_A, 1);
+  FOR I IN 1..V_INPUT_LENGTH LOOP
+    P_MOVING_OBJECT_A[I].MO_ID := NEXTVAL('MOVING_OBJECT_SEQ');
+  END LOOP;
+  INSERT INTO MOVING_OBJECT(
+    MO_ID, DESCRIPTION, MO_TYPE_ID)
+  SELECT
+    MO_ID, DESCRIPTION, MO_TYPE_ID
+  FROM UNNEST(P_MOVING_OBJECT_A);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_moving_object_a" type="moving_object_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="moving_object_delete(IN p_moving_object_a moving_object_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete ocurrences on MOVING_OBJECT based on array of MOVING_OBJECT_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[DELETE FROM 
+    MOVING_OBJECT T
+  WHERE EXISTS (
+    SELECT 1
+    FROM UNNEST(P_MOVING_OBJECT_A) P
+    WHERE 
+      P.MO_ID = T.MO_ID);]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_moving_object_a" type="moving_object_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="moving_object_delete_all()" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete all ocurrences on MOVING_OBJECT]]></comment>
+         <definition language="sql"><![CDATA[DELETE    
+  FROM MOVING_OBJECT;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="moving_object_find_all()" returnType="SETOF moving_object_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on MOVING_OBJECT]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    MO_ID, DESCRIPTION, MO_TYPE_ID
+  FROM MOVING_OBJECT;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="moving_object_find_by_id(p_mo_id integer)" returnType="SETOF moving_object_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on MOVING_OBJECT based on primary key]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    MO_ID, DESCRIPTION, MO_TYPE_ID
+  FROM MOVING_OBJECT
+  WHERE 
+    MO_ID = P_MO_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_mo_id" type="integer"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="moving_object_find_by_name(p_description character varying)" returnType="SETOF moving_object_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on MOVING_OBJECT based on name or description]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    MO_ID, DESCRIPTION, MO_TYPE_ID
+  FROM MOVING_OBJECT
+  WHERE DESCRIPTION = P_DESCRIPTION;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_description" type="character varying"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="moving_object_update(IN p_moving_object_a moving_object_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Updates all ocurrences on MOVING_OBJECT based on array of MOVING_OBJECT_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[UPDATE MOVING_OBJECT E
+  SET 
+    MO_ID=P.MO_ID, 
+    DESCRIPTION=P.DESCRIPTION, 
+    MO_TYPE_ID=P.MO_TYPE_ID
+  FROM UNNEST(P_MOVING_OBJECT_A) P
+  WHERE 
+    E.MO_ID = P.MO_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_moving_object_a" type="moving_object_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="point_aspect_count()" returnType="integer" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Counts ocurrences on POINT_ASPECT]]></comment>
+         <definition language="sql"><![CDATA[SELECT COUNT(*) AS CNT FROM POINT_ASPECT;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="point_aspect_create(INOUT p_point_aspect point_aspect_typ)" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates one tuple on POINT_ASPECT from a POINT_ASPECT_TYP object]]></comment>
+         <definition language="plpgsql"><![CDATA[BEGIN
+  INSERT INTO POINT_ASPECT(
+    POINT_ID, ASPECT_ID)
+  VALUES(
+    P_POINT_ASPECT.POINT_ID, P_POINT_ASPECT.ASPECT_ID);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_point_aspect" type="point_aspect_typ"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="point_aspect_create_many(INOUT p_point_aspect_a point_aspect_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Creates tuples on POINT_ASPECT from an array of POINT_ASPECT_TYP objects]]></comment>
+         <definition language="plpgsql"><![CDATA[BEGIN
+  INSERT INTO POINT_ASPECT(
+    POINT_ID, ASPECT_ID)
+  SELECT
+    POINT_ID, ASPECT_ID
+  FROM UNNEST(P_POINT_ASPECT_A);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_point_aspect_a" type="point_aspect_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="point_aspect_delete(IN p_point_aspect_a point_aspect_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete ocurrences on POINT_ASPECT based on array of POINT_ASPECT_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[DELETE FROM 
+    POINT_ASPECT T
+  WHERE EXISTS (
+    SELECT 1
+    FROM UNNEST(P_POINT_ASPECT_A) P
+    WHERE 
+      P.POINT_ID = T.POINT_ID AND
+      P.ASPECT_ID = T.ASPECT_ID);]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_point_aspect_a" type="point_aspect_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="point_aspect_delete_all()" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete all ocurrences on POINT_ASPECT]]></comment>
+         <definition language="sql"><![CDATA[DELETE    
+  FROM POINT_ASPECT;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="point_aspect_find_all()" returnType="SETOF point_aspect_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on POINT_ASPECT]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    POINT_ID, ASPECT_ID
+  FROM POINT_ASPECT;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="point_aspect_find_by_id(p_point_id integer, p_aspect_id integer)" returnType="SETOF point_aspect_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find all ocurrences on POINT_ASPECT based on primary key]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    POINT_ID, ASPECT_ID
+  FROM POINT_ASPECT
+  WHERE 
+    POINT_ID = P_POINT_ID AND
+    ASPECT_ID = P_ASPECT_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_point_id" type="integer"/>
+            <parameter mode="IN" name="p_aspect_id" type="integer"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="point_aspect_update(IN p_point_aspect_a point_aspect_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Updates all ocurrences on POINT_ASPECT based on array of POINT_ASPECT_TYP objects]]></comment>
+         <definition language="sql"><![CDATA[UPDATE POINT_ASPECT E
+  SET 
+    POINT_ID=P.POINT_ID, 
+    ASPECT_ID=P.ASPECT_ID
+  FROM UNNEST(P_POINT_ASPECT_A) P
+  WHERE 
+    E.POINT_ID = P.POINT_ID AND
+    E.ASPECT_ID = P.ASPECT_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_point_aspect_a" type="point_aspect_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="point_count()" returnType="integer" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Counts ocurrences on POINT]]></comment>
+         <definition language="sql"><![CDATA[SELECT COUNT(*) AS CNT FROM POINT;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="point_create(INOUT p_point point_typ)" securityType="INVOKER" type="PROCEDURE">
+         <comment/>
+         <definition language="plpgsql"><![CDATA[BEGIN
+  P_POINT.POINT_ID := NEXTVAL('POINT_SEQ');
+  INSERT INTO POINT(
+    POINT_ID, P_ORDER, MAT_ID, T)
+  VALUES(
+    P_POINT.POINT_ID, P_POINT.P_ORDER, P_POINT.MAT_ID, P_POINT.T);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_point" type="point_typ"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="point_create_many(INOUT p_point_a point_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment/>
+         <definition language="plpgsql"><![CDATA[DECLARE
+  V_INPUT_LENGTH INTEGER;
+BEGIN
+  V_INPUT_LENGTH := ARRAY_LENGTH(P_POINT_A, 1);
+  FOR I IN 1..V_INPUT_LENGTH LOOP
+    P_POINT_A[I].POINT_ID := NEXTVAL('POINT_SEQ');
+  END LOOP;
+  INSERT INTO POINT(
+    POINT_ID, P_ORDER, MAT_ID, T)
+  SELECT
+    POINT_ID, P_ORDER, MAT_ID, T
+  FROM UNNEST(P_POINT_A);
+END;]]></definition>
+         <parameters>
+            <parameter mode="INOUT" name="p_point_a" type="point_typ[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="point_delete_all()" securityType="INVOKER" type="PROCEDURE">
+         <comment><![CDATA[Delete all ocurrences on POINT]]></comment>
+         <definition language="sql"><![CDATA[DELETE    
+  FROM POINT;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="point_find_all()" returnType="SETOF point_typ" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="sql"><![CDATA[SELECT
+    POINT_ID, P_ORDER, MAT_ID, T
+  FROM POINT;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="point_find_by_aspect_attribute(p_aspect_type character varying, p_attribute character varying, p_value text)" returnType="SETOF point_typ" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Find points by aspect type and attribute value]]></comment>
+         <definition language="sql"><![CDATA[SELECT
+    P.POINT_ID, P.P_ORDER, P.MAT_ID, P.T
+  FROM POINT P
+  	inner join POINT_ASPECT PA USING(POINT_ID)
+  	inner join ASPECT A USING(ASPECT_ID)
+  	inner join ASPECT_TYPE_FIND_BY_NAME(P_ASPECT_TYPE) ATY USING(ASPECT_TYPE_ID)
+  	inner join ASPECT_ATTRIBUTE AA USING(ASPECT_ID)
+  	inner join ATTRIBUTE_FIND_BY_NAME(P_ATTRIBUTE) ATR USING(ATTRIBUTE_ID)
+  WHERE aa.VALUE = P_VALUE;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_aspect_type" type="character varying"/>
+            <parameter mode="IN" name="p_attribute" type="character varying"/>
+            <parameter mode="IN" name="p_value" type="text"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="point_find_by_id(p_point_id integer)" returnType="SETOF point_typ" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="sql"><![CDATA[SELECT
+    POINT_ID, P_ORDER, MAT_ID, T
+  FROM POINT
+  WHERE 
+    POINT_ID = P_POINT_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_point_id" type="integer"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="point_insert_trigger()" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="plpgsql"><![CDATA[declare 
+	v_schemaname text default 'partitions';
+	v_partitionname text;
+	v_pointdate timestamp;
+	v_interval text default format('%s days', to_char(new.T, 'D')::int - 1);
+begin
+	v_pointdate := new.T - v_interval::interval;
+	v_partitionname := 'point_' || to_char(v_pointdate, 'yyyy_mm_dd');
+	execute format(
+		'insert into %s.%s(point_id, p_order, mat_id, t) values($1, $2, $3, $4)',
+		v_schemaname, v_partitionname)
+	using new.POINT_ID, new.P_ORDER, new.MAT_ID, new.T;
+	return null;
+EXCEPTION 
+	when others then 
+		raise exception 'Date out of range.  Fix the point_insert_trigger() function!';
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="point_update(IN p_point_a point_typ[])" securityType="INVOKER" type="PROCEDURE">
+         <comment/>
+         <definition language="sql"><![CDATA[UPDATE POINT E
+  SET 
+    POINT_ID=P.POINT_ID, 
+    P_ORDER=P.P_ORDER, 
+    MAT_ID=P.MAT_ID,
+    T=P.T
+  FROM UNNEST(P_POINT_A) P
+  WHERE 
+    E.POINT_ID = P.POINT_ID;]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_point_a" type="point_typ[]"/>
+         </parameters>
+      </routine>
+   </routines>
+</database>
