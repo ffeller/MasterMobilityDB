@@ -1,13 +1,11 @@
 -- complain if script is sourced in psql, rather than via CREATE EXTENSION
 \echo Use "CREATE EXTENSION mastermobilitydb schema" to load this file. \quit
 
-
 SET SEARCH_PATH TO MASTER, public ;
-
 
 CREATE SCHEMA IF NOT EXISTS UTIL;
 
-
+CREATE SCHEMA IF NOT EXISTS PARTITIONS;
 
 CREATE TABLE MASTER.ASPECT
 (
@@ -5397,3 +5395,86 @@ $BODY$;
 
 COMMENT ON PROCEDURE PREDICATE_ASPECT_TYPE_DELETE
 IS 'Delete ocurrences on PREDICATE_ASPECT_TYPE based on array of PREDICATE_ASPECT_TYPE_TYP objects';
+
+CREATE OR REPLACE PROCEDURE util.create_partitions_by_date(IN p_schemaname text, IN p_tablename text, IN p_startdate date, IN p_enddate date, IN p_columnname text, IN p_interval text, IN p_schemapart text DEFAULT 'partitions'::text)
+ LANGUAGE plpgsql
+AS $procedure$
+declare
+  v_d date;
+  v_d1 date;
+  v_partitionname text;
+  v_interval text default '1 ' || p_interval;
+ 
+  c_indexes record;
+begin
+  if not exists (
+    select *
+    from information_schema.tables t
+    where t.table_name = lower(p_tablename)
+    	and t.table_schema = lower(p_schemaname)) 
+  then
+    raise exception 'table %.% does not exist', p_schemaname, p_tablename;
+  end if;
+ 
+  if p_startdate >= p_enddate then
+    raise exception 'the start date % must be before the end date %', 
+    	p_startdate, p_enddate;
+  end if;
+ 
+  v_d := p_startdate;
+
+  while v_d <= p_enddate 
+  loop
+    v_partitionname := p_tablename || '_' || to_char(v_d, 'yyyy_mm_dd');
+   
+    if not exists (
+      select 1
+       from information_schema.tables t
+       where t.table_name = lower(v_partitionname)
+       	 and t.table_schema = lower(p_schemapart)
+    ) then
+      v_d1 := v_d + v_interval::interval;
+     
+      execute format(
+      	'create table %s.%s(
+				 check ( %s >= date ''%s'' and %s < date ''%s'') 
+				) inherits (%s.%s)', 
+        p_schemapart, v_partitionname, p_columnname, to_char(v_d, 'yyyy-mm-dd'), 
+        p_columnname, to_char(v_d1, 'yyyy-mm-dd'), p_schemaname, p_tablename);
+
+      for c_indexes in
+				select 
+					replace(
+						replace(
+							replace(
+								pg_get_indexdef(i.indexrelid), 
+								p_tablename || ' ', 
+								v_partitionname || ' '
+							),
+							p_tablename || '_pkey', 
+							v_partitionname || '_pkey'
+						),
+						p_schemaname,
+						p_schemapart) ind_def 
+				from pg_catalog.pg_index i
+					inner join pg_catalog.pg_class c on
+						c."oid" = i.indrelid 
+					inner join pg_catalog.pg_namespace n on
+						n."oid" = c.relnamespace 
+					where c.relname = p_tablename
+						and n.nspname = p_schemaname
+	  loop 
+	  	execute c_indexes.ind_def;
+	  end loop;
+		
+      raise notice 'partition %.% has been created', 
+     		p_schemapart, v_partitionname;
+    end if;
+   
+    v_d := v_d + v_interval::interval;
+  end loop;
+end;
+$procedure$;
+
+COMMENT ON PROCEDURE create_partitions_by_date
+IS 'Create partitions by date for the relation';
