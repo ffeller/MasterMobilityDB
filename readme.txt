@@ -19,20 +19,4 @@ sudo make install
 3. Registro das extensões
 sudo su - postgres
 createdb -e -T template0 mobility
-<<<<<<< HEAD
 psql -e -d mobility -c "create extension if not exists mastermobilitydb cascade"
-=======
-psql -e -d <<EOF 
-create schema if not exists master; 
-create extensiom if not exists postgis; 
-create extension if not exists file_fdw; 
-create extension if not exists mobilitydb; 
-create extension if not exists mastermobilitydb; 
-EOF
-
-4. Teste
-select master.aspect_count();
-aspect_count
-0
-
->>>>>>> parent of 82255da (MasterMoblityDB)
