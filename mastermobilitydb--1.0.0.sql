@@ -1,11 +1,13 @@
 -- complain if script is sourced in psql, rather than via CREATE EXTENSION
-\echo Use "CREATE EXTENSION mastermobilitydb schema" to load this file. \quit
+\echo Use "CREATE EXTENSION mastermobilitydb cascade" to load this file. \quit
 
 SET SEARCH_PATH TO MASTER, public ;
 
 CREATE SCHEMA IF NOT EXISTS UTIL;
 
 CREATE SCHEMA IF NOT EXISTS PARTITIONS;
+
+CREATE SCHEMA IF NOT EXISTS STAGING;
 
 CREATE TABLE MASTER.ASPECT
 (
