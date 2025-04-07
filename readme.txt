@@ -2,7 +2,8 @@
 sudo apt-get update 
 sudo apt-get -y install postgreql-14 postgresql-14-pldebugger postgresql-client-14 postgresql-common postgresql-server-dev-14 
 sudo apt-get -y install postgresql-14-postgis-3-scripts=3.2.0+dfsg-1ubuntu1 postgresql-14-postgis-3=3.2.0+dfsg-1ubuntu1 
-sudo apt-get -y install build-essential cmake libproj-dev libjson-c-dev
+sudo apt-get -y install build-essential cmake libproj-dev libjson-c-dev libgeos-dev libgsl-dev
+sudo apt-mark hold postgresql-14-postgis-3 postgresql-14-postgis-3-scripts
 
 2. Compilação
 git clone git@github.com:ffeller/MasterMobilityDB.git
